@@ -1906,31 +1906,6 @@ a { color: inherit; text-decoration: none; }
     font-size: .88rem;
 }
 
-.entry-phone {
-    display: flex;
-    gap: .5rem;
-}
-
-.entry-phone select {
-    width: 88px;
-    height: 52px;
-    padding: 0 .7rem;
-    border: 1px solid #2c2c2c;
-    border-radius: 999px;
-    background: #141414;
-    color: #fff;
-    font: inherit;
-    font-size: .9rem;
-}
-
-.entry-phone select:focus,
-.entry-phone input:focus {
-    outline: none;
-    border-color: var(--gold);
-}
-
-.entry-phone input { flex: 1 1 auto; }
-
 .entry-eye {
     position: absolute;
     top: 50%;
