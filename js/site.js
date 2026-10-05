@@ -1,4 +1,57 @@
+var authOverlay = document.createElement("div");
+authOverlay.className = "auth-overlay";
+authOverlay.innerHTML =
+    '<div class="auth-modal" role="dialog" aria-labelledby="auth-title" aria-modal="true">' +
+        "<h2 id=\"auth-title\">Sign in</h2>" +
+        '<form>' +
+            '<label class="entry-field"><input type="email" name="email" placeholder="Email" autocomplete="email" required /></label>' +
+            '<label class="entry-field"><input type="password" name="password" placeholder="Password" autocomplete="current-password" required /><button type="button" class="entry-eye" aria-label="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12s3.6-6.5 9-6.5S21 12 21 12s-3.6 6.5-9 6.5S3 12 3 12z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></label>' +
+            '<button type="submit" class="account-signin">Sign in</button>' +
+            '<a class="entry-forgot" href="#">Forgot password?</a>' +
+            '<label class="entry-remember"><input type="checkbox" name="remember" /> Remember password</label>' +
+        "</form>" +
+    "</div>";
+document.body.appendChild(authOverlay);
+
+function openAuth() {
+    authOverlay.classList.add("is-on");
+    document.querySelectorAll(".click-menu[open]").forEach(function (menu) {
+        menu.removeAttribute("open");
+    });
+}
+
+function closeAuth() {
+    authOverlay.classList.remove("is-on");
+}
+
+authOverlay.addEventListener("click", function (event) {
+    if (event.target === authOverlay) closeAuth();
+});
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") closeAuth();
+});
+
+authOverlay.querySelector("form").addEventListener("submit", function (event) {
+    event.preventDefault();
+});
+
+authOverlay.querySelectorAll(".entry-eye").forEach(function (button) {
+    button.addEventListener("click", function () {
+        var field = button.previousElementSibling;
+        var hidden = field.type === "password";
+        field.type = hidden ? "text" : "password";
+        button.setAttribute("aria-label", hidden ? "Hide password" : "Show password");
+    });
+});
+
 document.addEventListener("click", function (event) {
+    var signLink = event.target.closest('a[href="signin.html"]');
+    if (signLink) {
+        event.preventDefault();
+        openAuth();
+        return;
+    }
     if (event.target.closest(".menu-toggle")) event.preventDefault();
     document.querySelectorAll(".click-menu[open]").forEach(function (menu) {
         if (!menu.contains(event.target)) menu.removeAttribute("open");
