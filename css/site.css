@@ -2504,6 +2504,121 @@ a.journal-card:hover { transform: translateY(-3px); }
     text-transform: uppercase;
 }
 
+.article-bar .is-chip {
+    height: 34px;
+    padding: 0 .7rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 999px;
+    background: #161616;
+}
+
+.article-tags,
+.article-comments {
+    margin-top: 2.4rem;
+}
+
+.article-tags h2,
+.article-comments h2 {
+    margin: 0 0 1rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.article-tags h2 span,
+.article-comments h2 span {
+    margin-left: .25rem;
+    color: #8a8a8a;
+    font-weight: 700;
+}
+
+.article-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.article-tag-list a {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 .9rem;
+    border-radius: 999px;
+    background: #1c1c1c;
+    color: #d5d5d5;
+    font-size: .9rem;
+}
+
+.article-comment-note {
+    margin: 0 0 1.4rem;
+    color: #cfcfcf;
+    text-align: center;
+    line-height: 1.45;
+}
+
+.article-comment-note a { color: #8eb4ff; }
+
+.article-comment {
+    padding: 1.1rem 0 1rem;
+    border-top: 1px solid #2a2a2a;
+}
+
+.article-comment-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: .7rem;
+    align-items: center;
+    margin-bottom: .7rem;
+}
+
+.article-comment-who strong { display: block; }
+.article-comment-who span,
+.article-comment time {
+    color: #8d8d8d;
+    font-size: .82rem;
+}
+
+.article-comment-more {
+    border: 0;
+    background: transparent;
+    color: #8d8d8d;
+    font: inherit;
+    letter-spacing: .12em;
+    cursor: pointer;
+}
+
+.article-comment p {
+    margin: 0 0 .75rem;
+    color: #d5d5d5;
+    line-height: 1.5;
+}
+
+.article-comment-votes {
+    display: flex;
+    gap: .45rem;
+}
+
+.article-comment-votes button {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    height: 32px;
+    padding: 0 .65rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    background: transparent;
+    color: #cfcfcf;
+    font: inherit;
+    font-size: .82rem;
+    cursor: pointer;
+}
+
+.article-comment-votes svg {
+    width: 16px;
+    height: 16px;
+}
+
 @media (max-width: 700px) {
     .article-split { grid-template-columns: 1fr; }
 }
@@ -3022,8 +3137,27 @@ html.theme-day {
 }
 
 .article-bar { color: var(--muted); }
+.article-bar .is-chip {
+    border-color: var(--line);
+    background: var(--card);
+}
 .article-shot figcaption,
-.article-author span { color: var(--muted); }
+.article-author span,
+.article-tags h2 span,
+.article-comments h2 span,
+.article-comment-who span,
+.article-comment time { color: var(--muted); }
 .article-avatar { background: var(--hover); color: var(--text); }
-#article .article-block p { color: #3a3a3a; }
+#article .article-block p,
+.article-comment p { color: #3a3a3a; }
+.article-tag-list a {
+    background: var(--hover);
+    color: #3a3a3a;
+}
+.article-comment { border-top-color: var(--line); }
+.article-comment-note { color: #4a4a4a; }
+.article-comment-votes button {
+    border-color: var(--line);
+    color: #3a3a3a;
+}
 }
