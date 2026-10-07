@@ -1,3 +1,8 @@
+(function () {
+    var root = document.documentElement;
+    if (localStorage.getItem("janz-theme") === "day") root.classList.add("theme-day");
+})();
+
 var authOverlay = document.createElement("div");
 authOverlay.className = "auth-overlay";
 authOverlay.innerHTML =
@@ -46,6 +51,13 @@ authOverlay.querySelectorAll(".entry-eye").forEach(function (button) {
 });
 
 document.addEventListener("click", function (event) {
+    var themeBtn = event.target.closest(".theme-toggle");
+    if (themeBtn) {
+        var day = document.documentElement.classList.toggle("theme-day");
+        localStorage.setItem("janz-theme", day ? "day" : "night");
+        themeBtn.setAttribute("aria-label", day ? "Night mode" : "Day mode");
+        return;
+    }
     var signLink = event.target.closest('a[href="signin.html"]');
     if (signLink) {
         event.preventDefault();
