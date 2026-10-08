@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites - Janz</title>
+    <link rel="stylesheet" href="css/site.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <header>
+        <div class="site-header">
+            <a class="logo" href="index.html" aria-label="Janz">
+                <span class="logo-mark" aria-hidden="true">J</span>
+                <span class="logo-name">Janz</span>
+            </a>
+
+            <nav aria-label="Main">
+                <div class="nav-drop">
+                    <a class="menu-toggle" href="#">Buy</a>
+                    <div class="menu-panel">
+                        <a href="catalog.html">Coffee</a>
+                        <a href="tea.html">Tea</a>
+                        <a href="chocolate.html">Chocolate and syrups</a>
+                        <a href="sets.html">Sets</a>
+                    </div>
+                </div>
+                <a href="reviews.html">Reviews <span class="nav-count">44,828</span></a>
+                <a href="community.html">Community</a>
+                <a href="journal.html">Journal</a>
+                <div class="nav-drop">
+                    <a href="#">Terms</a>
+                    <div class="menu-panel">
+                        <a href="#">Delivery and payment</a>
+                        <a href="#">Discount system</a>
+                        <a href="#">Refunds</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="header-actions">
+                <details class="search click-menu">
+                    <summary class="icon-btn" aria-label="Search">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    </summary>
+                    <form class="search-panel" data-where="catalog.html">
+                        <label class="search-field">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                            <input type="search" name="q" placeholder="Search" autocomplete="off" />
+                        </label>
+                        <details class="search-where">
+                            <summary>In catalog</summary>
+                            <div class="search-where-list">
+                                <button type="button" class="is-on" data-where="catalog.html">In catalog</button>
+                                <button type="button" data-where="journal.html">In journal</button>
+                            </div>
+                        </details>
+                    </form>
+                </details>
+                <details class="profile click-menu">
+                    <summary class="icon-btn" aria-label="Account">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7.8 16.2a4.4 4.4 0 0 1 8.4 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    </summary>
+                    <div class="profile-panel">
+                        <a href="signin.html">Sign in</a>
+                        <a href="register.html">Register</a>
+                    </div>
+                </details>
+                <a class="icon-btn" href="wishlist.html" aria-label="Wishlist">
+                    <svg viewBox="0 0 24 24"><path d="M12 19s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                </a>
+                <a class="icon-btn" href="#" aria-label="Compare">
+                    <svg viewBox="0 0 24 24"><path d="M12 3v15M8 20h8M4.5 7h15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4.5 7l-2.2 4.2a2.6 2.6 0 0 0 4.4 0zM19.5 7l-2.2 4.2a2.6 2.6 0 0 0 4.4 0z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                </a>
+                <a class="cart-link" href="cart.html" aria-label="Cart, 0 items">
+                    <svg viewBox="0 0 24 24"><path d="M6 7h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 7L5 4H2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="20" r="1.2" fill="currentColor"/><circle cx="17" cy="20" r="1.2" fill="currentColor"/></svg>
+                    <span>0 pcs</span>
+                </a>
+                <button class="icon-btn theme-toggle" type="button" aria-label="Day mode">
+                    <svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v2.2M12 18.8V21M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M3 12h2.2M18.8 12H21M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Favorites and notes come from the database for a signed-in user. Empty state until then. -->
+        <section id="wishlist">
+            <h1>Favorites</h1>
+            <div class="wish-tabs">
+                <button type="button" class="is-on" data-pane="fav" aria-pressed="true">Favorites 0</button>
+                <button type="button" data-pane="notes" aria-pressed="false">Notes 0</button>
+            </div>
+            <div class="wish-pane" data-pane="fav">
+                <div class="wish-empty">
+                    <h2>There is nothing in favorites</h2>
+                    <p>Let’s pick something in the catalog</p>
+                    <a href="catalog.html">To catalog</a>
+                </div>
+            </div>
+            <div class="wish-pane" data-pane="notes" hidden>
+                <div class="wish-empty">
+                    <h2>There is nothing in notes</h2>
+                    <p>Let’s pick something in the catalog</p>
+                    <a href="catalog.html">To catalog</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="site-footer">
+            <div class="footer-brand">
+                <a class="logo" href="index.html" aria-label="Janz">
+                    <span class="logo-mark" aria-hidden="true">J</span>
+                    <span class="logo-name">Janz</span>
+                </a>
+                <p>© 2026 Janz. Materials on this site may be used only with the owner's written permission.</p>
+                <a href="privacy.html">Privacy policy</a>
+            </div>
+            <div class="footer-col">
+                <div class="footer-title">Catalog</div>
+                <a href="catalog.html">Coffee</a>
+                <a href="tea.html">Tea</a>
+                <a href="chocolate.html">Chocolate and syrups</a>
+                <a href="sets.html">Sets</a>
+            </div>
+            <div class="footer-col">
+                <div class="footer-title">Help</div>
+                <a href="community.html">Community</a>
+                <a href="journal.html">Journal</a>
+                <a href="#">Delivery and payment</a>
+                <a href="#">Discount system</a>
+                <a href="#">Refunds</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-contacts">
+                <div class="footer-title">Contacts</div>
+                <a class="footer-phone" href="tel:+994702175557">+994 70 217 55 57</a>
+                <p>Nesimi, Masud Davudoglu 171</p>
+                <div class="footer-social">
+                    <a href="mailto:janahmadap@code.edu.az" aria-label="Email">
+                        <svg viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 7l8.5 6.5L20.5 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="https://instagram.com/prglnv" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.1" cy="6.9" r=".9" fill="currentColor"/></svg>
+                    </a>
+                    <a href="https://wa.me/994702175557" aria-label="WhatsApp">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.2a7.6 7.6 0 0 0-6.6 11.3L4.4 19.6l4.2-1.1A7.6 7.6 0 1 0 12 4.2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.2 9.4c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4.2.5.6 1.5.6 1.6s0 .3-.2.5l-.3.4c-.1.1-.2.3 0 .5.2.3.7 1.1 1.5 1.5.6.3 1 .4 1.2.2l.5-.6c.1-.2.3-.1.5-.1.6.2 1.3.6 1.4.8.1.2.1.7-.2 1.1-.2.4-1.2.8-1.7.7-.5 0-1.1-.1-2.4-.9-1.5-.9-2.5-2.3-2.6-2.5-.2-.3-.8-1.1-.8-2.1s.6-1.5.8-1.7z" fill="currentColor"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/site.js"></script>
+</body>
+</html>

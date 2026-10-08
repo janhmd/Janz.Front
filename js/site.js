@@ -34,7 +34,11 @@ authOverlay.addEventListener("click", function (event) {
 });
 
 document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") closeAuth();
+    if (event.key !== "Escape") return;
+    closeAuth();
+    document.querySelectorAll(".search[open], .search-where[open]").forEach(function (menu) {
+        menu.removeAttribute("open");
+    });
 });
 
 authOverlay.querySelector("form").addEventListener("submit", function (event) {
@@ -67,6 +71,51 @@ document.addEventListener("click", function (event) {
     if (event.target.closest(".menu-toggle")) event.preventDefault();
     document.querySelectorAll(".click-menu[open]").forEach(function (menu) {
         if (!menu.contains(event.target)) menu.removeAttribute("open");
+    });
+    document.querySelectorAll(".search-where[open]").forEach(function (menu) {
+        if (!menu.contains(event.target)) menu.removeAttribute("open");
+    });
+});
+
+document.querySelectorAll(".search").forEach(function (search) {
+    var form = search.querySelector(".search-panel");
+    var whereLabel = search.querySelector(".search-where > summary");
+    var input = search.querySelector("input[name='q']");
+    search.addEventListener("toggle", function () {
+        if (search.open && input) input.focus();
+    });
+    search.querySelectorAll(".search-where-list button").forEach(function (option) {
+        option.addEventListener("click", function () {
+            search.querySelectorAll(".search-where-list button").forEach(function (item) {
+                item.classList.toggle("is-on", item === option);
+            });
+            form.setAttribute("data-where", option.getAttribute("data-where"));
+            whereLabel.textContent = option.textContent;
+            search.querySelector(".search-where").removeAttribute("open");
+        });
+    });
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var where = form.getAttribute("data-where") || "catalog.html";
+        var query = input.value.trim();
+        window.location.href = query ? where + "?q=" + encodeURIComponent(query) : where;
+    });
+});
+
+document.querySelectorAll(".wish-tabs").forEach(function (tabs) {
+    var buttons = tabs.querySelectorAll("button");
+    var panes = document.querySelectorAll(".wish-pane");
+    buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            buttons.forEach(function (item) {
+                var on = item === button;
+                item.classList.toggle("is-on", on);
+                item.setAttribute("aria-pressed", on ? "true" : "false");
+            });
+            panes.forEach(function (pane) {
+                pane.hidden = pane.getAttribute("data-pane") !== button.getAttribute("data-pane");
+            });
+        });
     });
 });
 
