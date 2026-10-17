@@ -1979,7 +1979,8 @@ html.theme-day .theme-toggle { color: var(--ink); }
 #journal,
 #article,
 #wishlist,
-#cart {
+#cart,
+#account {
     padding: 2rem 2.4rem 3rem;
 }
 
@@ -2821,6 +2822,104 @@ a.journal-card:hover { transform: translateY(-3px); }
     text-transform: uppercase;
 }
 
+.cabinet-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2.4rem;
+}
+
+#account h1 {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.cabinet-balance {
+    display: flex;
+    align-items: baseline;
+    gap: .7rem;
+}
+
+.cabinet-balance a {
+    color: #8a8a8a;
+    font-size: .92rem;
+}
+
+.cabinet-balance strong {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.cabinet-row {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    gap: 2rem;
+    min-height: 22rem;
+}
+
+.cabinet-nav {
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+}
+
+.cabinet-nav a { color: #8a8a8a; }
+
+.cabinet-nav a.is-on {
+    color: inherit;
+    font-weight: 800;
+}
+
+.cabinet-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cabinet-empty {
+    max-width: 28rem;
+    text-align: center;
+}
+
+.cabinet-empty h2 {
+    margin: 0 0 .7rem;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.cabinet-empty p {
+    margin: 0 0 1.2rem;
+    color: #8d8d8d;
+}
+
+.cabinet-empty a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 1.35rem;
+    border-radius: 999px;
+    background: #fff;
+    color: #111;
+    font-size: .82rem;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+    .cabinet-row { grid-template-columns: 1fr; }
+    .cabinet-top { flex-wrap: wrap; }
+}
+
 .cart-empty { margin-bottom: 3.2rem; }
 
 .cart-empty h1 {
@@ -2996,7 +3095,8 @@ a.journal-card:hover { transform: translateY(-3px); }
     #journal,
     #article,
     #wishlist,
-    #cart { padding-left: 1.2rem; padding-right: 1.2rem; }
+    #cart,
+    #account { padding-left: 1.2rem; padding-right: 1.2rem; }
     #hero { padding-top: 2rem; padding-bottom: 2rem; }
     .hero-row,
     .week-row,
@@ -3396,8 +3496,13 @@ html.theme-day {
 
 .wish-empty p { color: var(--muted); }
 
-.wish-empty a {
+.wish-empty a,
+.cabinet-empty a {
     background: #111;
     color: #fff;
 }
+
+.cabinet-nav a,
+.cabinet-balance a,
+.cabinet-empty p { color: var(--muted); }
 }
