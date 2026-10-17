@@ -102,6 +102,33 @@ document.querySelectorAll(".search").forEach(function (search) {
     });
 });
 
+document.querySelectorAll(".cabinet-nav").forEach(function (nav) {
+    var tabs = nav.querySelectorAll(".cabinet-tab");
+    var panes = document.querySelectorAll(".cabinet-pane");
+    function showPane(name) {
+        tabs.forEach(function (tab) {
+            tab.classList.toggle("is-on", tab.getAttribute("data-pane") === name);
+        });
+        panes.forEach(function (pane) {
+            pane.hidden = pane.getAttribute("data-pane") !== name;
+        });
+    }
+    tabs.forEach(function (tab) {
+        tab.addEventListener("click", function (event) {
+            event.preventDefault();
+            var name = tab.getAttribute("data-pane");
+            showPane(name);
+            if (history.replaceState) {
+                history.replaceState(null, "", "#" + name);
+            }
+        });
+    });
+    var hash = (location.hash || "").replace("#", "");
+    if (hash && nav.querySelector('.cabinet-tab[data-pane="' + hash + '"]')) {
+        showPane(hash);
+    }
+});
+
 document.querySelectorAll(".wish-tabs").forEach(function (tabs) {
     var buttons = tabs.querySelectorAll("button");
     var panes = document.querySelectorAll(".wish-pane");

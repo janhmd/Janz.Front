@@ -2847,7 +2847,10 @@ a.journal-card:hover { transform: translateY(-3px); }
 .cabinet-balance a {
     color: #8a8a8a;
     font-size: .92rem;
+    transition: color .2s ease;
 }
+
+.cabinet-balance a:hover { color: inherit; }
 
 .cabinet-balance strong {
     font-size: 1.15rem;
@@ -2869,17 +2872,95 @@ a.journal-card:hover { transform: translateY(-3px); }
     gap: .55rem;
 }
 
-.cabinet-nav a { color: #8a8a8a; }
+.cabinet-nav a {
+    color: #8a8a8a;
+    width: fit-content;
+    transition: color .2s ease;
+}
+
+.cabinet-nav a:hover { color: inherit; }
 
 .cabinet-nav a.is-on {
     color: inherit;
     font-weight: 800;
 }
 
-.cabinet-main {
+.cabinet-pane:not([hidden]) {
+    animation: cabinet-pane-in .35s ease;
+}
+
+.cabinet-pane[data-pane="orders"],
+.cabinet-pane[data-pane="notifications"],
+.cabinet-pane[data-pane="community"],
+.cabinet-pane[data-pane="details"],
+.cabinet-pane[data-pane="subscriptions"],
+.cabinet-pane[data-pane="journal"],
+.cabinet-pane[data-pane="blacklist"] {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 22rem;
+}
+
+.cabinet-pane[hidden] { display: none; }
+
+.cabinet-pane-title {
+    margin: 0 0 1.4rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.cabinet-stats {
+    position: relative;
+    min-height: 14rem;
+}
+
+.cabinet-stats-blur {
+    filter: blur(3px);
+    opacity: .85;
+    pointer-events: none;
+    user-select: none;
+}
+
+.cabinet-stats-blur article {
+    animation: cabinet-card-float 5.2s ease-in-out infinite;
+}
+
+.cabinet-stats-blur article:nth-child(2) { animation-delay: -1.6s; }
+.cabinet-stats-blur article:nth-child(3) { animation-delay: -3.2s; }
+
+.cabinet-stats-lock {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    margin: 0;
+    padding: .85rem 1.35rem;
+    border-radius: 999px;
+    background: #fff;
+    color: #111;
+    font-size: .92rem;
+    white-space: nowrap;
+    animation: cabinet-lock-pulse 2.6s ease-in-out infinite;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cabinet-stats-lock:hover {
+    animation: none;
+    transform: translate(-50%, calc(-50% - 3px));
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+}
+
+.cabinet-stats-lock svg {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
 }
 
 .cabinet-empty {
@@ -2913,11 +2994,33 @@ a.journal-card:hover { transform: translateY(-3px); }
     font-weight: 800;
     letter-spacing: .05em;
     text-transform: uppercase;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cabinet-empty a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .22);
+}
+
+@keyframes cabinet-pane-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes cabinet-card-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes cabinet-lock-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.035); }
 }
 
 @media (max-width: 700px) {
     .cabinet-row { grid-template-columns: 1fr; }
     .cabinet-top { flex-wrap: wrap; }
+    .cabinet-stats-lock { white-space: normal; width: calc(100% - 2rem); justify-content: center; }
 }
 
 .cart-empty { margin-bottom: 3.2rem; }
@@ -3070,8 +3173,15 @@ a.journal-card:hover { transform: translateY(-3px); }
     .thumbs button,
     .formats button,
     .coffee-tabs button,
-    .roast-nav button { transition: none; }
-    .catalog-tags .tag-minute { animation: none; }
+    .roast-nav button,
+    .cabinet-nav a,
+    .cabinet-balance a,
+    .cabinet-empty a,
+    .cabinet-stats-lock { transition: none; }
+    .catalog-tags .tag-minute,
+    .cabinet-pane:not([hidden]),
+    .cabinet-stats-blur article,
+    .cabinet-stats-lock { animation: none; }
 }
 
 @media (max-width: 1100px) {
@@ -3505,4 +3615,9 @@ html.theme-day {
 .cabinet-nav a,
 .cabinet-balance a,
 .cabinet-empty p { color: var(--muted); }
+
+.cabinet-stats-lock {
+    background: #111;
+    color: #fff;
+}
 }
