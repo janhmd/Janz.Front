@@ -129,6 +129,32 @@ document.querySelectorAll(".cabinet-nav").forEach(function (nav) {
     }
 });
 
+document.querySelectorAll(".notice-tabs").forEach(function (tabs) {
+    var buttons = tabs.querySelectorAll("button");
+    var items = document.querySelectorAll(".notice-list .notice");
+    var empty = document.querySelector(".notice-empty");
+    function showKind(kind) {
+        var visible = 0;
+        items.forEach(function (item) {
+            var on = kind === "all" || item.getAttribute("data-kind") === kind;
+            item.hidden = !on;
+            if (on) visible += 1;
+        });
+        if (empty) empty.hidden = visible > 0;
+    }
+    buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var kind = button.getAttribute("data-kind");
+            buttons.forEach(function (item) {
+                var on = item === button;
+                item.classList.toggle("is-on", on);
+                item.setAttribute("aria-pressed", on ? "true" : "false");
+            });
+            showKind(kind);
+        });
+    });
+});
+
 document.querySelectorAll(".wish-tabs").forEach(function (tabs) {
     var buttons = tabs.querySelectorAll("button");
     var panes = document.querySelectorAll(".wish-pane");

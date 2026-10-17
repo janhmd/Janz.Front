@@ -107,9 +107,79 @@
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="notifications" hidden>
-                        <div class="cabinet-empty">
+                        <div class="notice-bar">
+                            <div class="notice-tabs">
+                                <button type="button" class="is-on" data-kind="all" aria-pressed="true">All</button>
+                                <button type="button" data-kind="shop" aria-pressed="false">Shop</button>
+                                <button type="button" data-kind="journal" aria-pressed="false">Journal</button>
+                                <button type="button" data-kind="community" aria-pressed="false">Community</button>
+                                <button type="button" data-kind="subscription" aria-pressed="false">Subscription</button>
+                            </div>
+                        </div>
+                        <div class="notice-list">
+                            <article class="notice" data-kind="community">
+                                <div class="notice-head">
+                                    <span class="notice-source">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="10" r="2.1" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15.4" cy="10.6" r="1.7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.6 16.4a3.6 3.6 0 0 1 6.8 0M13.2 16.6a3 3 0 0 1 5.2 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                                        Community
+                                    </span>
+                                    <time datetime="2026-10-17T04:33">17 October 2026, 04:33</time>
+                                </div>
+                                <p>@Our news recently published a new post.</p>
+                                <a class="notice-post" href="community.html">
+                                    <img src="images/roast.png" alt="" />
+                                    <strong>This is true — we have our own coffee community</strong>
+                                </a>
+                            </article>
+                            <article class="notice" data-kind="shop">
+                                <div class="notice-head">
+                                    <span class="notice-source">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1.2 11H5.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 8V6.4A4 4 0 0 1 16 6.4V8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                                        Shop
+                                    </span>
+                                    <time datetime="2026-10-17T00:34">17 October 2026, 00:34</time>
+                                </div>
+                                <p>New coffees are in the catalog this week — Floral, Guatemala Santiago and Aroma kit.</p>
+                                <div class="notice-products">
+                                    <article>
+                                        <div class="product">
+                                            <div class="product-top"><p>For espresso</p></div>
+                                            <h3><a class="product-link" href="product.html">Floral</a></h3>
+                                            <div class="kind">Blend</div>
+                                            <img class="product-photo" src="images/floral.png" alt="Floral espresso coffee" />
+                                            <div class="price-row">
+                                                <button type="button" class="price"><strong>₼29.90</strong></button>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="product">
+                                            <div class="product-top"><p>For filter</p></div>
+                                            <h3><a class="product-link" href="catalog.html">Guatemala Santiago</a></h3>
+                                            <div class="kind">Washed</div>
+                                            <img class="product-photo" src="images/guatemala.png" alt="Guatemala Santiago filter coffee" />
+                                            <div class="price-row">
+                                                <button type="button" class="price"><strong>₼27.50</strong></button>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="product">
+                                            <div class="product-top"><p>Set</p></div>
+                                            <h3><a class="product-link" href="sets.html">Aroma kit</a></h3>
+                                            <div class="kind">Gift</div>
+                                            <img class="product-photo" src="images/aroma-kit.png" alt="Aroma kit" />
+                                            <div class="price-row">
+                                                <button type="button" class="price"><strong>₼45.00</strong></button>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="cabinet-empty notice-empty" hidden>
                             <h2>No notifications yet</h2>
-                            <p>Order updates and news will appear here</p>
+                            <p>News from the shop, journal and community will appear here</p>
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="community" hidden>
