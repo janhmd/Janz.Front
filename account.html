@@ -343,8 +343,8 @@
                                     </div>
                                 </div>
                                 <div class="profile-follow">
-                                    <div><b>0</b><span>subscribers</span></div>
-                                    <div><b>0</b><span>subscriptions</span></div>
+                                    <button type="button" data-follow="subscribers"><b>0</b><span>subscribers</span></button>
+                                    <button type="button" data-follow="subscriptions"><b>0</b><span>subscriptions</span></button>
                                 </div>
                                 <p class="profile-bio">Tell about yourself</p>
                                 <button type="button" class="profile-edit">Edit</button>
@@ -388,9 +388,38 @@
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="details" hidden>
-                        <div class="cabinet-empty">
-                            <h2>No details yet</h2>
-                            <p>Name, phone and email will appear after you sign in</p>
+                        <div class="details-board">
+                            <div class="details-who">
+                                <label class="details-avatar">
+                                    <input type="file" accept="image/*" hidden />
+                                    <span class="details-avatar-letter">J</span>
+                                    <img class="details-avatar-photo" alt="" hidden />
+                                    <span class="details-avatar-change">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.8 7.2h3.1l1.3-2h5.6l1.3 2h3.1v11.2H4.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.1" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                                        Change
+                                    </span>
+                                </label>
+                                <div>
+                                    <strong class="details-name">Janahmad Piroghlanov</strong>
+                                    <p class="details-phone">+994 70 217 55 57</p>
+                                    <p class="details-email">janahmadap@code.edu.az</p>
+                                </div>
+                            </div>
+                            <button type="button" class="details-edit">Edit details</button>
+                            <h2>Addresses</h2>
+                            <div class="details-address-list"></div>
+                            <button type="button" class="details-add">
+                                <span aria-hidden="true">+</span>
+                                New address
+                            </button>
+                            <h2>Cards</h2>
+                            <div class="details-card-row">
+                                <div class="details-card-list"></div>
+                                <button type="button" class="details-add details-add-card">
+                                    <span aria-hidden="true">+</span>
+                                    New card
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="subscriptions" hidden>
@@ -506,6 +535,145 @@
         </div>
     </footer>
 
+    <div class="edit-overlay">
+        <form class="edit-modal" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+            <h2 id="edit-title">Edit details</h2>
+            <label class="edit-field">
+                <span>First and last name</span>
+                <input type="text" name="fullname" value="Janahmad Piroghlanov" autocomplete="name" />
+            </label>
+            <label class="edit-field">
+                <span>Phone</span>
+                <div class="edit-phone">
+                    <select name="phoneCode" aria-label="Country code">
+                        <option value="+994" selected>+994</option>
+                        <option value="+90">+90</option>
+                        <option value="+7">+7</option>
+                    </select>
+                    <input type="tel" name="phone" value="70 217 55 57" autocomplete="tel-national" />
+                    <button type="button" class="edit-phone-clear" aria-label="Clear phone">×</button>
+                </div>
+            </label>
+            <div class="edit-fold">
+                <button type="button" class="edit-fold-toggle">Account</button>
+                <div class="edit-fold-body" hidden>
+                    <label class="edit-field">
+                        <span>Email</span>
+                        <input type="email" name="email" value="janahmadap@code.edu.az" autocomplete="email" />
+                    </label>
+                    <div class="edit-field">
+                        <span>Password</span>
+                        <div class="edit-pass">
+                            <input type="password" name="password" value="password12" readonly />
+                            <button type="button" class="edit-pass-change">Change</button>
+                        </div>
+                    </div>
+                    <label class="edit-field">
+                        <span>Public username</span>
+                        <input type="text" name="username" placeholder="Public username" autocomplete="username" />
+                    </label>
+                    <p class="edit-hint">Only A–Z, 0–9, _, - and . are allowed. The name must be unique and 3 to 30 characters.</p>
+                    <p class="edit-hint">The short name will be used as part of your page address.</p>
+                </div>
+            </div>
+            <div class="edit-fold">
+                <button type="button" class="edit-fold-toggle">Organization</button>
+                <div class="edit-fold-body" hidden>
+                    <label class="edit-field">
+                        <span>Full organization name</span>
+                        <input type="text" name="org" placeholder="Full organization name" />
+                    </label>
+                    <label class="edit-field">
+                        <span>Legal address</span>
+                        <input type="text" name="orgAddress" placeholder="City, street, house, apartment" />
+                    </label>
+                    <div class="edit-tax">
+                        <label class="edit-field">
+                            <span>VOEN</span>
+                            <input type="text" name="voen" placeholder="VOEN" />
+                        </label>
+                        <label class="edit-field">
+                            <span>Tax number</span>
+                            <input type="text" name="tax" placeholder="Tax number" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="edit-save">Save</button>
+            <button type="button" class="edit-cancel">Cancel</button>
+        </form>
+    </div>
+    <div class="edit-overlay address-overlay">
+        <form class="edit-modal" role="dialog" aria-modal="true" aria-labelledby="address-title">
+            <h2 id="address-title">Add address</h2>
+            <label class="edit-field">
+                <span>Name</span>
+                <input type="text" name="title" placeholder="For example, home or work" />
+            </label>
+            <label class="edit-field">
+                <span>City</span>
+                <input type="text" name="city" placeholder="Enter city" />
+            </label>
+            <label class="edit-field">
+                <span>Street, house</span>
+                <input type="text" name="street" placeholder="Enter the address" />
+            </label>
+            <div class="edit-tax">
+                <label class="edit-field">
+                    <span>Apartment or office</span>
+                    <input type="text" name="apt" placeholder="Number" />
+                </label>
+                <label class="edit-field">
+                    <span>Postcode</span>
+                    <input type="text" name="postcode" placeholder="Postcode" />
+                </label>
+            </div>
+            <label class="edit-check">
+                <input type="checkbox" name="primary" />
+                Make primary
+            </label>
+            <button type="submit" class="edit-save">Save</button>
+            <button type="button" class="edit-cancel">Cancel</button>
+        </form>
+    </div>
+    <div class="edit-overlay card-overlay">
+        <form class="edit-modal" role="dialog" aria-modal="true" aria-labelledby="card-title">
+            <h2 id="card-title">Add card</h2>
+            <label class="edit-field">
+                <span>Name on card</span>
+                <input type="text" name="holder" placeholder="Name on card" autocomplete="cc-name" />
+            </label>
+            <label class="edit-field">
+                <span>Card number</span>
+                <input type="text" name="number" inputmode="numeric" placeholder="ACCT-000015" autocomplete="cc-number" maxlength="19" />
+            </label>
+            <div class="edit-tax">
+                <label class="edit-field">
+                    <span>Expiry</span>
+                    <input type="text" name="expiry" inputmode="numeric" placeholder="MM / YY" autocomplete="cc-exp" maxlength="7" />
+                </label>
+                <label class="edit-field">
+                    <span>CVC</span>
+                    <input type="password" name="cvc" inputmode="numeric" placeholder="CVC" autocomplete="cc-csc" maxlength="4" />
+                </label>
+            </div>
+            <label class="edit-check">
+                <input type="checkbox" name="primary" />
+                Make primary
+            </label>
+            <button type="submit" class="edit-save">Save</button>
+            <button type="button" class="edit-cancel">Cancel</button>
+        </form>
+    </div>
+    <div class="follow-overlay">
+        <div class="follow-modal" role="dialog" aria-modal="true" aria-labelledby="follow-title">
+            <h2 id="follow-title">My subscribers</h2>
+            <label class="follow-search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <input type="search" placeholder="Search subscribers" autocomplete="off" />
+            </label>
+        </div>
+    </div>
     <script src="js/site.js"></script>
 </body>
 </html>

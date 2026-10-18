@@ -29,6 +29,235 @@ function closeAuth() {
     authOverlay.classList.remove("is-on");
 }
 
+var followOverlay = document.querySelector(".follow-overlay");
+var followTitle = followOverlay ? followOverlay.querySelector("#follow-title") : null;
+var followSearch = followOverlay ? followOverlay.querySelector(".follow-search input") : null;
+var followCopy = {
+    subscribers: { title: "My subscribers", search: "Search subscribers" },
+    subscriptions: { title: "My subscriptions", search: "Search subscriptions" }
+};
+
+function openFollow(kind) {
+    if (!followOverlay) return;
+    var copy = followCopy[kind] || followCopy.subscribers;
+    if (followTitle) followTitle.textContent = copy.title;
+    if (followSearch) {
+        followSearch.placeholder = copy.search;
+        followSearch.value = "";
+    }
+    followOverlay.classList.add("is-on");
+    if (followSearch) followSearch.focus();
+}
+
+function closeFollow() {
+    if (followOverlay) followOverlay.classList.remove("is-on");
+}
+
+if (followOverlay) {
+    followOverlay.addEventListener("click", function (event) {
+        if (event.target === followOverlay) closeFollow();
+    });
+}
+
+document.querySelectorAll("[data-follow]").forEach(function (button) {
+    button.addEventListener("click", function () {
+        openFollow(button.getAttribute("data-follow"));
+    });
+});
+
+var editOverlay = document.querySelector(".edit-overlay");
+var editForm = editOverlay ? editOverlay.querySelector(".edit-modal") : null;
+
+function closeEdit() {
+    if (!editOverlay) return;
+    editOverlay.classList.remove("is-on");
+    editOverlay.querySelectorAll(".edit-fold").forEach(function (fold) {
+        fold.classList.remove("is-on");
+        var body = fold.querySelector(".edit-fold-body");
+        if (body) body.hidden = true;
+    });
+}
+
+function openEdit() {
+    if (!editOverlay || !editForm) return;
+    var name = document.querySelector(".details-name");
+    var phone = document.querySelector(".details-phone");
+    var email = document.querySelector(".details-email");
+    if (name) editForm.fullname.value = name.textContent.trim();
+    if (email) editForm.email.value = email.textContent.trim();
+    if (phone) {
+        var raw = phone.textContent.trim();
+        var code = editForm.phoneCode.value;
+        if (raw.indexOf("+994") === 0) code = "+994";
+        else if (raw.indexOf("+90") === 0) code = "+90";
+        else if (raw.indexOf("+7") === 0) code = "+7";
+        editForm.phoneCode.value = code;
+        editForm.phone.value = raw.replace(code, "").trim();
+    }
+    editOverlay.classList.add("is-on");
+}
+
+if (editOverlay && editForm) {
+    document.querySelectorAll(".details-edit").forEach(function (button) {
+        button.addEventListener("click", openEdit);
+    });
+    editOverlay.addEventListener("click", function (event) {
+        if (event.target === editOverlay) closeEdit();
+    });
+    editForm.querySelector(".edit-cancel").addEventListener("click", closeEdit);
+    editForm.querySelector(".edit-phone-clear").addEventListener("click", function () {
+        editForm.phone.value = "";
+        editForm.phone.focus();
+    });
+    editForm.querySelector(".edit-pass-change").addEventListener("click", function () {
+        var field = editForm.password;
+        field.readOnly = false;
+        field.value = "";
+        field.focus();
+    });
+    editForm.querySelectorAll(".edit-fold-toggle").forEach(function (button) {
+        button.addEventListener("click", function () {
+            var fold = button.parentElement;
+            var body = fold.querySelector(".edit-fold-body");
+            var open = fold.classList.toggle("is-on");
+            body.hidden = !open;
+        });
+    });
+    editForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var name = document.querySelector(".details-name");
+        var phone = document.querySelector(".details-phone");
+        var email = document.querySelector(".details-email");
+        if (name) name.textContent = editForm.fullname.value.trim() || name.textContent;
+        if (phone) {
+            var number = editForm.phone.value.trim();
+            phone.textContent = number ? editForm.phoneCode.value + " " + number : editForm.phoneCode.value;
+        }
+        if (email) email.textContent = editForm.email.value.trim() || email.textContent;
+        closeEdit();
+    });
+}
+
+var addressOverlay = document.querySelector(".address-overlay");
+var addressForm = addressOverlay ? addressOverlay.querySelector(".edit-modal") : null;
+var addressList = document.querySelector(".details-address-list");
+
+function closeAddress() {
+    if (!addressOverlay) return;
+    addressOverlay.classList.remove("is-on");
+    if (addressForm) addressForm.reset();
+}
+
+function openAddress() {
+    if (!addressOverlay) return;
+    if (addressForm) addressForm.reset();
+    addressOverlay.classList.add("is-on");
+    var first = addressForm && addressForm.title;
+    if (first) first.focus();
+}
+
+if (addressOverlay && addressForm) {
+    document.querySelectorAll(".details-add:not(.details-add-card)").forEach(function (button) {
+        button.addEventListener("click", openAddress);
+    });
+    addressOverlay.addEventListener("click", function (event) {
+        if (event.target === addressOverlay) closeAddress();
+    });
+    addressForm.querySelector(".edit-cancel").addEventListener("click", closeAddress);
+    addressForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var title = addressForm.title.value.trim() || "Address";
+        var city = addressForm.city.value.trim();
+        var street = addressForm.street.value.trim();
+        var apt = addressForm.apt.value.trim();
+        var post = addressForm.postcode.value.trim();
+        var line = [street, apt, city, post].filter(Boolean).join(", ");
+        if (!line) return;
+        if (addressForm.primary.checked && addressList) {
+            addressList.querySelectorAll("em").forEach(function (mark) { mark.remove(); });
+        }
+        var card = document.createElement("article");
+        card.className = "details-address-card";
+        var head = document.createElement("strong");
+        head.textContent = title;
+        var text = document.createElement("p");
+        text.textContent = line;
+        card.appendChild(head);
+        card.appendChild(text);
+        if (addressForm.primary.checked) {
+            var mark = document.createElement("em");
+            mark.textContent = "Primary";
+            card.appendChild(mark);
+        }
+        if (addressList) addressList.appendChild(card);
+        closeAddress();
+    });
+}
+
+var cardOverlay = document.querySelector(".card-overlay");
+var cardForm = cardOverlay ? cardOverlay.querySelector(".edit-modal") : null;
+var cardList = document.querySelector(".details-card-list");
+
+function closeCard() {
+    if (!cardOverlay) return;
+    cardOverlay.classList.remove("is-on");
+    if (cardForm) cardForm.reset();
+}
+
+function openCard() {
+    if (!cardOverlay) return;
+    if (cardForm) cardForm.reset();
+    cardOverlay.classList.add("is-on");
+    if (cardForm && cardForm.holder) cardForm.holder.focus();
+}
+
+if (cardOverlay && cardForm) {
+    document.querySelectorAll(".details-add-card").forEach(function (button) {
+        button.addEventListener("click", openCard);
+    });
+    cardOverlay.addEventListener("click", function (event) {
+        if (event.target === cardOverlay) closeCard();
+    });
+    cardForm.querySelector(".edit-cancel").addEventListener("click", closeCard);
+    cardForm.number.addEventListener("input", function () {
+        var digits = cardForm.number.value.replace(/\D/g, "").slice(0, 16);
+        cardForm.number.value = digits.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+    });
+    cardForm.expiry.addEventListener("input", function () {
+        var digits = cardForm.expiry.value.replace(/\D/g, "").slice(0, 4);
+        cardForm.expiry.value = digits.length > 2 ? digits.slice(0, 2) + " / " + digits.slice(2) : digits;
+    });
+    cardForm.cvc.addEventListener("input", function () {
+        cardForm.cvc.value = cardForm.cvc.value.replace(/\D/g, "").slice(0, 4);
+    });
+    cardForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var digits = cardForm.number.value.replace(/\D/g, "");
+        if (digits.length < 16) return;
+        var last = digits.slice(-4);
+        var holder = cardForm.holder.value.trim() || "Card";
+        var expiry = cardForm.expiry.value.trim();
+        if (cardForm.primary.checked && cardList) {
+            cardList.querySelectorAll("em").forEach(function (mark) { mark.remove(); });
+        }
+        var item = document.createElement("article");
+        item.className = "details-card-item";
+        var num = document.createElement("strong");
+        num.textContent = "•••• " + last;
+        var who = document.createElement("p");
+        who.textContent = expiry ? holder + " · " + expiry : holder;
+        item.appendChild(num);
+        item.appendChild(who);
+        if (cardForm.primary.checked) {
+            var mark = document.createElement("em");
+            mark.textContent = "Primary";
+            item.appendChild(mark);
+        }
+        if (cardList) cardList.appendChild(item);
+        closeCard();
+    });
+}
+
 authOverlay.addEventListener("click", function (event) {
     if (event.target === authOverlay) closeAuth();
 });
@@ -36,6 +265,10 @@ authOverlay.addEventListener("click", function (event) {
 document.addEventListener("keydown", function (event) {
     if (event.key !== "Escape") return;
     closeAuth();
+    closeFollow();
+    closeEdit();
+    closeAddress();
+    closeCard();
     document.querySelectorAll(".search[open], .search-where[open]").forEach(function (menu) {
         menu.removeAttribute("open");
     });
@@ -485,6 +718,24 @@ document.querySelectorAll(".profile-tag-pick").forEach(function (pick) {
             pick.classList.remove("is-on");
             drop.hidden = true;
         }
+    });
+});
+
+document.querySelectorAll(".details-avatar").forEach(function (box) {
+    var field = box.querySelector('input[type="file"]');
+    var photo = box.querySelector(".details-avatar-photo");
+    var letter = box.querySelector(".details-avatar-letter");
+    if (!field || !photo) return;
+    field.addEventListener("change", function () {
+        var file = field.files && field.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+            photo.src = reader.result;
+            photo.hidden = false;
+            if (letter) letter.hidden = true;
+        };
+        reader.readAsDataURL(file);
     });
 });
 
