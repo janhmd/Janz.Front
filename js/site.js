@@ -258,6 +258,139 @@ if (cardOverlay && cardForm) {
     });
 }
 
+var cookOverlay = document.querySelector(".cook-overlay");
+var cookForm = cookOverlay ? cookOverlay.querySelector(".cook-modal") : null;
+var cookList = document.querySelector(".profile-cook-list");
+var cookOther = cookForm ? cookForm.querySelector(".cook-other") : null;
+var cookSaved = [];
+var cookOtherText = "";
+
+function cookOptionOn(button) {
+    return button.classList.contains("is-on");
+}
+
+function showCookOther() {
+    if (!cookForm || !cookOther) return;
+    var other = cookForm.querySelector('.cook-option[data-name="Other"]');
+    var on = other && cookOptionOn(other);
+    cookOther.hidden = !on;
+    if (on) {
+        cookForm.other.value = cookOtherText;
+        cookForm.other.focus();
+    }
+}
+
+function fillCookOptions() {
+    if (!cookForm) return;
+    cookForm.querySelectorAll(".cook-option").forEach(function (button) {
+        var name = button.getAttribute("data-name");
+        button.classList.toggle("is-on", cookSaved.indexOf(name) !== -1);
+    });
+    if (cookForm.other) cookForm.other.value = cookOtherText;
+    showCookOther();
+}
+
+function renderCookList() {
+    if (!cookList || !cookForm) return;
+    cookList.innerHTML = "";
+    cookSaved.forEach(function (name) {
+        var option = cookForm.querySelector('.cook-option[data-name="' + name + '"]');
+        var icon = option ? option.querySelector("svg") : null;
+        var title = name === "Other" && cookOtherText ? cookOtherText : name;
+        var card = document.createElement("article");
+        card.className = "profile-cook-item";
+        if (icon) {
+            card.appendChild(icon.cloneNode(true));
+        } else {
+            var plus = document.createElement("span");
+            plus.className = "profile-cook-plus";
+            plus.textContent = "+";
+            card.appendChild(plus);
+        }
+        var body = document.createElement("div");
+        var strong = document.createElement("strong");
+        strong.textContent = title;
+        var link = document.createElement("a");
+        link.href = "#";
+        link.textContent = "Open the guide";
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+        });
+        body.appendChild(strong);
+        body.appendChild(link);
+        card.appendChild(body);
+        cookList.appendChild(card);
+    });
+}
+
+function closeCook() {
+    if (!cookOverlay) return;
+    cookOverlay.classList.remove("is-on");
+}
+
+function openCook() {
+    if (!cookOverlay || !cookForm) return;
+    fillCookOptions();
+    cookOverlay.classList.add("is-on");
+}
+
+if (cookOverlay && cookForm) {
+    document.querySelectorAll(".profile-cook-edit").forEach(function (button) {
+        button.addEventListener("click", openCook);
+    });
+    cookOverlay.addEventListener("click", function (event) {
+        if (event.target === cookOverlay) closeCook();
+    });
+    cookForm.querySelector(".edit-cancel").addEventListener("click", closeCook);
+    cookForm.querySelectorAll(".cook-option").forEach(function (button) {
+        button.addEventListener("click", function () {
+            button.classList.toggle("is-on");
+            if (button.getAttribute("data-name") === "Other") showCookOther();
+        });
+    });
+    cookForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        cookSaved = [];
+        cookForm.querySelectorAll(".cook-option.is-on").forEach(function (button) {
+            cookSaved.push(button.getAttribute("data-name"));
+        });
+        cookOtherText = cookForm.other ? cookForm.other.value.trim() : "";
+        renderCookList();
+        closeCook();
+    });
+}
+
+var aboutBox = document.querySelector(".profile-about");
+var aboutBio = aboutBox ? aboutBox.querySelector(".profile-bio") : null;
+var aboutEdit = aboutBox ? aboutBox.querySelector(".profile-edit") : null;
+var aboutForm = aboutBox ? aboutBox.querySelector(".profile-bio-form") : null;
+var aboutEmpty = "Tell about yourself";
+
+function closeAbout() {
+    if (!aboutBox || !aboutForm) return;
+    aboutBox.classList.remove("is-on");
+    aboutForm.hidden = true;
+}
+
+function openAbout() {
+    if (!aboutBox || !aboutForm || !aboutBio) return;
+    var now = aboutBio.textContent.trim();
+    aboutForm.bio.value = now === aboutEmpty ? "" : now;
+    aboutBox.classList.add("is-on");
+    aboutForm.hidden = false;
+    aboutForm.bio.focus();
+}
+
+if (aboutBox && aboutForm && aboutEdit) {
+    aboutEdit.addEventListener("click", openAbout);
+    aboutForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var text = aboutForm.bio.value.trim();
+        if (aboutBio) aboutBio.textContent = text || aboutEmpty;
+        closeAbout();
+    });
+}
+
 authOverlay.addEventListener("click", function (event) {
     if (event.target === authOverlay) closeAuth();
 });
@@ -269,6 +402,8 @@ document.addEventListener("keydown", function (event) {
     closeEdit();
     closeAddress();
     closeCard();
+    closeCook();
+    closeAbout();
     document.querySelectorAll(".search[open], .search-where[open]").forEach(function (menu) {
         menu.removeAttribute("open");
     });
@@ -360,6 +495,12 @@ document.querySelectorAll(".cabinet-nav").forEach(function (nav) {
     if (hash && nav.querySelector('.cabinet-tab[data-pane="' + hash + '"]')) {
         showPane(hash);
     }
+    window.addEventListener("hashchange", function () {
+        var next = (location.hash || "").replace("#", "");
+        if (next && nav.querySelector('.cabinet-tab[data-pane="' + next + '"]')) {
+            showPane(next);
+        }
+    });
 });
 
 document.querySelectorAll(".notice-tabs").forEach(function (tabs) {

@@ -83,8 +83,8 @@
             <div class="cabinet-top">
                 <h1>Personal account</h1>
                 <div class="cabinet-balance">
-                    <a href="#">Replenish</a>
-                    <strong>Balance 0₼</strong>
+                    <a href="#ledger">Replenish</a>
+                    <a class="cabinet-balance-sum" href="#ledger"><strong>Balance 0₼</strong></a>
                 </div>
             </div>
             <div class="cabinet-row">
@@ -94,7 +94,7 @@
                     <a href="#notifications" class="cabinet-tab" data-pane="notifications">Notifications</a>
                     <a href="#community" class="cabinet-tab" data-pane="community">Community profile</a>
                     <a href="#details" class="cabinet-tab" data-pane="details">My details</a>
-                    <a href="#subscriptions" class="cabinet-tab" data-pane="subscriptions">Subscriptions</a>
+                    <a href="#ledger" class="cabinet-tab" data-pane="ledger">Internal account</a>
                     <a href="#journal" class="cabinet-tab" data-pane="journal">Reading in the journal</a>
                     <a href="#blacklist" class="cabinet-tab" data-pane="blacklist">Blacklist</a>
                 </nav>
@@ -346,8 +346,14 @@
                                     <button type="button" data-follow="subscribers"><b>0</b><span>subscribers</span></button>
                                     <button type="button" data-follow="subscriptions"><b>0</b><span>subscriptions</span></button>
                                 </div>
-                                <p class="profile-bio">Tell about yourself</p>
-                                <button type="button" class="profile-edit">Edit</button>
+                                <div class="profile-about">
+                                    <p class="profile-bio">Tell about yourself</p>
+                                    <button type="button" class="profile-edit">Edit</button>
+                                    <form class="profile-bio-form" hidden>
+                                        <input type="text" name="bio" placeholder="Tell about yourself" maxlength="180" autocomplete="off" />
+                                        <button type="submit" class="edit-save">Save</button>
+                                    </form>
+                                </div>
                                 <ul class="profile-stats">
                                     <li>
                                         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 8.2V12l2.4 1.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -379,10 +385,13 @@
                                     </li>
                                 </ul>
                                 <div class="profile-cook">
-                                    <h3>How I cook</h3>
-                                    <button type="button" aria-label="Edit how I cook">
-                                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.6 5.6l3.8 3.8-9.4 9.4H5.2v-3.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.2 7l3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-                                    </button>
+                                    <div class="profile-cook-head">
+                                        <h3>How I cook</h3>
+                                        <button type="button" class="profile-cook-edit" aria-label="Edit how I cook">
+                                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.6 5.6l3.8 3.8-9.4 9.4H5.2v-3.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.2 7l3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                                        </button>
+                                    </div>
+                                    <div class="profile-cook-list"></div>
                                 </div>
                             </aside>
                         </div>
@@ -422,10 +431,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cabinet-pane" data-pane="subscriptions" hidden>
+                    <div class="cabinet-pane" data-pane="ledger" hidden>
                         <div class="cabinet-empty">
-                            <h2>No subscriptions yet</h2>
-                            <p>New coffee and journal letters will show up here</p>
+                            <h2>You haven't topped up your account yet</h2>
+                            <p>This page stores records of all top-ups and write-offs of your account</p>
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="journal" hidden>
@@ -663,6 +672,69 @@
             </label>
             <button type="submit" class="edit-save">Save</button>
             <button type="button" class="edit-cancel">Cancel</button>
+        </form>
+    </div>
+    <div class="edit-overlay cook-overlay">
+        <form class="edit-modal cook-modal" role="dialog" aria-modal="true" aria-labelledby="cook-title">
+            <h2 id="cook-title">How I cook</h2>
+            <div class="cook-grid">
+                <button type="button" class="cook-option" data-name="Espresso machine">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8.2h9.2v8.2H5zM14.2 10.4H18a2 2 0 0 1 0 4h-3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M7.2 6.4h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    <span>Espresso machine</span>
+                </button>
+                <button type="button" class="cook-option" data-name="Moka pot">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9.2h8l-1.1 8.2H9.1zM9.2 6.6h5.6M12 4.8v1.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    <span>Moka pot</span>
+                </button>
+                <button type="button" class="cook-option" data-name="AeroPress">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 7.2h7.2v10.2H8.4zM9.6 4.8h4.8M10.2 10.2h3.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    <span>AeroPress</span>
+                </button>
+                <button type="button" class="cook-option" data-name="Drip coffee maker">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 6.2h11.2v3.2H6.4zM8.2 9.4h7.6v8.2H8.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 12.2h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    <span>Drip coffee maker</span>
+                </button>
+                <button type="button" class="cook-option" data-name="Pour over">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 7.2h9.6L14 13.4H10zM9.2 13.4h5.6v5H9.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    <span>Pour over</span>
+                </button>
+                <button type="button" class="cook-option" data-name="Capsules">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 9.2h7.6v4.4c0 2.1-1.7 3.4-3.8 3.4s-3.8-1.3-3.8-3.4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9.6 9.2V7.6h4.8v1.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                    <span>Capsules</span>
+                </button>
+                <button type="button" class="cook-option" data-name="Cezve">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.2h8.4l-1 7.2H7.6zM15 12.2h3.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.4 8.2h4.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    <span>Cezve</span>
+                </button>
+                <button type="button" class="cook-option" data-name="Immersion dripper">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6.8h8l-2.4 6.4H10.4zM10 13.2h4v5h-4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    <span>Immersion dripper</span>
+                </button>
+                <button type="button" class="cook-option" data-name="Drip bags">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.4 8.4h7.2v8.8l-3.6 2.2-3.6-2.2zM9.6 6.4h4.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    <span>Drip bags</span>
+                </button>
+                <button type="button" class="cook-option" data-name="French press">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9.2h8v8.4a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2zM9.2 6.2h5.6M12 4.8v4.4M8 12.4h8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    <span>French press</span>
+                </button>
+                <button type="button" class="cook-option" data-name="In a cup">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 8.6h8.6v6.2A3.4 3.4 0 0 1 12 18.2H10.2A3.4 3.4 0 0 1 6.8 14.8zM15.4 10.2H18a1.8 1.8 0 0 1 0 3.6h-2.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                    <span>In a cup</span>
+                </button>
+                <button type="button" class="cook-option cook-option-plus" data-name="Other">
+                    <span aria-hidden="true">+</span>
+                    <span>Other</span>
+                </button>
+            </div>
+            <label class="cook-other" hidden>
+                <span>Your method</span>
+                <input type="text" name="other" placeholder="For example, siphon" />
+            </label>
+            <div class="cook-actions">
+                <button type="submit" class="edit-save">Save</button>
+                <button type="button" class="edit-cancel">Cancel</button>
+            </div>
         </form>
     </div>
     <div class="follow-overlay">
