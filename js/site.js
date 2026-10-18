@@ -155,6 +155,206 @@ document.querySelectorAll(".notice-tabs").forEach(function (tabs) {
     });
 });
 
+document.querySelectorAll(".profile-composer").forEach(function (box) {
+    var openBtn = box.querySelector(".profile-compose");
+    var form = box.querySelector(".profile-post");
+    var closeBtn = box.querySelector(".profile-post-close");
+    var text = form.querySelector('input[name="text"]');
+    function open() {
+        box.classList.add("is-on");
+        form.hidden = false;
+        if (text) text.focus();
+    }
+    function close() {
+        box.classList.remove("is-on");
+        form.hidden = true;
+        form.classList.remove("has-product");
+        form.reset();
+        var review = form.querySelector(".profile-review");
+        if (review) {
+            review.hidden = true;
+            review.querySelectorAll(".profile-star").forEach(function (star) {
+                star.classList.remove("is-on");
+            });
+            var brewToggle = review.querySelector(".profile-brew-toggle");
+            var more = review.querySelector(".profile-recipe-more");
+            var extra = review.querySelector(".profile-recipe-extra");
+            if (brewToggle) {
+                brewToggle.textContent = "Brewing method";
+                brewToggle.style.color = "";
+            }
+            if (more) more.classList.remove("is-on");
+            if (extra) extra.hidden = true;
+        }
+        box.querySelectorAll(".profile-pick").forEach(function (pick) {
+            pick.classList.remove("is-on");
+            var drop = pick.querySelector(".profile-pick-drop");
+            if (drop) drop.hidden = true;
+        });
+        var chips = form.querySelector(".profile-tag-chips");
+        var tagPick = form.querySelector(".profile-tag-pick");
+        var tagDrop = form.querySelector(".profile-tag-drop");
+        if (chips) chips.innerHTML = "";
+        if (tagPick) tagPick.classList.remove("is-on");
+        if (tagDrop) {
+            tagDrop.hidden = true;
+            tagDrop.querySelectorAll("button").forEach(function (item) { item.hidden = false; });
+        }
+    }
+    openBtn.addEventListener("click", open);
+    closeBtn.addEventListener("click", close);
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        close();
+    });
+});
+
+document.querySelectorAll(".profile-pick").forEach(function (pick) {
+    var form = pick.closest(".profile-post");
+    var search = pick.querySelector(".profile-pick-search");
+    var drop = pick.querySelector(".profile-pick-drop");
+    var hidden = pick.querySelector('input[name="product"]');
+    var items = pick.querySelectorAll(".profile-pick-list button");
+    var review = form ? form.querySelector(".profile-review") : null;
+    var reviewImg = review ? review.querySelector(".profile-review-img") : null;
+    var reviewName = review ? review.querySelector(".profile-review-name") : null;
+    var reviewClear = review ? review.querySelector(".profile-review-clear") : null;
+    function filter() {
+        var q = search.value.trim().toLowerCase();
+        items.forEach(function (item) {
+            var name = (item.getAttribute("data-name") || "").toLowerCase();
+            item.hidden = q !== "" && name.indexOf(q) === -1;
+        });
+    }
+    function openPick() {
+        pick.classList.add("is-on");
+        drop.hidden = false;
+    }
+    function closePick() {
+        pick.classList.remove("is-on");
+        drop.hidden = true;
+        if (hidden.value) {
+            search.value = hidden.value;
+            items.forEach(function (item) { item.hidden = false; });
+            return;
+        }
+        search.value = "";
+        filter();
+    }
+    function clearProduct() {
+        hidden.value = "";
+        search.value = "";
+        items.forEach(function (item) { item.hidden = false; });
+        if (form) form.classList.remove("has-product");
+        if (review) review.hidden = true;
+        if (reviewImg) reviewImg.removeAttribute("src");
+        if (reviewName) reviewName.textContent = "";
+        if (review) {
+            var rating = review.querySelector('input[name="rating"]');
+            var brew = review.querySelector('input[name="brew"]');
+            var recipe = review.querySelector('input[name="recipe"]');
+            var toggle = review.querySelector(".profile-brew-toggle");
+            var extra = review.querySelector(".profile-recipe-extra");
+            var more = review.querySelector(".profile-recipe-more");
+            if (rating) rating.value = "";
+            if (brew) brew.value = "";
+            if (recipe) recipe.value = "";
+            if (toggle) toggle.textContent = "Brewing method";
+            review.querySelectorAll(".profile-star").forEach(function (star) {
+                star.classList.remove("is-on");
+            });
+            review.querySelectorAll(".profile-recipe-extra input").forEach(function (field) {
+                field.value = "";
+            });
+            if (extra) extra.hidden = true;
+            if (more) more.classList.remove("is-on");
+        }
+        closePick();
+    }
+    search.addEventListener("focus", openPick);
+    search.addEventListener("pointerdown", function (event) {
+        event.stopPropagation();
+        openPick();
+    });
+    search.addEventListener("input", function () {
+        hidden.value = "";
+        openPick();
+        filter();
+    });
+    search.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") event.preventDefault();
+    });
+    items.forEach(function (item) {
+        item.addEventListener("click", function () {
+            var name = item.getAttribute("data-name") || "";
+            var src = item.getAttribute("data-img") || "";
+            hidden.value = name;
+            search.value = name;
+            items.forEach(function (row) { row.hidden = false; });
+            if (reviewImg) reviewImg.src = src;
+            if (reviewName) reviewName.textContent = name;
+            if (review) review.hidden = false;
+            if (form) form.classList.add("has-product");
+            closePick();
+        });
+    });
+    if (reviewClear) reviewClear.addEventListener("click", clearProduct);
+    document.addEventListener("pointerdown", function (event) {
+        if (!pick.contains(event.target)) closePick();
+    });
+});
+
+document.querySelectorAll(".profile-review").forEach(function (review) {
+    var stars = review.querySelectorAll(".profile-star");
+    var rating = review.querySelector('input[name="rating"]');
+    var brewPick = review.querySelector(".profile-brew-pick");
+    var brewToggle = review.querySelector(".profile-brew-toggle");
+    var brewDrop = review.querySelector(".profile-brew-drop");
+    var brewHidden = review.querySelector('input[name="brew"]');
+    var more = review.querySelector(".profile-recipe-more");
+    var extra = review.querySelector(".profile-recipe-extra");
+    stars.forEach(function (star) {
+        star.addEventListener("click", function () {
+            var value = Number(star.getAttribute("data-star") || 0);
+            if (rating) rating.value = String(value);
+            stars.forEach(function (item) {
+                item.classList.toggle("is-on", Number(item.getAttribute("data-star") || 0) <= value);
+            });
+        });
+    });
+    function closeBrew() {
+        if (!brewPick) return;
+        brewPick.classList.remove("is-on");
+        if (brewDrop) brewDrop.hidden = true;
+    }
+    if (brewToggle && brewDrop) {
+        brewToggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            var open = brewPick.classList.toggle("is-on");
+            brewDrop.hidden = !open;
+        });
+        brewDrop.querySelectorAll("button").forEach(function (item) {
+            item.addEventListener("click", function () {
+                var name = item.getAttribute("data-name") || "";
+                if (brewHidden) brewHidden.value = name;
+                brewToggle.textContent = name;
+                brewToggle.style.color = "inherit";
+                closeBrew();
+            });
+        });
+        document.addEventListener("pointerdown", function (event) {
+            if (!brewPick.contains(event.target)) closeBrew();
+        });
+    }
+    if (more && extra) {
+        more.addEventListener("click", function () {
+            var open = extra.hidden;
+            extra.hidden = !open;
+            more.classList.toggle("is-on", open);
+        });
+    }
+});
+
 document.querySelectorAll(".wish-tabs").forEach(function (tabs) {
     var buttons = tabs.querySelectorAll("button");
     var panes = document.querySelectorAll(".wish-pane");
@@ -205,6 +405,86 @@ document.querySelectorAll(".buy-row").forEach(function (row) {
                 item.classList.toggle("is-on", item === weight);
             });
         });
+    });
+});
+
+document.querySelectorAll(".profile-tag-pick").forEach(function (pick) {
+    var search = pick.querySelector(".profile-tag-search");
+    var drop = pick.querySelector(".profile-tag-drop");
+    var hidden = pick.querySelector('input[name="tags"]');
+    var chips = pick.parentElement.querySelector(".profile-tag-chips");
+    var items = pick.querySelectorAll(".profile-tag-drop button");
+    function selected() {
+        return hidden.value ? hidden.value.split("|") : [];
+    }
+    function writeTags(list) {
+        hidden.value = list.join("|");
+    }
+    function filter() {
+        var q = search.value.trim().toLowerCase();
+        var taken = selected();
+        var visible = 0;
+        items.forEach(function (item) {
+            var name = item.getAttribute("data-name") || "";
+            var hide = taken.indexOf(name) !== -1 || (q !== "" && name.toLowerCase().indexOf(q) === -1);
+            item.hidden = hide;
+            if (!hide) visible += 1;
+        });
+        drop.hidden = visible === 0;
+        pick.classList.toggle("is-on", visible > 0);
+    }
+    function openPick() {
+        pick.classList.add("is-on");
+        filter();
+    }
+    function closePick() {
+        pick.classList.remove("is-on");
+        drop.hidden = true;
+        search.value = "";
+    }
+    function addTag(name) {
+        var list = selected();
+        if (!name || list.indexOf(name) !== -1) return;
+        list.push(name);
+        writeTags(list);
+        var chip = document.createElement("span");
+        chip.className = "profile-tag-chip";
+        chip.setAttribute("data-name", name);
+        chip.appendChild(document.createTextNode(name));
+        var remove = document.createElement("button");
+        remove.type = "button";
+        remove.setAttribute("aria-label", "Remove " + name);
+        remove.textContent = "×";
+        remove.addEventListener("click", function () {
+            chip.remove();
+            writeTags(selected().filter(function (item) { return item !== name; }));
+        });
+        chip.appendChild(remove);
+        chips.appendChild(chip);
+        closePick();
+    }
+    search.addEventListener("focus", openPick);
+    search.addEventListener("pointerdown", function (event) {
+        event.stopPropagation();
+        openPick();
+    });
+    search.addEventListener("input", openPick);
+    search.addEventListener("keydown", function (event) {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        var match = Array.prototype.filter.call(items, function (item) { return !item.hidden; });
+        if (match.length === 1) addTag(match[0].getAttribute("data-name") || "");
+    });
+    items.forEach(function (item) {
+        item.addEventListener("click", function () {
+            addTag(item.getAttribute("data-name") || "");
+        });
+    });
+    document.addEventListener("pointerdown", function (event) {
+        if (!pick.contains(event.target)) {
+            pick.classList.remove("is-on");
+            drop.hidden = true;
+        }
     });
 });
 
