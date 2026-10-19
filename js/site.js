@@ -858,6 +858,38 @@ document.querySelectorAll(".grind").forEach(function (menu) {
     });
 });
 
+// Səbətə əlavə: qiymət düyməsi. Hələlik yalnız sayğac və bildiriş; backend gələndə API-yə gedəcək
+var cartCountKey = "janz-cart-count";
+
+function readCartCount() {
+    try {
+        return parseInt(localStorage.getItem(cartCountKey), 10) || 0;
+    } catch (error) {
+        return 0;
+    }
+}
+
+function showCartCount() {
+    var count = readCartCount();
+    document.querySelectorAll(".cart-link").forEach(function (link) {
+        var label = link.querySelector("span");
+        if (label) label.textContent = count + " pcs";
+        link.setAttribute("aria-label", "Cart, " + count + (count === 1 ? " item" : " items"));
+    });
+}
+
+document.querySelectorAll(".price").forEach(function (button) {
+    button.addEventListener("click", function () {
+        try {
+            localStorage.setItem(cartCountKey, String(readCartCount() + 1));
+        } catch (error) {}
+        showCartCount();
+        showToast("Added to cart");
+    });
+});
+
+showCartCount();
+
 document.querySelectorAll(".buy-row").forEach(function (row) {
     var weights = row.querySelectorAll(".weight");
     weights.forEach(function (weight) {
@@ -1258,6 +1290,21 @@ function closeMenus(except) {
     });
 }
 
+// Bildiriş (toast) bütün səhifələrdə var: blok, səbətə əlavə və s.
+toastBox = document.createElement("div");
+toastBox.className = "toast";
+toastBox.setAttribute("role", "status");
+toastBox.innerHTML =
+    '<div class="toast-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 12.4l4 4L18 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
+    '<p class="toast-text"></p>' +
+    '<div class="toast-bar"></div>' +
+    '<button type="button" class="toast-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>';
+document.body.appendChild(toastBox);
+toastBox.querySelector(".toast-close").addEventListener("click", function () {
+    clearTimeout(toastTimer);
+    hideToast();
+});
+
 if (document.querySelector(".feed-card")) {
     shareOverlay = document.createElement("div");
     shareOverlay.className = "share-overlay";
@@ -1280,20 +1327,6 @@ if (document.querySelector(".feed-card")) {
     });
     shareOverlay.querySelector(".share-link").addEventListener("focus", function (event) {
         event.target.select();
-    });
-
-    toastBox = document.createElement("div");
-    toastBox.className = "toast";
-    toastBox.setAttribute("role", "status");
-    toastBox.innerHTML =
-        '<div class="toast-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 12.4l4 4L18 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
-        '<p class="toast-text"></p>' +
-        '<div class="toast-bar"></div>' +
-        '<button type="button" class="toast-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>';
-    document.body.appendChild(toastBox);
-    toastBox.querySelector(".toast-close").addEventListener("click", function () {
-        clearTimeout(toastTimer);
-        hideToast();
     });
 
     document.addEventListener("keydown", function (event) {
