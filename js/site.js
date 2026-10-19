@@ -1505,3 +1505,68 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
         });
     }
 });
+
+// Blacklist (Account): axtarış və bloku götürmək. Hələlik yalnız səhifədə; backend gələndə API-dən silinəcək
+var blacklistPane = document.querySelector(".cabinet-pane[data-pane='blacklist']");
+var unblockOverlay = document.querySelector(".unblock-overlay");
+
+if (blacklistPane && unblockOverlay) {
+    var blacklistBoard = blacklistPane.querySelector(".blacklist-board");
+    var blacklistSearch = blacklistPane.querySelector(".blacklist-search input");
+    var blacklistNone = blacklistPane.querySelector(".blacklist-none");
+    var blacklistEmpty = blacklistPane.querySelector(".blacklist-empty");
+    var unblockTarget = null;
+
+    // Siyahı boşdursa "Blacklist is empty" görünür, axtarışda heç kim tapılmasa "Nobody found"
+    function syncBlacklist() {
+        var items = blacklistPane.querySelectorAll(".blacklist-item");
+        var query = blacklistSearch.value.trim().toLowerCase();
+        var shown = 0;
+        items.forEach(function (item) {
+            var match = item.textContent.toLowerCase().indexOf(query) !== -1;
+            item.hidden = !match;
+            if (match) shown++;
+        });
+        var hasUsers = items.length > 0;
+        blacklistBoard.hidden = !hasUsers;
+        blacklistEmpty.hidden = hasUsers;
+        blacklistPane.classList.toggle("is-filled", hasUsers);
+        blacklistNone.hidden = !hasUsers || shown > 0;
+    }
+
+    function closeUnblock() {
+        unblockOverlay.classList.remove("is-on");
+        unblockTarget = null;
+    }
+
+    blacklistSearch.addEventListener("input", syncBlacklist);
+
+    blacklistPane.addEventListener("click", function (event) {
+        var remove = event.target.closest(".blacklist-remove");
+        if (!remove) return;
+        unblockTarget = remove.closest(".blacklist-item");
+        var name = unblockTarget.querySelector(".blacklist-name strong").textContent;
+        unblockOverlay.querySelector(".unblock-avatar").textContent = unblockTarget.querySelector(".blacklist-avatar").textContent;
+        unblockOverlay.querySelector(".unblock-name").textContent = name;
+        unblockOverlay.querySelector(".unblock-role").textContent = unblockTarget.querySelector(".blacklist-who p").textContent;
+        unblockOverlay.classList.add("is-on");
+    });
+
+    unblockOverlay.querySelector(".unblock-yes").addEventListener("click", function () {
+        if (unblockTarget) unblockTarget.remove();
+        closeUnblock();
+        syncBlacklist();
+    });
+
+    unblockOverlay.querySelector(".unblock-no").addEventListener("click", closeUnblock);
+
+    unblockOverlay.addEventListener("click", function (event) {
+        if (event.target === unblockOverlay) closeUnblock();
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") closeUnblock();
+    });
+
+    syncBlacklist();
+}

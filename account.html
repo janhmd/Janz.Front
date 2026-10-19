@@ -453,9 +453,40 @@
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="blacklist" hidden>
-                        <div class="cabinet-empty">
+                        <!-- Users blocked from community (post or comment menu). They can be unblocked only here. -->
+                        <div class="blacklist-board">
+                            <label class="blacklist-search">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                                <input type="search" placeholder="Search the list" autocomplete="off" />
+                            </label>
+                            <div class="blacklist-list">
+                                <div class="blacklist-item" data-user-id="11">
+                                    <div class="blacklist-avatar">K</div>
+                                    <div class="blacklist-who">
+                                        <div class="blacklist-name"><strong>Kamran</strong><button type="button" class="blacklist-remove">Remove</button></div>
+                                        <p>Expert, Lankaran</p>
+                                    </div>
+                                </div>
+                                <div class="blacklist-item" data-user-id="12">
+                                    <div class="blacklist-avatar">R</div>
+                                    <div class="blacklist-who">
+                                        <div class="blacklist-name"><strong>Rashad</strong><button type="button" class="blacklist-remove">Remove</button></div>
+                                        <p>Coffee lover, Ganja</p>
+                                    </div>
+                                </div>
+                                <div class="blacklist-item" data-user-id="13">
+                                    <div class="blacklist-avatar">E</div>
+                                    <div class="blacklist-who">
+                                        <div class="blacklist-name"><strong>Elvin</strong><button type="button" class="blacklist-remove">Remove</button></div>
+                                        <p>Ambassador, Sheki</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="blacklist-none" hidden>Nobody found</p>
+                        </div>
+                        <div class="cabinet-empty blacklist-empty" hidden>
                             <h2>Blacklist is empty</h2>
-                            <p>Products you hide will collect here</p>
+                            <p>Users you block in the community will collect here</p>
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="statistics" hidden>
@@ -782,6 +813,18 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
                 <input type="search" placeholder="Search subscribers" autocomplete="off" />
             </label>
+        </div>
+    </div>
+    <div class="unblock-overlay">
+        <div class="unblock-modal" role="dialog" aria-modal="true" aria-labelledby="unblock-title">
+            <h2 id="unblock-title">Remove from blacklist</h2>
+            <div class="blacklist-avatar unblock-avatar"></div>
+            <strong class="unblock-name"></strong>
+            <p class="unblock-role"></p>
+            <div class="unblock-actions">
+                <button type="button" class="edit-save unblock-yes">Yes</button>
+                <button type="button" class="edit-cancel unblock-no">No</button>
+            </div>
         </div>
     </div>
     <script src="js/site.js"></script>
