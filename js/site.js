@@ -1063,6 +1063,9 @@ if (articleRoot && articleRoot.getAttribute("data-id")) {
 
     window.addEventListener("scroll", trackArticle, { passive: true });
 
+    // Məqalə açılan kimi Journal-dakı "Recently read" siyahısına düşür
+    rememberArticle(articleRoot, { seenAt: Date.now() });
+
     if (bookmarkBtn) {
         bookmarkBtn.addEventListener("click", function () {
             var id = articleRoot.getAttribute("data-id");
@@ -1569,4 +1572,195 @@ if (blacklistPane && unblockOverlay) {
     });
 
     syncBlacklist();
+}
+
+
+// Journal: mövzu və tag filtri, sıralama, like, bookmark, oxunma xətti və "Recently read".
+// Bookmark və oxunma Account → "Reading in the journal" ilə ortaqdır (janz-reading)
+var journalGrid = document.querySelector(".journal-grid");
+
+if (journalGrid && journalGrid.querySelector(".article-card")) {
+    var journalCards = Array.prototype.slice.call(journalGrid.querySelectorAll(".article-card"));
+    var journalNone = journalGrid.querySelector(".journal-none");
+    var journalCount = document.querySelector(".journal-count");
+    var journalSort = document.querySelector(".journal-toolbar select");
+    var journalRecent = document.querySelector(".journal-recent");
+    var journalRecentRow = journalRecent ? journalRecent.querySelector(".journal-recent-row") : null;
+    var journalTopic = "";
+    var journalTag = "";
+
+    function cardTopics(card) {
+        return (card.getAttribute("data-topic") || "").split(",").map(function (item) {
+            return item.trim();
+        });
+    }
+
+    function cardTags(card) {
+        return (card.getAttribute("data-tags") || "").split(",").map(function (item) {
+            return item.trim();
+        });
+    }
+
+    // Soldakı mövzuların yanındakı rəqəmlər kartlardan hesablanır
+    document.querySelectorAll(".journal-topics a[data-topic]").forEach(function (link) {
+        var topic = link.getAttribute("data-topic");
+        var count = link.querySelector("span");
+        if (!topic || !count) return;
+        count.textContent = journalCards.filter(function (card) {
+            return cardTopics(card).indexOf(topic) !== -1;
+        }).length;
+    });
+
+    function sortValue(card, mode) {
+        if (mode === "Most read") return parseInt(card.getAttribute("data-views"), 10) || 0;
+        if (mode === "Most popular") return parseInt(card.getAttribute("data-likes"), 10) || 0;
+        return card.getAttribute("data-sort") || "";
+    }
+
+    function renderJournal() {
+        var mode = journalSort ? journalSort.value : "Newest first";
+        var sorted = journalCards.slice().sort(function (a, b) {
+            var x = sortValue(a, mode);
+            var y = sortValue(b, mode);
+            if (x === y) return 0;
+            var asc = mode === "Oldest first";
+            return (x > y ? 1 : -1) * (asc ? 1 : -1);
+        });
+
+        var shown = 0;
+        sorted.forEach(function (card) {
+            var match = (!journalTopic || cardTopics(card).indexOf(journalTopic) !== -1) &&
+                        (!journalTag || cardTags(card).indexOf(journalTag) !== -1);
+            card.hidden = !match;
+            if (match) shown++;
+            journalGrid.insertBefore(card, journalNone);
+        });
+
+        if (journalNone) journalNone.hidden = shown > 0;
+        if (journalCount) journalCount.textContent = shown + (shown === 1 ? " article" : " articles");
+    }
+
+    document.querySelectorAll(".journal-topics a[data-topic]").forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            journalTopic = link.getAttribute("data-topic");
+            document.querySelectorAll(".journal-topics a[data-topic]").forEach(function (item) {
+                item.classList.toggle("is-on", item === link);
+            });
+            renderJournal();
+        });
+    });
+
+    document.querySelectorAll(".journal-tags a[data-tag]").forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            var tag = link.getAttribute("data-tag");
+            journalTag = journalTag === tag ? "" : tag;
+            document.querySelectorAll(".journal-tags a[data-tag]").forEach(function (item) {
+                item.classList.toggle("is-on", !!journalTag && item.getAttribute("data-tag") === journalTag);
+            });
+            renderJournal();
+        });
+    });
+
+    if (journalSort) journalSort.addEventListener("change", renderJournal);
+
+    // Kartın (və hero-nun) düymələri və oxunma xətti janz-reading-dən oxunur
+    function syncArticle(card) {
+        var item = loadReading()[card.getAttribute("data-id")] || {};
+        var like = card.querySelector(".article-like");
+        var save = card.querySelector(".article-save");
+        var bar = card.querySelector(".article-progress i");
+        var base = parseInt(card.getAttribute("data-likes"), 10) || 0;
+
+        if (like) {
+            like.classList.toggle("is-on", !!item.liked);
+            like.setAttribute("aria-pressed", item.liked ? "true" : "false");
+            like.querySelector("span").textContent = base + (item.liked ? 1 : 0);
+        }
+        if (save) {
+            save.classList.toggle("is-on", !!item.bookmarked);
+            save.setAttribute("aria-pressed", item.bookmarked ? "true" : "false");
+        }
+        if (bar) {
+            var progress = item.status === "read" ? 1 : (item.progress || 0);
+            bar.style.width = Math.round(progress * 100) + "%";
+            card.classList.toggle("is-started", progress > 0);
+        }
+    }
+
+    function syncAll() {
+        document.querySelectorAll(".article-card, .journal-hero[data-id]").forEach(syncArticle);
+    }
+
+    function bindArticle(card) {
+        var like = card.querySelector(".article-like");
+        var save = card.querySelector(".article-save");
+        if (like) {
+            like.addEventListener("click", function () {
+                var item = loadReading()[card.getAttribute("data-id")] || {};
+                rememberArticle(card, { liked: !item.liked });
+                syncAll();
+            });
+        }
+        if (save) {
+            save.addEventListener("click", function () {
+                var item = loadReading()[card.getAttribute("data-id")] || {};
+                rememberArticle(card, { bookmarked: !item.bookmarked });
+                syncAll();
+            });
+        }
+        // Məqaləyə keçəndə "Recently read"-ə düşür
+        card.querySelectorAll("a[href^='article.html']").forEach(function (link) {
+            link.addEventListener("click", function () {
+                rememberArticle(card, { seenAt: Date.now() });
+            });
+        });
+    }
+
+    function renderRecent() {
+        if (!journalRecent || !journalRecentRow) return;
+        var map = loadReading();
+        var seen = Object.keys(map).map(function (id) {
+            return map[id];
+        }).filter(function (item) {
+            return item.seenAt;
+        }).sort(function (a, b) {
+            return b.seenAt - a.seenAt;
+        }).slice(0, 6);
+
+        journalRecentRow.innerHTML = "";
+        seen.forEach(function (item) {
+            // Kart artıq səhifədədirsə ondan kopyalanır, yoxdursa yadda saxlanan məlumatdan qurulur
+            var source = document.querySelector(".article-card[data-id='" + item.id + "'], .journal-hero[data-id='" + item.id + "']");
+            var card;
+            if (source && source.classList.contains("article-card")) {
+                card = source.cloneNode(true);
+                card.hidden = false;
+            } else {
+                card = document.createElement("article");
+                card.className = "article-card";
+                ["id", "title", "topic", "date", "lead", "image", "href", "likes", "comments", "views", "mins"].forEach(function (key) {
+                    if (item[key]) card.setAttribute("data-" + key, item[key]);
+                });
+                var stats = source ? source.querySelector(".article-stats").outerHTML : "";
+                card.innerHTML =
+                    '<a class="article-card-photo" href="' + (item.href || "article.html") + '"><img src="' + (item.image || "images/aroma-kit.png") + '" alt="" /><span class="article-progress"><i></i></span></a>' +
+                    '<div class="article-meta">' + escapeHtml(item.topic || "") + "<br />" + escapeHtml(item.date || "") + "</div>" +
+                    '<h3><a href="' + (item.href || "article.html") + '">' + escapeHtml(item.title || "Article") + "</a></h3>" +
+                    "<p>" + escapeHtml(item.lead || "") + "</p>" + stats;
+            }
+            journalRecentRow.appendChild(card);
+            bindArticle(card);
+        });
+        journalRecent.hidden = seen.length === 0;
+        syncAll();
+    }
+
+    document.querySelectorAll(".article-card, .journal-hero[data-id]").forEach(bindArticle);
+    renderJournal();
+    renderRecent();
+
+    // Başqa tabda məqalə oxunanda geri qayıdanda yenilənsin
+    window.addEventListener("pageshow", renderRecent);
 }

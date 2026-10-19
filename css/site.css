@@ -2944,47 +2944,76 @@ html.theme-day .theme-toggle { color: var(--ink); }
 
 .journal-topics span { color: #8a8a8a; }
 
+/* Əsas məqalə: şəkil bütün kartı tutur, mətn aşağıda qaranlıq fonun üstündədir */
 .journal-hero {
     position: relative;
-    min-height: 320px;
+    min-height: 420px;
     overflow: hidden;
-    border-radius: 22px;
+    border-radius: 24px;
     background: #141414;
 }
 
-.journal-hero img {
+.journal-hero-photo,
+.journal-hero-photo img {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
-    height: 360px;
-    object-fit: cover;
+    height: 100%;
 }
+
+.journal-hero-photo img {
+    object-fit: cover;
+    transition: transform .6s ease;
+}
+
+.journal-hero:hover .journal-hero-photo img { transform: scale(1.03); }
 
 .journal-hero .copy {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 1.4rem 1.5rem 1.2rem;
-    background: linear-gradient(transparent, rgba(0, 0, 0, .82));
+    padding: 4rem 2rem 1.6rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, .78) 45%);
+    pointer-events: none;
 }
 
-.journal-hero .meta {
-    color: #d5d5d5;
-    font-size: .82rem;
-}
+.journal-hero .copy a,
+.journal-hero .copy button { pointer-events: auto; }
+
+.journal-hero .article-meta { color: #e6e6e6; }
 
 .journal-hero h2 {
-    margin: .35rem 0 .3rem;
-    font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+    margin: .8rem 0 .7rem;
+    font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+    font-weight: 800;
     letter-spacing: -0.03em;
+    line-height: 1.08;
     text-transform: uppercase;
 }
 
 .journal-hero p {
-    margin: 0 0 .7rem;
-    color: #d0d0d0;
-    max-width: 42rem;
+    margin: 0 0 1rem;
+    max-width: 52rem;
+    color: #e6e6e6;
+    font-size: 1.05rem;
 }
+
+/* Hero-da düymələrin fonu yoxdur, yalnız ikon və rəqəm */
+.journal-hero .article-like,
+.journal-hero .article-discuss,
+.journal-hero .article-save {
+    padding: 0;
+    background: transparent;
+    color: #fff;
+}
+
+.journal-hero .article-like:hover,
+.journal-hero .article-discuss:hover,
+.journal-hero .article-save:hover { background: transparent; color: var(--gold); }
+
+.journal-hero .article-stat { color: #fff; }
 
 .journal-stats {
     display: flex;
@@ -3060,8 +3089,165 @@ html.theme-day .theme-toggle { color: var(--ink); }
 
 .journal-grid {
     display: grid;
-    grid-template-columns: 1.2fr .8fr;
-    gap: .9rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.4rem 1.6rem;
+}
+
+.journal-none {
+    grid-column: 1 / -1;
+    margin: 1rem 0;
+    color: #8d8d8d;
+}
+
+.journal-none[hidden] { display: none; }
+
+/* Məqalə kartı: şəkil, oxunma xətti, mövzu və tarix, başlıq, qısa mətn, statistika */
+.article-card[hidden] { display: none; }
+
+.article-card-photo {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #1c1c1c;
+}
+
+.article-card-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+
+.article-card-photo:hover img { transform: scale(1.04); }
+
+/* Nə qədər oxunub: şəklin altındakı nazik xətt (heç oxunmayıbsa görünmür) */
+.article-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, .25);
+    opacity: 0;
+}
+
+.article-progress i {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: #fff;
+}
+
+.article-card.is-started .article-progress { opacity: 1; }
+
+.article-meta {
+    color: #9a9a9a;
+    font-size: .95rem;
+    line-height: 1.5;
+}
+
+.article-card .article-meta { margin-top: 1rem; }
+
+.article-card h3 {
+    margin: .9rem 0 .6rem;
+    font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-transform: uppercase;
+}
+
+.article-card h3 a:hover { color: var(--gold); }
+
+.article-card p {
+    margin: 0;
+    color: #cfcfcf;
+    line-height: 1.4;
+}
+
+.article-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .45rem .7rem;
+    margin-top: 1rem;
+}
+
+.article-like,
+.article-discuss,
+.article-save {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    height: 40px;
+    min-width: 40px;
+    padding: 0 .7rem;
+    border: 0;
+    border-radius: 12px;
+    background: #1c1c1c;
+    color: #ececec;
+    font: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+
+.article-save { justify-content: center; padding: 0; }
+
+.article-like:hover,
+.article-discuss:hover,
+.article-save:hover { background: #2a2a2a; color: #fff; }
+
+.article-like.is-on,
+.article-save.is-on { color: var(--gold); }
+
+.article-save.is-on svg path { fill: currentColor; }
+
+.article-stats svg {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+}
+
+.article-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    color: #ececec;
+}
+
+/* "Recently read": açılan məqalələr, sonuncu birinci */
+.journal-recent { margin-bottom: 3rem; }
+.journal-recent[hidden] { display: none; }
+
+.journal-recent h2 {
+    margin: 0 0 1.2rem;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+.journal-recent h2 a {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+.journal-recent h2 svg { width: 22px; height: 22px; }
+.journal-recent h2 a:hover { color: var(--gold); }
+
+.journal-recent-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 3.2rem) / 3);
+    gap: 1.6rem;
+    overflow-x: auto;
+    padding-bottom: .4rem;
+    scrollbar-width: thin;
+    scrollbar-color: #3a3a3a transparent;
 }
 
 .journal-card {
@@ -3092,10 +3278,18 @@ a.journal-card { color: inherit; display: block; }
 .journal-card { transition: transform .2s ease; }
 a.journal-card:hover { transform: translateY(-3px); }
 
+@media (max-width: 1200px) {
+    .journal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .journal-recent-row { grid-auto-columns: calc((100% - 1.6rem) / 2); }
+}
+
 @media (max-width: 900px) {
     .journal-top,
     .journal-board,
     .journal-grid { grid-template-columns: 1fr; }
+    .journal-hero { min-height: 360px; }
+    .journal-hero .copy { padding: 3rem 1.2rem 1.2rem; }
+    .journal-recent-row { grid-auto-columns: 82%; }
 }
 
 .article-wrap {
@@ -6108,6 +6302,33 @@ html.theme-day {
 .blacklist-who p,
 .blacklist-none,
 .unblock-role { color: var(--muted); }
+.article-meta,
+.journal-none { color: var(--muted); }
+.journal-hero .article-meta { color: #e6e6e6; }
+.article-card h3 a,
+.article-card p,
+.article-stat,
+.journal-recent h2 a { color: var(--text); }
+.article-card h3 a:hover,
+.journal-recent h2 a:hover { color: #a5793a; }
+.article-like,
+.article-discuss,
+.article-save {
+    background: #fff;
+    color: var(--text);
+}
+.article-like:hover,
+.article-discuss:hover,
+.article-save:hover { background: var(--hover); color: var(--text); }
+.article-like.is-on,
+.article-save.is-on { color: #a5793a; }
+.journal-hero .article-like,
+.journal-hero .article-discuss,
+.journal-hero .article-save,
+.journal-hero .article-stat { background: transparent; color: #fff; }
+.article-card-photo { background: var(--hover); }
+.article-progress { background: rgba(0, 0, 0, .15); }
+.article-progress i { background: var(--ink); }
 .unblock-overlay { background: rgba(0, 0, 0, .18); }
 .unblock-modal {
     background: #fff;
