@@ -1204,6 +1204,139 @@ function escapeHtml(text) {
     return box.innerHTML;
 }
 
+// Paylaşma pəncərəsi, bildiriş və ⋮ menyusu yalnız community postları olan səhifədə yaranır
+var shareOverlay = null;
+var toastBox = null;
+var toastTimer = null;
+
+function postLink(card, note) {
+    // Hələlik səhifənin öz ünvanı; backend gələndə /community?post=ID olacaq
+    var link = location.href.split(/[?#]/)[0] + "?post=" + card.getAttribute("data-post-id");
+    if (note) link += "&comment=" + note.getAttribute("data-comment-id");
+    return link;
+}
+
+function openShare(link) {
+    if (!shareOverlay) return;
+    var field = shareOverlay.querySelector(".share-link");
+    field.value = link;
+    var text = encodeURIComponent(link);
+    shareOverlay.querySelector("[data-share='telegram']").href = "https://t.me/share/url?url=" + text;
+    shareOverlay.querySelector("[data-share='whatsapp']").href = "https://wa.me/?text=" + text;
+    shareOverlay.querySelector("[data-share='facebook']").href = "https://www.facebook.com/sharer/sharer.php?u=" + text;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(link).catch(function () {});
+    }
+    shareOverlay.classList.add("is-on");
+}
+
+function closeShare() {
+    if (shareOverlay) shareOverlay.classList.remove("is-on");
+}
+
+function showToast(text) {
+    if (!toastBox) return;
+    toastBox.querySelector(".toast-text").textContent = text;
+    // Animasiya hər dəfə əvvəldən başlasın deyə sinif çıxarılıb yenidən əlavə olunur
+    toastBox.classList.remove("is-on");
+    void toastBox.offsetWidth;
+    toastBox.classList.add("is-on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 4000);
+}
+
+function hideToast() {
+    if (toastBox) toastBox.classList.remove("is-on");
+}
+
+function closeMenus(except) {
+    document.querySelectorAll(".feed-menu").forEach(function (menu) {
+        if (menu !== except) menu.hidden = true;
+    });
+}
+
+if (document.querySelector(".feed-card")) {
+    shareOverlay = document.createElement("div");
+    shareOverlay.className = "share-overlay";
+    shareOverlay.innerHTML =
+        '<div class="share-modal" role="dialog" aria-modal="true" aria-labelledby="share-title">' +
+            '<svg class="share-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M17 6h25v25H17z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M11 13H6v29h29v-5" fill="none" stroke="currentColor" stroke-width="3"/></svg>' +
+            '<h2 id="share-title">Link copied<br />to clipboard</h2>' +
+            '<input class="share-link" type="text" readonly aria-label="Post link" />' +
+            "<p>Share on social networks</p>" +
+            '<div class="share-socials">' +
+                '<a data-share="telegram" href="#" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M20.6 4.2L3.4 10.9c-.9.3-.9 1.6 0 1.9l4.2 1.4 1.6 5c.2.7 1.1.9 1.6.4l2.4-2.3 4.4 3.2c.6.4 1.4.1 1.6-.6l2.9-14.2c.2-.9-.7-1.7-1.5-1.5zM9.2 13.9l8.1-5.2-6.5 6.4-.3 3-1.3-4.2z" fill="currentColor"/></svg></a>' +
+                '<a data-share="whatsapp" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.3 8.3c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.6l-.5.6c.6 1.1 1.5 2 2.6 2.6l.6-.5c.2-.2.4-.2.6-.1l1.6.7c.3.1.4.3.4.5v.5c0 .3-.1.5-.4.7-.5.4-1.2.6-1.8.5-2.9-.6-5.2-2.9-5.8-5.8-.1-.6.1-1.3.4-1.9z" fill="currentColor"/></svg></a>' +
+                '<a data-share="facebook" href="#" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M13.4 20.5v-7h2.4l.4-2.8h-2.8V8.9c0-.8.2-1.4 1.4-1.4h1.5V5c-.3 0-1.1-.1-2.2-.1-2.2 0-3.6 1.3-3.6 3.7v2.1H8.1v2.8h2.4v7z" fill="currentColor"/></svg></a>' +
+            "</div>" +
+        "</div>";
+    document.body.appendChild(shareOverlay);
+
+    shareOverlay.addEventListener("click", function (event) {
+        if (event.target === shareOverlay) closeShare();
+    });
+    shareOverlay.querySelector(".share-link").addEventListener("focus", function (event) {
+        event.target.select();
+    });
+
+    toastBox = document.createElement("div");
+    toastBox.className = "toast";
+    toastBox.setAttribute("role", "status");
+    toastBox.innerHTML =
+        '<div class="toast-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 12.4l4 4L18 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' +
+        '<p class="toast-text"></p>' +
+        '<div class="toast-bar"></div>' +
+        '<button type="button" class="toast-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>';
+    document.body.appendChild(toastBox);
+    toastBox.querySelector(".toast-close").addEventListener("click", function () {
+        clearTimeout(toastTimer);
+        hideToast();
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeShare();
+            closeMenus(null);
+        }
+    });
+
+    // ⋮ basanda menyu açılır; menyudan kənara basanda bağlanır
+    document.addEventListener("click", function (event) {
+        var more = event.target.closest(".feed-more");
+        if (!more) {
+            if (!event.target.closest(".feed-menu")) closeMenus(null);
+            return;
+        }
+
+        var head = more.parentElement;
+        var menu = head.querySelector(".feed-menu");
+        if (!menu) {
+            var card = more.closest(".feed-card");
+            var note = more.closest(".feed-note");
+            menu = document.createElement("div");
+            menu.className = "feed-menu";
+            menu.hidden = true;
+            menu.innerHTML =
+                '<button type="button" data-menu="block">Block</button>' +
+                '<button type="button" data-menu="share">Share</button>';
+            head.appendChild(menu);
+
+            menu.querySelector("[data-menu='block']").addEventListener("click", function () {
+                menu.hidden = true;
+                // Backend gələndə istifadəçi qara siyahıya yazılacaq (Account → Blacklist)
+                showToast("You blocked the user");
+            });
+            menu.querySelector("[data-menu='share']").addEventListener("click", function () {
+                menu.hidden = true;
+                openShare(postLink(card, note));
+            });
+        }
+
+        closeMenus(menu);
+        menu.hidden = !menu.hidden;
+    });
+}
+
 document.querySelectorAll(".feed-card").forEach(function (card) {
     var photos = card.querySelector("[data-feed-photos]");
     if (photos) {
@@ -1289,12 +1422,7 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
     var share = card.querySelector(".feed-share");
     if (share) {
         share.addEventListener("click", function () {
-            var link = location.href.split("#")[0] + "#post-" + card.getAttribute("data-post-id");
-            if (navigator.share) {
-                navigator.share({ url: link }).catch(function () {});
-            } else if (navigator.clipboard) {
-                navigator.clipboard.writeText(link);
-            }
+            openShare(postLink(card, null));
         });
     }
 

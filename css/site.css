@@ -2698,6 +2698,198 @@ html.theme-day .theme-toggle { color: var(--ink); }
     .feed-replies { padding-left: .9rem; }
 }
 
+/* ⋮ menyusu: post və şərhdə Block / Share */
+.feed-head,
+.feed-note-head { position: relative; }
+
+.feed-menu {
+    position: absolute;
+    top: calc(100% - .2rem);
+    right: -.6rem;
+    z-index: 5;
+    min-width: 11rem;
+    padding: .35rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    background: #1c1c1c;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+}
+
+.feed-menu[hidden] { display: none; }
+
+.feed-menu button {
+    display: block;
+    width: 100%;
+    padding: .7rem .9rem;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: #ececec;
+    font: inherit;
+    font-size: 1.02rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.feed-menu button:hover { background: #2a2a2a; color: #fff; }
+
+/* Paylaşma pəncərəsi: link buferə kopyalanıb */
+.share-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 74;
+    display: none;
+    place-items: center;
+    padding: 1.2rem;
+    background: rgba(0, 0, 0, .55);
+}
+
+.share-overlay.is-on { display: grid; }
+
+.share-modal {
+    width: 100%;
+    max-width: 38rem;
+    padding: 2.4rem 2rem 2rem;
+    border-radius: 30px;
+    background: #141414;
+    text-align: center;
+}
+
+.share-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1.1rem;
+    color: #fff;
+}
+
+.share-modal h2 {
+    margin: 0 0 1.6rem;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    text-transform: uppercase;
+}
+
+.share-link {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.1rem;
+    border: 0;
+    border-radius: 14px;
+    background: #1c1c1c;
+    color: #ececec;
+    font: inherit;
+    font-size: 1rem;
+    text-overflow: ellipsis;
+}
+
+.share-link:focus { outline: 1px solid var(--gold); }
+
+.share-modal p {
+    margin: 2rem 0 .9rem;
+    font-weight: 700;
+}
+
+.share-socials {
+    display: flex;
+    justify-content: center;
+    gap: .55rem;
+}
+
+.share-socials a {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    color: #111;
+    transition: transform .2s ease;
+}
+
+.share-socials a:hover { transform: translateY(-2px); }
+
+.share-socials svg { width: 22px; height: 22px; }
+
+/* Bildiriş: solda aşağıda çıxır, xətt bitəndə özü bağlanır */
+.toast {
+    position: fixed;
+    left: 1.6rem;
+    bottom: 1.6rem;
+    z-index: 76;
+    width: min(32rem, calc(100vw - 5.2rem));
+    padding: 1.2rem 1.4rem 1.3rem;
+    border-radius: 22px;
+    background: #1c1c1c;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .45);
+    opacity: 0;
+    transform: translateY(14px);
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+}
+
+.toast.is-on {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+.toast-check {
+    width: 30px;
+    height: 30px;
+    margin-bottom: .55rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #1fb83a;
+    color: #fff;
+}
+
+.toast-check svg { width: 18px; height: 18px; }
+
+.toast-text {
+    margin: 0 0 .7rem;
+    color: #ececec;
+    font-size: 1.05rem;
+}
+
+.toast-bar {
+    height: 5px;
+    border-radius: 999px;
+    background: #1fb83a;
+    transform-origin: left;
+}
+
+.toast.is-on .toast-bar { animation: toast-bar 4s linear forwards; }
+
+@keyframes toast-bar {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+.toast-close {
+    position: absolute;
+    top: -.9rem;
+    right: -2.6rem;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: #1c1c1c;
+    color: #fff;
+    cursor: pointer;
+}
+
+.toast-close svg { width: 16px; height: 16px; }
+
+@media (max-width: 700px) {
+    .share-modal { padding: 1.8rem 1.2rem 1.5rem; border-radius: 24px; }
+    .toast { left: 1rem; bottom: 1rem; width: calc(100vw - 4.6rem); }
+}
+
 @media (max-width: 700px) {
     .feed-card { padding: 1.1rem 1rem 1rem; border-radius: 20px; }
     .feed-avatar { flex-basis: 46px; width: 46px; height: 46px; }
@@ -5714,6 +5906,35 @@ html.theme-day {
     background: var(--hover);
     color: var(--text);
 }
+.feed-menu {
+    border-color: var(--line);
+    background: #fff;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .12);
+}
+.feed-menu button { color: var(--text); }
+.feed-menu button:hover { background: #f3f3f4; color: var(--text); }
+.share-overlay { background: rgba(0, 0, 0, .18); }
+.share-modal {
+    background: #fff;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .1);
+}
+.share-icon { color: var(--ink); }
+.share-link {
+    background: #f3f3f4;
+    color: var(--text);
+}
+.share-socials a {
+    background: var(--ink);
+    color: #fff;
+}
+.toast,
+.toast-close {
+    background: #f3f3f4;
+    border-color: var(--line);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .1);
+}
+.toast-text { color: var(--text); }
+.toast-close { color: var(--text); background: #fff; }
 .feed-comment-photo:hover { color: var(--text); }
 
 .journal-tags a {
