@@ -1144,8 +1144,66 @@ if (readingBoard) {
     renderReading();
 }
 
-// Community postları: şəkil karuseli, like/dislike, yadda saxlama, izləmə və şərh.
+// Community postları: şəkil karuseli, like/dislike, yadda saxlama, izləmə, şərhlər və cavablar.
 // Hələlik hər şey səhifədədir; backend gələndə düymələr API-yə sorğu göndərəcək
+
+// Like +1 edir, dislike sayı göstərmir; ikisi eyni anda seçilə bilməz. Post və hər şərh üçün ayrıca işləyir
+function bindVotes(box) {
+    var like = box.querySelector(":scope > .feed-like");
+    var dislike = box.querySelector(":scope > .feed-dislike");
+    var score = box.querySelector(":scope > .feed-score");
+    if (!like || !dislike || !score) return;
+    var baseScore = parseInt(score.textContent, 10) || 0;
+
+    function setVote(likeOn, dislikeOn) {
+        like.classList.toggle("is-on", likeOn);
+        like.setAttribute("aria-pressed", likeOn ? "true" : "false");
+        dislike.classList.toggle("is-on", dislikeOn);
+        dislike.setAttribute("aria-pressed", dislikeOn ? "true" : "false");
+        score.textContent = baseScore + (likeOn ? 1 : 0);
+    }
+
+    like.addEventListener("click", function () {
+        setVote(!like.classList.contains("is-on"), false);
+    });
+    dislike.addEventListener("click", function () {
+        setVote(false, !dislike.classList.contains("is-on"));
+    });
+}
+
+function bindNote(note, card) {
+    var actions = note.querySelector(":scope > .feed-note-actions");
+    if (actions) bindVotes(actions);
+
+    // "Reply" şərh sahəsinə müəllifin adını yazır
+    var reply = actions ? actions.querySelector(".feed-reply") : null;
+    var input = card.querySelector(".feed-comment input[type='text']");
+    if (reply && input) {
+        reply.addEventListener("click", function () {
+            var name = note.querySelector(".feed-name a").textContent.trim();
+            input.value = "@" + name + ", ";
+            input.focus();
+            input.setSelectionRange(input.value.length, input.value.length);
+        });
+    }
+
+    var toggle = note.querySelector(":scope > .feed-replies-toggle");
+    var replies = note.querySelector(":scope > .feed-replies");
+    if (toggle && replies) {
+        toggle.addEventListener("click", function () {
+            var open = replies.hidden;
+            replies.hidden = !open;
+            toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    }
+}
+
+function escapeHtml(text) {
+    var box = document.createElement("div");
+    box.textContent = text;
+    return box.innerHTML;
+}
+
 document.querySelectorAll(".feed-card").forEach(function (card) {
     var photos = card.querySelector("[data-feed-photos]");
     if (photos) {
@@ -1206,28 +1264,8 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
         }
     }
 
-    var like = card.querySelector(".feed-like");
-    var dislike = card.querySelector(".feed-dislike");
-    var score = card.querySelector(".feed-score");
-    var baseScore = score ? parseInt(score.textContent, 10) || 0 : 0;
-
-    // Like +1, dislike sayı göstərmir; ikisi eyni anda seçilə bilməz
-    function setVote(likeOn, dislikeOn) {
-        like.classList.toggle("is-on", likeOn);
-        like.setAttribute("aria-pressed", likeOn ? "true" : "false");
-        dislike.classList.toggle("is-on", dislikeOn);
-        dislike.setAttribute("aria-pressed", dislikeOn ? "true" : "false");
-        score.textContent = baseScore + (likeOn ? 1 : 0);
-    }
-
-    if (like && dislike && score) {
-        like.addEventListener("click", function () {
-            setVote(!like.classList.contains("is-on"), false);
-        });
-        dislike.addEventListener("click", function () {
-            setVote(false, !dislike.classList.contains("is-on"));
-        });
-    }
+    var postActions = card.querySelector(".feed-actions");
+    if (postActions) bindVotes(postActions);
 
     var save = card.querySelector(".feed-save");
     if (save) {
@@ -1260,12 +1298,32 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
         });
     }
 
+    // Şərh düyməsi şərhləri açıb-bağlayır
+    var thread = card.querySelector(".feed-thread");
+    var commentsBtn = card.querySelector(".feed-comments");
+    var commentsCount = commentsBtn ? commentsBtn.querySelector("span") : null;
+
+    function setThread(open) {
+        if (!thread || !commentsBtn) return;
+        thread.hidden = !open;
+        commentsBtn.classList.toggle("is-on", open);
+        commentsBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    if (thread && commentsBtn) {
+        commentsBtn.addEventListener("click", function () {
+            setThread(thread.hidden);
+        });
+        thread.querySelectorAll(".feed-note").forEach(function (note) {
+            bindNote(note, card);
+        });
+    }
+
     var comment = card.querySelector(".feed-comment");
     if (comment) {
         var text = comment.querySelector("input[type='text']");
         var file = comment.querySelector("input[type='file']");
         var photoBtn = comment.querySelector(".feed-comment-photo");
-        var comments = card.querySelector(".feed-comments span");
 
         if (file && photoBtn) {
             file.addEventListener("change", function () {
@@ -1273,16 +1331,47 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
             });
         }
 
-        // Boş şərh göndərilmir: ya mətn, ya şəkil olmalıdır
+        // Boş şərh göndərilmir: ya mətn, ya şəkil olmalıdır. Yeni şərh siyahının sonuna düşür
         comment.addEventListener("submit", function (event) {
             event.preventDefault();
-            var hasText = text.value.trim().length > 0;
+            var value = text.value.trim();
             var hasPhoto = file && file.files.length > 0;
-            if (!hasText && !hasPhoto) {
+            if (!value && !hasPhoto) {
                 text.focus();
                 return;
             }
-            if (comments) comments.textContent = (parseInt(comments.textContent, 10) || 0) + 1;
+
+            if (thread) {
+                var today = new Date();
+                var date = ("0" + today.getDate()).slice(-2) + "." + ("0" + (today.getMonth() + 1)).slice(-2) + "." + today.getFullYear();
+                var template = thread.querySelector(".feed-note");
+                var note = document.createElement("article");
+                note.className = "feed-note";
+                note.innerHTML =
+                    '<div class="feed-note-head">' +
+                        '<div class="feed-note-avatar">Y</div>' +
+                        '<div class="feed-who"><div class="feed-name"><a href="account.html">You</a></div><div class="feed-role">Coffee lover</div></div>' +
+                        '<time class="feed-date">' + date + "</time>" +
+                    "</div>" +
+                    '<p class="feed-note-text">' + (value ? escapeHtml(value) : "Photo") + "</p>" +
+                    '<div class="feed-note-actions">' +
+                        (template ? template.querySelector(".feed-like").outerHTML : '<button type="button" class="feed-like">+</button>') +
+                        '<span class="feed-score">0</span>' +
+                        (template ? template.querySelector(".feed-dislike").outerHTML : '<button type="button" class="feed-dislike">-</button>') +
+                        '<button type="button" class="feed-reply">Reply</button>' +
+                    "</div>";
+                note.querySelectorAll("[aria-pressed]").forEach(function (item) {
+                    item.classList.remove("is-on");
+                    item.setAttribute("aria-pressed", "false");
+                });
+                var empty = thread.querySelector(".feed-thread-empty");
+                thread.insertBefore(note, empty);
+                if (empty) empty.hidden = true;
+                bindNote(note, card);
+                setThread(true);
+            }
+
+            if (commentsCount) commentsCount.textContent = (parseInt(commentsCount.textContent, 10) || 0) + 1;
             comment.reset();
             if (photoBtn) photoBtn.classList.remove("is-on");
         });

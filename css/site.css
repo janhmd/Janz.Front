@@ -2544,6 +2544,160 @@ html.theme-day .theme-toggle { color: var(--ink); }
 .feed-comment-send svg { width: 22px; height: 22px; }
 .feed-comment-send:hover { background: #2a2a2a; }
 
+/* Şərhlər: şərh düyməsinə basanda postun altında açılır. Cavablar "N replies" ilə açılır */
+.feed-thread {
+    margin-top: 1.4rem;
+    border-top: 1px solid #2a2a2a;
+}
+
+.feed-thread[hidden] { display: none; }
+
+.feed-note {
+    padding: 1.6rem 0;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.feed-note-head {
+    display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+}
+
+.feed-note-avatar {
+    flex: 0 0 56px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #2a2a2a;
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.feed-note-avatar.is-mini {
+    flex-basis: 22px;
+    width: 22px;
+    height: 22px;
+    font-size: .7rem;
+}
+
+.feed-note-text {
+    margin: 1.1rem 0 0;
+    color: #ececec;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.feed-note-actions {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1.1rem;
+}
+
+.feed-note-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 .6rem;
+    border: 0;
+    border-radius: 12px;
+    background: #1c1c1c;
+    color: #d5d5d5;
+    font: inherit;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+
+.feed-note-actions button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.feed-note-actions button:hover {
+    background: #2a2a2a;
+    color: #fff;
+}
+
+.feed-note-actions button.is-on { color: var(--gold); }
+
+.feed-note-actions .feed-reply {
+    height: 32px;
+    padding: 0 .7rem;
+    border-radius: 9px;
+    background: #2a2a2a;
+    color: #fff;
+    font-weight: 600;
+}
+
+.feed-note-actions .feed-reply:hover { background: #3a3a3a; }
+
+.feed-edited {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    margin-left: auto;
+    color: #8d8d8d;
+}
+
+.feed-edited svg {
+    width: 16px;
+    height: 16px;
+}
+
+.feed-replies-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1.2rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #8eb4ff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.feed-replies-toggle > svg {
+    width: 18px;
+    height: 18px;
+}
+
+.feed-replies-toggle:hover { color: #fff; }
+
+.feed-replies {
+    margin-top: .4rem;
+    padding-left: 1.6rem;
+    border-left: 2px solid #2a2a2a;
+}
+
+.feed-replies[hidden] { display: none; }
+
+.feed-replies .feed-note:last-child { border-bottom: 0; padding-bottom: .4rem; }
+.feed-replies .feed-note-avatar { flex-basis: 44px; width: 44px; height: 44px; font-size: 1rem; }
+
+.feed-thread-empty {
+    margin: 0;
+    padding: 1.4rem 0 .2rem;
+    color: #8d8d8d;
+    text-align: center;
+}
+
+.feed-thread-empty[hidden] { display: none; }
+
+.feed-actions .feed-comments.is-on { background: #2a2a2a; color: #fff; }
+
+@media (max-width: 700px) {
+    .feed-note { padding: 1.1rem 0; }
+    .feed-note-avatar { flex-basis: 44px; width: 44px; height: 44px; }
+    .feed-note-text { font-size: 1rem; }
+    .feed-replies { padding-left: .9rem; }
+}
+
 @media (max-width: 700px) {
     .feed-card { padding: 1.1rem 1rem 1rem; border-radius: 20px; }
     .feed-avatar { flex-basis: 46px; width: 46px; height: 46px; }
@@ -5533,6 +5687,33 @@ html.theme-day {
 
 .feed-actions button.is-on { color: #a5793a; }
 .feed-comment-photo { color: #3a3a3a; }
+.feed-thread,
+.feed-note { border-color: var(--line); }
+.feed-note-avatar { background: var(--hover); }
+.feed-note-text { color: var(--text); }
+.feed-note-actions button {
+    background: #f3f3f4;
+    color: #3a3a3a;
+}
+.feed-note-actions button:hover {
+    background: var(--hover);
+    color: var(--text);
+}
+.feed-note-actions button.is-on { color: #a5793a; }
+.feed-note-actions .feed-reply {
+    background: var(--hover);
+    color: var(--text);
+}
+.feed-note-actions .feed-reply:hover { background: #d8d8d8; }
+.feed-edited,
+.feed-thread-empty { color: var(--muted); }
+.feed-replies-toggle { color: #2f6fe4; }
+.feed-replies-toggle:hover { color: var(--text); }
+.feed-replies { border-color: var(--line); }
+.feed-actions .feed-comments.is-on {
+    background: var(--hover);
+    color: var(--text);
+}
 .feed-comment-photo:hover { color: var(--text); }
 
 .journal-tags a {
