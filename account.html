@@ -83,7 +83,7 @@
             <div class="cabinet-top">
                 <h1>Personal account</h1>
                 <div class="cabinet-balance">
-                    <a href="#ledger">Replenish</a>
+                    <a class="cabinet-replenish" href="#ledger">Replenish</a>
                     <a class="cabinet-balance-sum" href="#ledger"><strong>Balance 0₼</strong></a>
                 </div>
             </div>
@@ -438,10 +438,18 @@
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="journal" hidden>
-                        <div class="cabinet-empty">
-                            <h2>Nothing saved in the journal</h2>
-                            <p>Articles you read will stay here</p>
-                            <a href="journal.html">To journal</a>
+                        <div class="reading-board is-empty">
+                            <div class="reading-tabs">
+                                <button type="button" class="is-on" data-read="progress">In progress <span>0</span></button>
+                                <button type="button" data-read="read">Read <span>0</span></button>
+                                <button type="button" data-read="saved">Bookmarks <span>0</span></button>
+                            </div>
+                            <div class="reading-list"></div>
+                            <div class="cabinet-empty reading-empty">
+                                <h2>Nothing saved in the journal</h2>
+                                <p>Articles you read will stay here</p>
+                                <a href="journal.html">To journal</a>
+                            </div>
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="blacklist" hidden>
@@ -672,6 +680,36 @@
             </label>
             <button type="submit" class="edit-save">Save</button>
             <button type="button" class="edit-cancel">Cancel</button>
+        </form>
+    </div>
+    <div class="edit-overlay topup-overlay">
+        <form class="edit-modal topup-modal" role="dialog" aria-modal="true" aria-labelledby="topup-title">
+            <h2 id="topup-title">Top up balance</h2>
+            <div class="topup-tabs">
+                <button type="button" class="is-on" data-topup="money">Money</button>
+                <button type="button" data-topup="certificate">Certificate</button>
+            </div>
+            <div class="topup-money">
+                <label class="topup-amount">
+                    <input type="text" name="amount" inputmode="decimal" placeholder="Amount" autocomplete="off" />
+                    <span>₼</span>
+                </label>
+                <button type="button" class="topup-pay is-on" aria-pressed="true">
+                    <span class="topup-pay-dot" aria-hidden="true"></span>
+                    <span>Visa, Mastercard</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.6" y="6.4" width="16.8" height="11.2" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.6 10.2h16.8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                </button>
+            </div>
+            <div class="topup-cert" hidden>
+                <label class="topup-amount">
+                    <input type="text" name="code" placeholder="Certificate code" autocomplete="off" />
+                </label>
+            </div>
+            <button type="submit" class="edit-save topup-submit">Top up <span class="topup-submit-sum"></span></button>
+            <label class="edit-check topup-agree">
+                <input type="checkbox" name="agree" checked />
+                I agree to the terms of data processing, the user agreement and the offer
+            </label>
         </form>
     </div>
     <div class="edit-overlay cook-overlay">

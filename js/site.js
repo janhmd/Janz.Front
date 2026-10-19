@@ -258,6 +258,92 @@ if (cardOverlay && cardForm) {
     });
 }
 
+var topupOverlay = document.querySelector(".topup-overlay");
+var topupForm = topupOverlay ? topupOverlay.querySelector(".topup-modal") : null;
+var topupKind = "money";
+
+function syncTopupLabel() {
+    if (!topupForm) return;
+    var mark = topupForm.querySelector(".topup-submit-sum");
+    if (!mark) return;
+    var add = parseFloat(topupForm.amount.value);
+    mark.textContent = topupKind === "money" && add > 0 ? add + "₼" : "";
+}
+
+function closeTopup() {
+    if (!topupOverlay) return;
+    topupOverlay.classList.remove("is-on");
+}
+
+function openTopup() {
+    if (!topupOverlay || !topupForm) return;
+    topupForm.reset();
+    topupForm.agree.checked = true;
+    topupKind = "money";
+    topupForm.querySelectorAll(".topup-tabs button").forEach(function (button) {
+        button.classList.toggle("is-on", button.getAttribute("data-topup") === "money");
+    });
+    topupForm.querySelector(".topup-money").hidden = false;
+    topupForm.querySelector(".topup-cert").hidden = true;
+    topupOverlay.classList.add("is-on");
+    syncTopupLabel();
+    if (topupForm.amount) topupForm.amount.focus();
+}
+
+function setBalance(value) {
+    var sum = document.querySelector(".cabinet-balance-sum strong");
+    if (sum) sum.textContent = "Balance " + value + "₼";
+}
+
+function readBalance() {
+    var sum = document.querySelector(".cabinet-balance-sum strong");
+    if (!sum) return 0;
+    var n = parseFloat(sum.textContent.replace(/[^\d.]/g, ""));
+    return isNaN(n) ? 0 : n;
+}
+
+if (topupOverlay && topupForm) {
+    document.querySelectorAll(".cabinet-replenish").forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+            openTopup();
+        });
+    });
+    topupOverlay.addEventListener("click", function (event) {
+        if (event.target === topupOverlay) closeTopup();
+    });
+    topupForm.querySelectorAll(".topup-tabs button").forEach(function (button) {
+        button.addEventListener("click", function () {
+            topupKind = button.getAttribute("data-topup");
+            topupForm.querySelectorAll(".topup-tabs button").forEach(function (tab) {
+                tab.classList.toggle("is-on", tab === button);
+            });
+            topupForm.querySelector(".topup-money").hidden = topupKind !== "money";
+            topupForm.querySelector(".topup-cert").hidden = topupKind !== "certificate";
+            if (topupKind === "money") topupForm.amount.focus();
+            else topupForm.code.focus();
+            syncTopupLabel();
+        });
+    });
+    topupForm.amount.addEventListener("input", function () {
+        topupForm.amount.value = topupForm.amount.value.replace(/[^\d.,]/g, "").replace(",", ".");
+        syncTopupLabel();
+    });
+    topupForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!topupForm.agree.checked) return;
+        if (topupKind === "certificate") {
+            if (!topupForm.code.value.trim()) return;
+            closeTopup();
+            return;
+        }
+        var add = parseFloat(topupForm.amount.value);
+        if (!add || add <= 0) return;
+        setBalance(Math.round((readBalance() + add) * 100) / 100);
+        closeTopup();
+    });
+}
+
 var cookOverlay = document.querySelector(".cook-overlay");
 var cookForm = cookOverlay ? cookOverlay.querySelector(".cook-modal") : null;
 var cookList = document.querySelector(".profile-cook-list");
@@ -404,6 +490,7 @@ document.addEventListener("keydown", function (event) {
     closeCard();
     closeCook();
     closeAbout();
+    closeTopup();
     document.querySelectorAll(".search[open], .search-where[open]").forEach(function (menu) {
         menu.removeAttribute("open");
     });
@@ -899,4 +986,160 @@ if (promo) {
     promo.querySelector("[aria-label='Next']").addEventListener("click", function () {
         showSlide(slideIndex + 1);
     });
+}
+
+var readingKey = "janz-reading";
+var readingEmptyCopy = {
+    progress: { title: "Nothing in progress", text: "Open an article and scroll about halfway" },
+    read: { title: "Nothing read yet", text: "Finish an article to keep it here" },
+    saved: { title: "No bookmarks", text: "Save an article from the journal" }
+};
+
+function loadReading() {
+    try {
+        return JSON.parse(localStorage.getItem(readingKey) || "{}");
+    } catch (error) {
+        return {};
+    }
+}
+
+function saveReading(map) {
+    localStorage.setItem(readingKey, JSON.stringify(map));
+}
+
+function articleMeta(root) {
+    return {
+        id: root.getAttribute("data-id"),
+        title: root.getAttribute("data-title"),
+        topic: root.getAttribute("data-topic"),
+        date: root.getAttribute("data-date"),
+        lead: root.getAttribute("data-lead"),
+        image: root.getAttribute("data-image"),
+        href: root.getAttribute("data-href") || "article.html",
+        likes: root.getAttribute("data-likes") || "0",
+        comments: root.getAttribute("data-comments") || "0",
+        views: root.getAttribute("data-views") || "0",
+        mins: root.getAttribute("data-mins") || "0'"
+    };
+}
+
+function rememberArticle(root, patch) {
+    var id = root.getAttribute("data-id");
+    if (!id) return;
+    var map = loadReading();
+    var cur = map[id] || articleMeta(root);
+    if (patch.status === "progress" && cur.status === "read") {
+        delete patch.status;
+    }
+    Object.keys(patch).forEach(function (key) {
+        cur[key] = patch[key];
+    });
+    map[id] = cur;
+    saveReading(map);
+}
+
+var articleRoot = document.getElementById("article");
+if (articleRoot && articleRoot.getAttribute("data-id")) {
+    var bookmarkBtn = articleRoot.querySelector(".article-bookmark");
+    var storedArticle = loadReading()[articleRoot.getAttribute("data-id")];
+    if (bookmarkBtn && storedArticle && storedArticle.bookmarked) {
+        bookmarkBtn.classList.add("is-on");
+    }
+
+    function pageProgress() {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        if (max <= 80) return 0;
+        return Math.min(1, window.scrollY / max);
+    }
+
+    function trackArticle() {
+        var progress = pageProgress();
+        if (progress >= 0.9) {
+            rememberArticle(articleRoot, { status: "read", progress: progress });
+        } else if (progress >= 0.4) {
+            rememberArticle(articleRoot, { status: "progress", progress: progress });
+        }
+    }
+
+    window.addEventListener("scroll", trackArticle, { passive: true });
+
+    if (bookmarkBtn) {
+        bookmarkBtn.addEventListener("click", function () {
+            var id = articleRoot.getAttribute("data-id");
+            var on = !(loadReading()[id] && loadReading()[id].bookmarked);
+            bookmarkBtn.classList.toggle("is-on", on);
+            rememberArticle(articleRoot, { bookmarked: on });
+        });
+    }
+}
+
+var readingBoard = document.querySelector(".reading-board");
+if (readingBoard) {
+    var readingTabs = readingBoard.querySelectorAll("[data-read]");
+    var readingList = readingBoard.querySelector(".reading-list");
+    var readingEmpty = readingBoard.querySelector(".reading-empty");
+    var readingFilter = "progress";
+
+    function readingItems() {
+        var map = loadReading();
+        return Object.keys(map).map(function (id) {
+            return map[id];
+        });
+    }
+
+    function renderReading() {
+        var items = readingItems();
+        var counts = { progress: 0, read: 0, saved: 0 };
+        items.forEach(function (item) {
+            if (item.status === "read") counts.read += 1;
+            else if (item.status === "progress") counts.progress += 1;
+            if (item.bookmarked) counts.saved += 1;
+        });
+        readingTabs.forEach(function (tab) {
+            var key = tab.getAttribute("data-read");
+            tab.classList.toggle("is-on", key === readingFilter);
+            var count = tab.querySelector("span");
+            if (count) count.textContent = counts[key] || 0;
+        });
+        var shown = items.filter(function (item) {
+            if (readingFilter === "saved") return item.bookmarked;
+            return item.status === readingFilter;
+        });
+        readingList.innerHTML = "";
+        shown.forEach(function (item) {
+            var card = document.createElement("a");
+            card.className = "journal-card";
+            card.href = item.href || "article.html";
+            card.innerHTML =
+                '<img src="' + (item.image || "images/aroma-kit.png") + '" alt="" />' +
+                '<div class="body">' +
+                    '<div class="meta">' + (item.topic || "") + "<br>" + (item.date || "") + "</div>" +
+                    "<h3>" + (item.title || "Article") + "</h3>" +
+                    "<p>" + (item.lead || "") + "</p>" +
+                    '<div class="journal-stats">' +
+                        '<span><svg viewBox="0 0 24 24"><path d="M8 11v9H5.2A1.2 1.2 0 0 1 4 18.8v-6.6A1.2 1.2 0 0 1 5.2 11H8zm0 0l3.2-6.1A2.2 2.2 0 0 1 13.2 4h.3A2.5 2.5 0 0 1 16 6.5V11h3.7a1.8 1.8 0 0 1 1.8 2.1l-1.2 6.2A1.8 1.8 0 0 1 18.5 21H8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>' + (item.likes || "0") + "</span>" +
+                        '<span><svg viewBox="0 0 24 24"><path d="M5 6.5h14v9.2H9.2L5 19.2V6.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>' + (item.comments || "0") + "</span>" +
+                        '<span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>' + (item.views || "0") + "</span>" +
+                        '<span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v4.2l2.6 1.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>' + (item.mins || "0'") + "</span>" +
+                    "</div>" +
+                "</div>";
+            readingList.appendChild(card);
+        });
+        readingBoard.classList.toggle("is-empty", shown.length === 0);
+        if (readingEmpty) {
+            var copy = readingEmptyCopy[readingFilter] || readingEmptyCopy.progress;
+            var title = readingEmpty.querySelector("h2");
+            var text = readingEmpty.querySelector("p");
+            if (title) title.textContent = copy.title;
+            if (text) text.textContent = copy.text;
+        }
+    }
+
+    readingTabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+            readingFilter = tab.getAttribute("data-read");
+            renderReading();
+        });
+    });
+    renderReading();
 }

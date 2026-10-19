@@ -2890,9 +2890,75 @@ a.journal-card:hover { transform: translateY(-3px); }
     animation: cabinet-pane-in .35s ease;
 }
 
+.cabinet-pane[data-pane="journal"] { width: 100%; }
+
+.reading-board { width: 100%; max-width: 36rem; }
+
+.reading-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .7rem 1.15rem;
+    margin: 0 0 1.4rem;
+}
+
+.reading-tabs button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #8d8d8d;
+    font: inherit;
+    font-size: .92rem;
+    cursor: pointer;
+    transition: color .2s ease;
+}
+
+.reading-tabs button:hover,
+.reading-tabs button.is-on {
+    color: inherit;
+}
+
+.reading-tabs button.is-on { font-weight: 800; }
+
+.reading-tabs span { margin-left: .2rem; }
+
+.reading-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.reading-list .journal-card { background: transparent; }
+
+.reading-list .journal-card img {
+    height: 240px;
+    border-radius: 22px;
+}
+
+.reading-list .journal-card .body { padding: .85rem .1rem 0; }
+
+.reading-list .journal-stats span {
+    display: inline-flex;
+    align-items: center;
+    gap: .28rem;
+}
+
+.reading-list .journal-stats svg {
+    width: 14px;
+    height: 14px;
+}
+
+.reading-board.is-empty {
+    min-height: 22rem;
+}
+
+.reading-board.is-empty .reading-empty { display: block; }
+
+.reading-empty { display: none; }
+
+.article-bookmark.is-on { color: inherit; }
+
 .cabinet-pane[data-pane="orders"],
 .cabinet-pane[data-pane="ledger"],
-.cabinet-pane[data-pane="journal"],
 .cabinet-pane[data-pane="blacklist"] {
     display: flex;
     align-items: center;
@@ -4070,6 +4136,128 @@ a.journal-card:hover { transform: translateY(-3px); }
     padding: 0 1.4rem;
 }
 
+.topup-modal { max-width: 26rem; }
+
+.topup-tabs {
+    display: flex;
+    width: fit-content;
+    margin: 0 0 1.35rem;
+    padding: .22rem;
+    border-radius: 999px;
+    background: #1c1c1c;
+}
+
+.topup-tabs button {
+    height: 36px;
+    padding: 0 1rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #8d8d8d;
+    font: inherit;
+    font-size: .82rem;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.topup-tabs button.is-on {
+    background: #fff;
+    color: #111;
+}
+
+.topup-tabs button:hover { color: inherit; }
+
+.topup-amount {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    margin: 0 0 1.15rem;
+    padding: 0 1rem;
+    border-radius: 999px;
+    background: #1c1c1c;
+}
+
+.topup-amount input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+}
+
+.topup-amount input:focus { outline: none; }
+.topup-amount input::placeholder { color: #8d8d8d; }
+
+.topup-amount span {
+    flex: 0 0 auto;
+    color: #8d8d8d;
+}
+
+.topup-pay {
+    display: grid;
+    grid-template-columns: 1.1rem 1fr 1.4rem;
+    align-items: start;
+    gap: .75rem;
+    width: 11.5rem;
+    min-height: 7.2rem;
+    margin: 0 0 .4rem;
+    padding: 1rem 1.05rem;
+    border: 0;
+    border-radius: 22px;
+    background: #1c1c1c;
+    color: inherit;
+    font: inherit;
+    font-size: .95rem;
+    font-weight: 600;
+    text-align: left;
+    line-height: 1.3;
+    cursor: pointer;
+    transition: transform .22s ease, box-shadow .22s ease, background .2s ease;
+}
+
+.topup-pay:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+}
+
+.topup-pay-dot {
+    width: 16px;
+    height: 16px;
+    margin-top: .15rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 3px #1c1c1c;
+    background: #fff;
+}
+
+.topup-pay svg {
+    width: 22px;
+    height: 22px;
+    justify-self: end;
+}
+
+.topup-agree {
+    margin-top: 1.1rem;
+    align-items: flex-start;
+    line-height: 1.4;
+}
+
+.topup-money[hidden],
+.topup-cert[hidden] { display: none; }
+
+.topup-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+}
+
+.topup-submit-sum:empty { display: none; }
+
 @keyframes cook-chip-in {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: none; }
@@ -4747,7 +4935,9 @@ a.journal-card:hover { transform: translateY(-3px); }
     .details-edit,
     .details-add,
     .profile-cook-item,
-    .profile-edit { transition: none; }
+    .profile-edit,
+    .topup-pay,
+    .topup-tabs button { transition: none; }
     .catalog-tags .tag-minute,
     .cabinet-pane:not([hidden]),
     .cabinet-stats-blur article,
@@ -4884,6 +5074,7 @@ html.theme-day {
 .journal-count,
 .journal-card .meta,
 .journal-card p,
+.reading-tabs button,
 .score-block p,
 .score-count { color: var(--muted); }
 
@@ -5315,6 +5506,14 @@ html.theme-day {
 .cook-option.is-on { background: #111; color: #fff; }
 
 .cook-other input { background: #f3f3f3; }
+
+.topup-tabs,
+.topup-amount,
+.topup-pay { background: #f3f3f3; }
+
+.topup-tabs button.is-on { background: #fff; color: #111; }
+
+.topup-pay-dot { box-shadow: inset 0 0 0 3px #f3f3f3; }
 
 .edit-overlay { background: rgba(0, 0, 0, .18); }
 
