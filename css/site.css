@@ -2947,11 +2947,25 @@ a.journal-card:hover { transform: translateY(-3px); }
     height: 14px;
 }
 
+/* Boş olanda Orders-dakı kimi: tablar və mətn bir blok olaraq pane-in ortasındadır */
 .reading-board.is-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: none;
     min-height: 22rem;
 }
 
+.reading-board.is-empty .reading-tabs { justify-content: center; }
+
 .reading-board.is-empty .reading-empty { display: block; }
+
+@media (min-width: 1120px) {
+    .reading-board.is-empty {
+        transform: translateX(calc(-0.5 * (15rem + 2rem)));
+    }
+}
 
 .reading-empty { display: none; }
 
