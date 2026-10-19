@@ -1143,3 +1143,148 @@ if (readingBoard) {
     });
     renderReading();
 }
+
+// Community postları: şəkil karuseli, like/dislike, yadda saxlama, izləmə və şərh.
+// Hələlik hər şey səhifədədir; backend gələndə düymələr API-yə sorğu göndərəcək
+document.querySelectorAll(".feed-card").forEach(function (card) {
+    var photos = card.querySelector("[data-feed-photos]");
+    if (photos) {
+        var frame = photos.querySelector(".feed-frame");
+        var track = photos.querySelector(".feed-track");
+        var dots = photos.querySelectorAll(".feed-dots button");
+        var count = track.children.length;
+        var index = 0;
+        var startX = null;
+        var deltaX = 0;
+
+        function showPhoto(next) {
+            index = Math.max(0, Math.min(count - 1, next));
+            track.style.transform = "translateX(" + (-index * 100) + "%)";
+            dots.forEach(function (dot, n) {
+                dot.classList.toggle("is-on", n === index);
+            });
+        }
+
+        dots.forEach(function (dot, n) {
+            dot.addEventListener("click", function () {
+                showPhoto(n);
+            });
+        });
+
+        // Bir şəkil varsa sürüşdürmək lazım deyil
+        if (count > 1) {
+            frame.addEventListener("pointerdown", function (event) {
+                startX = event.clientX;
+                deltaX = 0;
+                frame.classList.add("is-dragging");
+                frame.setPointerCapture(event.pointerId);
+            });
+
+            frame.addEventListener("pointermove", function (event) {
+                if (startX === null) return;
+                deltaX = event.clientX - startX;
+                var shift = -index * frame.clientWidth + deltaX;
+                track.style.transform = "translateX(" + shift + "px)";
+            });
+
+            function endDrag() {
+                if (startX === null) return;
+                frame.classList.remove("is-dragging");
+                // Şəklin beşdə biri qədər çəkilibsə növbəti/əvvəlki şəkil açılır
+                if (Math.abs(deltaX) > frame.clientWidth / 5) {
+                    showPhoto(index + (deltaX < 0 ? 1 : -1));
+                } else {
+                    showPhoto(index);
+                }
+                startX = null;
+            }
+
+            frame.addEventListener("pointerup", endDrag);
+            frame.addEventListener("pointercancel", endDrag);
+        } else {
+            frame.style.cursor = "default";
+        }
+    }
+
+    var like = card.querySelector(".feed-like");
+    var dislike = card.querySelector(".feed-dislike");
+    var score = card.querySelector(".feed-score");
+    var baseScore = score ? parseInt(score.textContent, 10) || 0 : 0;
+
+    // Like +1, dislike sayı göstərmir; ikisi eyni anda seçilə bilməz
+    function setVote(likeOn, dislikeOn) {
+        like.classList.toggle("is-on", likeOn);
+        like.setAttribute("aria-pressed", likeOn ? "true" : "false");
+        dislike.classList.toggle("is-on", dislikeOn);
+        dislike.setAttribute("aria-pressed", dislikeOn ? "true" : "false");
+        score.textContent = baseScore + (likeOn ? 1 : 0);
+    }
+
+    if (like && dislike && score) {
+        like.addEventListener("click", function () {
+            setVote(!like.classList.contains("is-on"), false);
+        });
+        dislike.addEventListener("click", function () {
+            setVote(false, !dislike.classList.contains("is-on"));
+        });
+    }
+
+    var save = card.querySelector(".feed-save");
+    if (save) {
+        save.addEventListener("click", function () {
+            var on = !save.classList.contains("is-on");
+            save.classList.toggle("is-on", on);
+            save.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+    }
+
+    var follow = card.querySelector(".feed-follow");
+    if (follow) {
+        follow.addEventListener("click", function () {
+            var on = !follow.classList.contains("is-on");
+            follow.classList.toggle("is-on", on);
+            follow.setAttribute("aria-pressed", on ? "true" : "false");
+            follow.textContent = on ? "Following" : "Follow";
+        });
+    }
+
+    var share = card.querySelector(".feed-share");
+    if (share) {
+        share.addEventListener("click", function () {
+            var link = location.href.split("#")[0] + "#post-" + card.getAttribute("data-post-id");
+            if (navigator.share) {
+                navigator.share({ url: link }).catch(function () {});
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(link);
+            }
+        });
+    }
+
+    var comment = card.querySelector(".feed-comment");
+    if (comment) {
+        var text = comment.querySelector("input[type='text']");
+        var file = comment.querySelector("input[type='file']");
+        var photoBtn = comment.querySelector(".feed-comment-photo");
+        var comments = card.querySelector(".feed-comments span");
+
+        if (file && photoBtn) {
+            file.addEventListener("change", function () {
+                photoBtn.classList.toggle("is-on", file.files.length > 0);
+            });
+        }
+
+        // Boş şərh göndərilmir: ya mətn, ya şəkil olmalıdır
+        comment.addEventListener("submit", function (event) {
+            event.preventDefault();
+            var hasText = text.value.trim().length > 0;
+            var hasPhoto = file && file.files.length > 0;
+            if (!hasText && !hasPhoto) {
+                text.focus();
+                return;
+            }
+            if (comments) comments.textContent = (parseInt(comments.textContent, 10) || 0) + 1;
+            comment.reset();
+            if (photoBtn) photoBtn.classList.remove("is-on");
+        });
+    }
+});

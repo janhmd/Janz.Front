@@ -2213,122 +2213,350 @@ html.theme-day .theme-toggle { color: var(--ink); }
 .feed {
     display: flex;
     flex-direction: column;
-    gap: .9rem;
+    gap: 1rem;
 }
 
+/* Post kartı: başlıq, mətn, şəkillər, məhsul, taglar, düymələr və şərh sahəsi. Mətn və şəkil istəyə bağlıdır */
 .feed-card {
-    padding: 1.1rem 1.2rem 1rem;
+    padding: 1.6rem 1.8rem 1.5rem;
     border: 1px solid #2a2a2a;
-    border-radius: 20px;
+    border-radius: 26px;
     background: #141414;
 }
 
 .feed-head {
     display: flex;
-    align-items: center;
-    gap: .75rem;
-    margin-bottom: .85rem;
+    align-items: flex-start;
+    gap: .9rem;
 }
 
 .feed-avatar {
-    width: 42px;
-    height: 42px;
+    position: relative;
+    flex: 0 0 56px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     display: grid;
     place-items: center;
     background: #2a2a2a;
+    font-size: 1.2rem;
     font-weight: 700;
 }
 
-.feed-who { flex: 1 1 auto; min-width: 0; }
-.feed-name { font-weight: 700; }
-.feed-role { color: #9a9a9a; font-size: .82rem; }
-.feed-date { color: #9a9a9a; font-size: .82rem; }
+.feed-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
-.feed-copy {
-    margin: 0;
+.feed-avatar.is-brand {
+    border: 1px solid #4a4a4a;
+    background: #111;
+}
+
+/* Kiçik gülən üz: ambassador və komanda nişanı */
+.feed-badge {
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #141414;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #b8f1d8, #e6c8ff);
+    color: #111;
+}
+
+.feed-badge svg { width: 14px; height: 14px; }
+
+.feed-who {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-top: .3rem;
+}
+
+.feed-name {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .2rem .45rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.feed-follow {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #8eb4ff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.feed-follow:hover { color: #fff; }
+.feed-follow.is-on { color: #8d8d8d; }
+
+.feed-role {
+    margin-top: .15rem;
+    color: #9a9a9a;
+    font-size: .95rem;
+}
+
+.feed-date {
+    padding-top: .3rem;
+    color: #9a9a9a;
+    font-size: .95rem;
+    white-space: nowrap;
+}
+
+.feed-more {
+    width: 28px;
+    height: 32px;
+    margin: .1rem -.5rem 0 -.1rem;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    color: #9a9a9a;
+    cursor: pointer;
+}
+
+.feed-more svg { width: 18px; height: 18px; }
+.feed-more:hover { color: #fff; }
+
+.feed-text {
+    margin-top: 1.2rem;
     color: #ececec;
-    line-height: 1.55;
+    font-size: 1.05rem;
+    line-height: 1.5;
 }
 
-.feed-copy + .feed-copy { margin-top: .7rem; }
+.feed-text p { margin: 0; }
+.feed-text p + p { margin-top: 1.1rem; }
 
-.feed-photos {
-    margin: 1rem -1.2rem 0;
+/* Şəkillər: bir və ya bir neçə şəkil, sürüşdürmək və ya nöqtələrə basmaqla dəyişir */
+.feed-photos { margin-top: 1.4rem; }
+
+.feed-frame {
     overflow: hidden;
+    border-radius: 14px;
+    background: #1c1c1c;
+    touch-action: pan-y;
+    cursor: grab;
 }
+
+.feed-frame.is-dragging { cursor: grabbing; }
 
 .feed-track {
     display: flex;
-    transition: transform .25s ease;
+    transition: transform .3s ease;
 }
+
+.feed-frame.is-dragging .feed-track { transition: none; }
 
 .feed-track img {
     flex: 0 0 100%;
     width: 100%;
-    max-height: 380px;
-    object-fit: cover;
+    height: 420px;
+    object-fit: contain;
+    user-select: none;
 }
 
 .feed-dots {
     display: flex;
     justify-content: center;
-    gap: .35rem;
-    margin: .7rem 0 .2rem;
+    gap: .55rem;
+    margin-top: .8rem;
 }
 
-.feed-dots i {
-    width: 7px;
-    height: 7px;
+.feed-dots button {
+    width: 11px;
+    height: 11px;
+    padding: 0;
+    border: 1.5px solid #9a9a9a;
     border-radius: 50%;
-    background: #3a3a3a;
+    background: transparent;
+    cursor: pointer;
 }
 
-.feed-dots i.is-on { background: #fff; }
+.feed-dots button.is-on {
+    border-color: #fff;
+    background: #fff;
+}
 
 .feed-product {
     display: flex;
     align-items: center;
-    gap: .75rem;
-    margin-top: .85rem;
-    padding: .65rem .8rem;
+    gap: 1.2rem;
+    margin-top: 1.4rem;
+    padding: 1rem 1.6rem;
     border-radius: 14px;
     background: #1c1c1c;
+    color: #8eb4ff;
+    font-weight: 600;
 }
 
 .feed-product img {
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
     object-fit: contain;
 }
 
-.feed-product a { color: #8eb4ff; font-weight: 600; }
-.feed-product a:hover { color: #fff; }
+.feed-product:hover { color: #fff; }
+
+.feed-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 1.1rem;
+}
+
+.feed-tags a {
+    padding: .7rem 1rem;
+    border-radius: 14px;
+    background: #1c1c1c;
+    color: #ececec;
+}
+
+.feed-tags a span { color: #8d8d8d; }
+.feed-tags a:hover { background: #2a2a2a; }
 
 .feed-actions {
     display: flex;
     align-items: center;
-    gap: .45rem;
-    margin-top: .9rem;
+    gap: .5rem;
+    margin-top: 1.4rem;
 }
 
 .feed-actions button {
     display: inline-flex;
     align-items: center;
-    gap: .35rem;
-    height: 34px;
-    padding: 0 .7rem;
-    border: 1px solid #2a2a2a;
-    border-radius: 999px;
-    background: #111;
+    justify-content: center;
+    gap: .4rem;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 .6rem;
+    border: 0;
+    border-radius: 12px;
+    background: #1c1c1c;
     color: #d5d5d5;
     font: inherit;
-    font-size: .82rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+
+.feed-actions button svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+}
+
+.feed-actions button:hover {
+    background: #2a2a2a;
+    color: #fff;
+}
+
+.feed-actions button.is-on { color: var(--gold); }
+.feed-actions .feed-save.is-on svg path { fill: currentColor; }
+
+.feed-score {
+    min-width: 1.6rem;
+    font-size: 1.05rem;
+    text-align: center;
+}
+
+.feed-actions .push { margin-left: auto; }
+
+/* Şərh: mətn və istəyə görə şəkil */
+.feed-comment {
+    display: flex;
+    gap: .9rem;
+    margin-top: 1.4rem;
+}
+
+.feed-comment-field {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    height: 54px;
+    padding: 0 .6rem 0 1.1rem;
+    border-radius: 14px;
+    background: #1c1c1c;
+}
+
+.feed-comment-field input[type="text"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-size: 1.02rem;
+}
+
+.feed-comment-field input[type="text"]::placeholder { color: #8d8d8d; }
+.feed-comment-field input[type="text"]:focus { outline: none; }
+
+.feed-comment-photo {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    color: #d5d5d5;
     cursor: pointer;
 }
 
-.feed-actions button:hover { border-color: var(--gold); color: #fff; }
-.feed-actions .push { margin-left: auto; }
+.feed-comment-photo svg { width: 22px; height: 22px; }
+.feed-comment-photo:hover { color: #fff; }
+.feed-comment-photo.is-on { color: var(--gold); }
+
+.feed-comment-photo input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.feed-comment-send {
+    flex: 0 0 54px;
+    width: 54px;
+    height: 54px;
+    border: 0;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: #1c1c1c;
+    color: #fff;
+    cursor: pointer;
+}
+
+.feed-comment-send svg { width: 22px; height: 22px; }
+.feed-comment-send:hover { background: #2a2a2a; }
+
+@media (max-width: 700px) {
+    .feed-card { padding: 1.1rem 1rem 1rem; border-radius: 20px; }
+    .feed-avatar { flex-basis: 46px; width: 46px; height: 46px; }
+    .feed-text { font-size: 1rem; }
+    .feed-track img { height: 280px; }
+    .feed-product { padding: .8rem 1rem; }
+    .feed-actions { gap: .35rem; }
+    .feed-actions button { min-width: 36px; height: 36px; }
+    .feed-comment { gap: .5rem; }
+    .feed-comment-field,
+    .feed-comment-send { height: 48px; }
+    .feed-comment-send { flex-basis: 48px; width: 48px; }
+}
 
 @media (max-width: 700px) {
     .community-bar { flex-direction: column; align-items: flex-start; }
@@ -5266,21 +5494,46 @@ html.theme-day {
 .community-tabs { background: var(--hover); }
 .community-tabs button { color: #4a4a4a; }
 .community-search input,
-.community-search select,
-.feed-copy { color: var(--text); }
+.community-search select { color: var(--text); }
 
 .feed-avatar { background: var(--hover); }
-.feed-product { background: var(--hover); }
-.feed-dots i { background: #cfcfcf; }
-.feed-dots i.is-on { background: var(--ink); }
+.feed-avatar.is-brand { background: var(--card); border-color: var(--line); }
+.feed-badge { border-color: var(--card); }
+.feed-name a,
+.feed-text,
+.feed-tags a,
+.feed-comment-field input[type="text"],
+.feed-comment-send { color: var(--text); }
+.feed-follow.is-on,
+.feed-more { color: var(--muted); }
+.feed-more:hover,
+.feed-follow:hover { color: var(--text); }
+.feed-frame,
+.feed-product,
+.feed-tags a,
+.feed-comment-field,
+.feed-comment-send { background: #f3f3f4; }
+.feed-tags a:hover,
+.feed-comment-send:hover { background: var(--hover); }
+.feed-dots button { border-color: #9a9a9a; }
+.feed-dots button.is-on { border-color: var(--ink); background: var(--ink); }
+.feed-product { color: #2f6fe4; }
+.feed-product:hover { color: var(--text); }
+.feed-follow { color: #2f6fe4; }
 
 .feed-actions button {
-    border-color: var(--line);
-    background: var(--card);
+    background: #f3f3f4;
     color: #3a3a3a;
 }
 
-.feed-actions button:hover { color: var(--text); }
+.feed-actions button:hover {
+    background: var(--hover);
+    color: var(--text);
+}
+
+.feed-actions button.is-on { color: #a5793a; }
+.feed-comment-photo { color: #3a3a3a; }
+.feed-comment-photo:hover { color: var(--text); }
 
 .journal-tags a {
     background: var(--hover);
