@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order #1045 - Janz Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/janz-admin.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="logo" aria-label="Janz admin" href="index.html">
+                            <span class="logo-mark" aria-hidden="true">J</span>
+                            <span class="logo-name">Janz</span>
+                            <span class="logo-tag">Admin</span>
+                        </a>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block" aria-label="Close menu"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item ">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="bi bi-grid-1x2"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Shop</li>
+                        <li class="sidebar-item ">
+                            <a class="sidebar-link" href="products.html">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item ">
+                            <a class="sidebar-link" href="categories.html">
+                                <i class="bi bi-tags"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="orders.html">
+                                <i class="bi bi-bag-check"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Account</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="../index.html">
+                                <i class="bi bi-shop"></i>
+                                <span>Go to site</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="post" data-demo action="#">
+                                <button type="submit" class="sidebar-link sidebar-button">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span>Sign out</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="admin-top">
+                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                <div class="admin-top-title">Order #1045</div>
+                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                <div class="admin-user">
+                    <span class="admin-avatar" aria-hidden="true">J</span>
+                    <div>
+                        <div class="admin-user-name">Janz Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-heading">
+                <section class="admin-head">
+    <div>
+        <p class="admin-eyebrow"><a href="orders.html">Orders</a> / #1045</p>
+        <h1>Order #1045 <span class="admin-status status-pending">Pending</span></h1>
+    </div>
+</section>
+
+<div class="admin-grid">
+    <section class="admin-card admin-card-flush">
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th class="num">Price</th>
+                        <th class="num">Qty</th>
+                        <th class="num">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>
+                                <span class="admin-product">
+                                    <img src="../images/floral-bag.png" alt="" />
+                                    <span>Floral</span>
+                                </span>
+                            </td>
+                            <td class="num">₼29.90</td>
+                            <td class="num">2</td>
+                            <td class="num">₼59.80</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="admin-product">
+                                    <img src="../images/aroma-kit.png" alt="" />
+                                    <span>Aroma kit</span>
+                                </span>
+                            </td>
+                            <td class="num">₼45.00</td>
+                            <td class="num">1</td>
+                            <td class="num">₼45.00</td>
+                        </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">Total</td>
+                        <td class="num"><strong>₼104.80</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </section>
+
+    <div class="admin-stack">
+        <section class="admin-card">
+            <h2>Status</h2>
+            <form class="admin-status-form" method="post" data-demo action="orders.html">
+                <select name="status">
+                        <option value="Pending" selected="selected">Pending</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                </select>
+                <button type="submit" class="admin-btn">Save</button>
+            </form>
+        </section>
+        <section class="admin-card">
+            <h2>Delivery</h2>
+            <dl class="admin-facts">
+                <dt>Name</dt><dd>Aysel M&#x259;mm&#x259;dova</dd>
+                <dt>Phone</dt><dd>&#x2B;994 50 123 45 67</dd>
+                <dt>Address</dt><dd>Nizami 10, apt 5, Baku, AZ1000</dd>
+                <dt>Placed</dt><dd>22.10.2026 01:31</dd>
+            </dl>
+        </section>
+    </div>
+</div>
+<a class="admin-link" href="orders.html"><i class="bi bi-arrow-left"></i> Back to orders</a>
+
+            </div>
+
+            <footer class="admin-footer">
+                <span>© 2026 Janz</span>
+                <span>Admin panel</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
+        document.querySelector(".admin-theme").addEventListener("click", function () {
+            var day = document.documentElement.classList.toggle("theme-day");
+            localStorage.setItem("janz-theme", day ? "day" : "night");
+        });
+        // Silmədən əvvəl soruşulur
+        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+            form.addEventListener("submit", function (event) {
+                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+            });
+        });
+    </script>
+    
+    <script src="js/admin-demo.js"></script>
+</body>
+</html>
