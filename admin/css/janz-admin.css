@@ -765,3 +765,8 @@ html.theme-day .status-published { color: #1d7a45; }
 .page-heading > .admin-note { margin-top: -.4rem; }
 .admin-field input[type="date"] { color-scheme: dark; }
 html.theme-day .admin-field input[type="date"] { color-scheme: light; }
+
+/* ---- Dashboard: son rəylər ---- */
+.admin-list-reviews .admin-stars { min-width: 2.6rem; font-weight: 800; letter-spacing: 0; font-size: .85rem; }
+.admin-list-reviews .admin-stars.is-low { color: var(--a-danger); }
+.admin-list-reviews li > span:last-child { color: var(--a-muted); font-size: .82rem; }
