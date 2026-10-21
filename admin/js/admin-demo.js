@@ -19,11 +19,26 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
         var button = form.querySelector("[type=submit]");
         var label = button ? button.textContent.trim().toLowerCase() : "";
 
-        // Cədvəldə "Delete": sətir silinir
+        // "Delete": cədvəl sətri və ya rəy kartı silinir
         if (label === "delete") {
-            var row = form.closest("tr");
+            var row = form.closest("tr, .admin-review");
             if (row) row.remove();
+            var count = document.querySelector(".admin-head h1 span:not(.admin-status)");
+            if (count && /^\d+$/.test(count.textContent)) count.textContent = Math.max(0, Number(count.textContent) - 1);
             adminFlash("Deleted.");
+            return;
+        }
+
+        // Rəyi gizlətmək / göstərmək
+        if (form.hasAttribute("data-review-toggle")) {
+            var card = form.closest(".admin-review");
+            var badgeReview = card.querySelector(".admin-status");
+            var hide = button.textContent.trim() === "Hide";
+            badgeReview.textContent = hide ? "Hidden" : "Published";
+            badgeReview.className = "admin-status " + (hide ? "status-hidden" : "status-published");
+            card.setAttribute("data-filter", card.getAttribute("data-filter").replace(/published|hidden/, hide ? "hidden" : "published"));
+            button.textContent = hide ? "Show" : "Hide";
+            adminFlash(hide ? "The review is hidden." : "The review is published.");
             return;
         }
 
@@ -65,8 +80,9 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
 (function () {
     var filter = document.querySelector(".admin-filter");
     if (!filter) return;
-    var rows = document.querySelectorAll(".admin-table tbody tr");
+    var rows = document.querySelectorAll(".admin-table tbody tr, .admin-review");
     var title = document.querySelector(".admin-head h1 span");
+    var emptyBox = document.querySelector(".admin-reviews + .admin-empty");
 
     function apply() {
         var status = location.hash.replace("#", "");
@@ -83,6 +99,7 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             link.classList.toggle("is-on", target === status);
         });
         if (title) title.textContent = shown;
+        if (emptyBox) emptyBox.hidden = shown > 0;
     }
 
     window.addEventListener("hashchange", apply);

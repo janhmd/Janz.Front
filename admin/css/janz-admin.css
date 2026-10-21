@@ -659,3 +659,66 @@ html.theme-day .status-active { color: #1d7a45; }
 .admin-btn.is-danger-ghost { background: none; border-color: var(--a-danger); color: var(--a-danger); }
 .admin-btn.is-danger-ghost:hover { color: var(--a-danger); }
 .admin-table tbody tr.is-searched-out { display: none; }
+
+/* ---- Reviews ---- */
+.admin-grid-side { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); }
+
+.admin-reviews { display: grid; gap: 1rem; }
+
+.admin-review {
+    padding: 1.2rem 1.3rem;
+    background: var(--a-card);
+    border: 1px solid var(--a-line);
+    border-radius: var(--a-radius);
+}
+
+.admin-review[hidden] { display: none; }
+.admin-review p { margin: .55rem 0 .9rem; line-height: 1.5; }
+
+.admin-review-top,
+.admin-review-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.admin-review-top { margin-bottom: .7rem; }
+.admin-review-foot { color: var(--a-muted); font-size: .85rem; }
+.admin-review-foot a { color: var(--a-text); font-weight: 600; }
+.admin-review-foot a:hover { color: var(--a-gold); }
+
+.admin-stars { color: var(--a-gold); letter-spacing: .15rem; }
+.status-published { color: #5fcf8f; border-color: rgba(95, 207, 143, .45); }
+.status-hidden { color: var(--a-muted); }
+html.theme-day .status-published { color: #1d7a45; }
+
+.admin-rating-big { display: grid; justify-items: start; gap: .2rem; margin-bottom: 1.2rem; }
+.admin-rating-big strong { font-size: 3rem; font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
+.admin-rating-big span { color: var(--a-muted); font-size: .85rem; }
+
+.admin-bars { display: grid; gap: .45rem; margin-bottom: 1rem; }
+
+.admin-bar {
+    display: grid;
+    grid-template-columns: 1rem 1rem minmax(0, 1fr) 1.5rem;
+    align-items: center;
+    gap: .5rem;
+    color: var(--a-muted);
+    font-size: .85rem;
+}
+
+.admin-bar i { color: var(--a-gold); font-size: .75rem; }
+
+.admin-bar b {
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--a-gold) var(--w), var(--a-card-2) var(--w));
+}
+
+.admin-bar span:last-child { text-align: right; }
+
+@media (max-width: 991px) {
+    .admin-grid-side { grid-template-columns: 1fr; }
+}
