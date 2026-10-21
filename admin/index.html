@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Janz Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/janz-admin.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="logo" aria-label="Janz admin" href="index.html">
+                            <span class="logo-mark" aria-hidden="true">J</span>
+                            <span class="logo-name">Janz</span>
+                            <span class="logo-tag">Admin</span>
+                        </a>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block" aria-label="Close menu"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="bi bi-grid-1x2"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Shop</li>
+                        <li class="sidebar-item ">
+                            <a class="sidebar-link" href="products.html">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item ">
+                            <a class="sidebar-link" href="categories.html">
+                                <i class="bi bi-tags"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item ">
+                            <a class="sidebar-link" href="orders.html">
+                                <i class="bi bi-bag-check"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Account</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="../index.html">
+                                <i class="bi bi-shop"></i>
+                                <span>Go to site</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="post" data-demo action="#">
+                                <button type="submit" class="sidebar-link sidebar-button">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span>Sign out</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="admin-top">
+                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                <div class="admin-top-title">Dashboard</div>
+                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                <div class="admin-user">
+                    <span class="admin-avatar" aria-hidden="true">J</span>
+                    <div>
+                        <div class="admin-user-name">Janz Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-heading">
+                <section class="admin-head">
+    <div>
+        <p class="admin-eyebrow">Overview</p>
+        <h1>Dashboard</h1>
+    </div>
+</section>
+
+<section class="admin-stats">
+    <a class="admin-stat" href="products.html">
+        <i class="bi bi-box-seam"></i>
+        <span class="admin-stat-label">Products</span>
+        <strong>8</strong>
+    </a>
+    <a class="admin-stat" href="categories.html">
+        <i class="bi bi-tags"></i>
+        <span class="admin-stat-label">Categories</span>
+        <strong>4</strong>
+    </a>
+    <a class="admin-stat" href="orders.html">
+        <i class="bi bi-bag-check"></i>
+        <span class="admin-stat-label">Orders</span>
+        <strong>5</strong>
+    </a>
+    <div class="admin-stat is-gold">
+        <i class="bi bi-cash-stack"></i>
+        <span class="admin-stat-label">Revenue</span>
+        <strong>₼316.80</strong>
+    </div>
+</section>
+
+<div class="admin-grid">
+    <section class="admin-card">
+        <div class="admin-card-head">
+            <h2>Recent orders</h2>
+            <a class="admin-link" href="orders.html">All orders</a>
+        </div>
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                        <th class="num">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td><a href="order.html">#1045</a></td>
+                            <td>Aysel M&#x259;mm&#x259;dova</td>
+                            <td><span class="admin-status status-pending">Pending</span></td>
+                            <td class="num">₼104.80</td>
+                        </tr>
+                        <tr>
+                            <td><a href="order.html">#1044</a></td>
+                            <td>R&#x259;&#x15F;ad &#x18F;liyev</td>
+                            <td><span class="admin-status status-processing">Processing</span></td>
+                            <td class="num">₼27.50</td>
+                        </tr>
+                        <tr>
+                            <td><a href="order.html">#1043</a></td>
+                            <td>Leyla H&#x259;s&#x259;nova</td>
+                            <td><span class="admin-status status-shipped">Shipped</span></td>
+                            <td class="num">₼99.60</td>
+                        </tr>
+                        <tr>
+                            <td><a href="order.html">#1042</a></td>
+                            <td>Orxan Quliyev</td>
+                            <td><span class="admin-status status-delivered">Delivered</span></td>
+                            <td class="num">₼84.90</td>
+                        </tr>
+                        <tr>
+                            <td><a href="order.html">#1041</a></td>
+                            <td>Nigar Rzayeva</td>
+                            <td><span class="admin-status status-cancelled">Cancelled</span></td>
+                            <td class="num">₼45.00</td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="admin-card">
+        <div class="admin-card-head">
+            <h2>Low stock</h2>
+            <span class="admin-count">4</span>
+        </div>
+            <ul class="admin-list">
+                    <li>
+                        <img src="../images/set-box.png" alt="" />
+                        <a href="product-edit.html">Gift box</a>
+                        <span class="admin-stock is-out">0 left</span>
+                    </li>
+                    <li>
+                        <img src="../images/set-drip.png" alt="" />
+                        <a href="product-edit.html">Drip set</a>
+                        <span class="admin-stock ">2 left</span>
+                    </li>
+                    <li>
+                        <img src="../images/roast.png" alt="" />
+                        <a href="product-edit.html">Roast No. 5</a>
+                        <span class="admin-stock ">4 left</span>
+                    </li>
+                    <li>
+                        <img src="../images/aroma-kit.png" alt="" />
+                        <a href="product-edit.html">Aroma kit</a>
+                        <span class="admin-stock ">5 left</span>
+                    </li>
+            </ul>
+    </section>
+</div>
+
+            </div>
+
+            <footer class="admin-footer">
+                <span>© 2026 Janz</span>
+                <span>Admin panel</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
+        document.querySelector(".admin-theme").addEventListener("click", function () {
+            var day = document.documentElement.classList.toggle("theme-day");
+            localStorage.setItem("janz-theme", day ? "day" : "night");
+        });
+        // Silmədən əvvəl soruşulur
+        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+            form.addEventListener("submit", function (event) {
+                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+            });
+        });
+    </script>
+    
+    <script src="js/admin-demo.js"></script>
+</body>
+</html>
