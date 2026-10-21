@@ -27,6 +27,24 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
+        // İstifadəçini bloklamaq / blokdan çıxarmaq: başlıqdakı nişan və düymə dəyişir
+        if (form.hasAttribute("data-block")) {
+            var badgeUser = document.querySelector("[data-user-status]");
+            var blocked = badgeUser.textContent.trim() === "Blocked";
+            badgeUser.textContent = blocked ? "Active" : "Blocked";
+            badgeUser.className = "admin-status " + (blocked ? "status-active" : "status-blocked");
+            button.textContent = blocked ? "Block user" : "Unblock user";
+            adminFlash(blocked ? "The user is unblocked." : "The user is blocked.");
+            return;
+        }
+
+        // Rol
+        var role = form.querySelector("select[name=role]");
+        if (role) {
+            adminFlash("Role changed to " + role.value + ".");
+            return;
+        }
+
         // Sifarişin statusu: başlıqdakı nişan da dəyişir
         var select = form.querySelector("select[name=status]");
         if (select) {
@@ -55,7 +73,8 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
         var shown = 0;
         rows.forEach(function (row) {
             var badge = row.querySelector(".admin-status");
-            var match = !status || (badge && badge.classList.contains("status-" + status));
+            var tags = (row.getAttribute("data-filter") || "").split(" ");
+            var match = !status || tags.indexOf(status) >= 0 || (badge && badge.classList.contains("status-" + status));
             row.hidden = !match;
             if (match) shown += 1;
         });
@@ -68,4 +87,23 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
 
     window.addEventListener("hashchange", apply);
     apply();
+})();
+
+// Axtarış (Users): ad və ya email-ə görə sətirləri süzür
+(function () {
+    var input = document.querySelector(".admin-search input");
+    if (!input) return;
+    var rows = document.querySelectorAll(".admin-table tbody tr");
+    var empty = document.querySelector(".admin-card .admin-empty");
+
+    input.addEventListener("input", function () {
+        var text = input.value.trim().toLowerCase();
+        var shown = 0;
+        rows.forEach(function (row) {
+            var match = row.textContent.toLowerCase().indexOf(text) >= 0;
+            row.classList.toggle("is-searched-out", !match);
+            if (match && !row.hidden) shown += 1;
+        });
+        if (empty) empty.hidden = shown > 0;
+    });
 })();

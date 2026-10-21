@@ -603,3 +603,59 @@ html.theme-day .status-delivered { color: #1d7a45; }
     color: var(--a-muted);
     font-size: .8rem;
 }
+
+/* ---- Users ---- */
+.admin-search {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    width: min(100%, 22rem);
+    height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--a-line);
+    border-radius: 999px;
+    background: var(--a-card);
+    color: var(--a-muted);
+}
+
+.admin-search input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: none;
+    color: var(--a-text);
+    font: inherit;
+    outline: none;
+}
+
+.admin-person { display: inline-flex; align-items: center; gap: .75rem; }
+.admin-person strong { display: block; font-weight: 600; }
+.admin-person small { display: block; color: var(--a-muted); font-size: .78rem; }
+
+.admin-avatar-sm { width: 34px; height: 34px; font-size: .85rem; flex: 0 0 auto; }
+.admin-avatar-lg { width: 56px; height: 56px; font-size: 1.3rem; flex: 0 0 auto; }
+
+.role-admin { color: var(--a-gold); border-color: var(--a-gold); }
+.role-user { color: var(--a-muted); }
+.status-active { color: #5fcf8f; border-color: rgba(95, 207, 143, .45); }
+.status-blocked { color: var(--a-danger); border-color: var(--a-danger); }
+
+html.theme-day .status-active { color: #1d7a45; }
+
+.admin-card-pad { padding: 1.2rem 1.4rem .2rem; }
+
+.admin-addresses { margin: 0; padding: 0; list-style: none; }
+.admin-addresses li { padding: .7rem 0; border-bottom: 1px solid var(--a-line); }
+.admin-addresses li:last-child { border-bottom: 0; padding-bottom: 0; }
+.admin-addresses strong { display: block; font-weight: 600; }
+.admin-addresses span { color: var(--a-muted); font-size: .88rem; }
+
+.admin-profile { display: flex; align-items: center; gap: .9rem; margin-bottom: 1.2rem; }
+.admin-profile div strong { display: block; font-size: 1.05rem; }
+.admin-profile div span { color: var(--a-muted); font-size: .88rem; }
+
+.admin-note { margin: 0 0 1rem; color: var(--a-muted); font-size: .88rem; }
+
+.admin-btn.is-danger-ghost { background: none; border-color: var(--a-danger); color: var(--a-danger); }
+.admin-btn.is-danger-ghost:hover { color: var(--a-danger); }
+.admin-table tbody tr.is-searched-out { display: none; }

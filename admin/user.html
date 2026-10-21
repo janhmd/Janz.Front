@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aysel Məmmədova - Janz Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/janz-admin.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="logo" aria-label="Janz admin" href="index.html">
+                            <span class="logo-mark" aria-hidden="true">J</span>
+                            <span class="logo-name">Janz</span>
+                            <span class="logo-tag">Admin</span>
+                        </a>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block" aria-label="Close menu"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="bi bi-grid-1x2"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Shop</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="products.html">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="categories.html">
+                                <i class="bi bi-tags"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="orders.html">
+                                <i class="bi bi-bag-check"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="coupons.html">
+                                <i class="bi bi-percent"></i>
+                                <span>Coupons</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Customers</li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="users.html">
+                                <i class="bi bi-people"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="reviews.html">
+                                <i class="bi bi-star"></i>
+                                <span>Reviews</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Account</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="../index.html">
+                                <i class="bi bi-shop"></i>
+                                <span>Go to site</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="post" data-demo action="#">
+                                <button type="submit" class="sidebar-link sidebar-button">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span>Sign out</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="admin-top">
+                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                <div class="admin-top-title">Aysel Məmmədova</div>
+                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                <div class="admin-user">
+                    <span class="admin-avatar" aria-hidden="true">J</span>
+                    <div>
+                        <div class="admin-user-name">Janz Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-heading">
+<section class="admin-head">
+    <div>
+        <p class="admin-eyebrow"><a href="users.html">Users</a> / #1</p>
+        <h1>Aysel Məmmədova <span class="admin-status status-active" data-user-status>Active</span></h1>
+    </div>
+</section>
+
+<div class="admin-grid">
+    <div class="admin-stack">
+        <section class="admin-card admin-card-flush">
+            <div class="admin-card-head admin-card-pad">
+                <h2>Orders</h2>
+                <span class="admin-count">3</span>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th class="num">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="order.html">#1045</a></td>
+                            <td>21.10.2026</td>
+                            <td><span class="admin-status status-pending">Pending</span></td>
+                            <td class="num">₼104.80</td>
+                        </tr>
+                        <tr>
+                            <td><a href="order.html">#1031</a></td>
+                            <td>14.10.2026</td>
+                            <td><span class="admin-status status-delivered">Delivered</span></td>
+                            <td class="num">₼59.80</td>
+                        </tr>
+                        <tr>
+                            <td><a href="order.html">#1022</a></td>
+                            <td>05.10.2026</td>
+                            <td><span class="admin-status status-delivered">Delivered</span></td>
+                            <td class="num">₼49.90</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <section class="admin-card">
+            <h2>Addresses</h2>
+            <ul class="admin-addresses">
+                <li>
+                    <strong>Aysel Məmmədova · +994 50 123 45 67</strong>
+                    <span>Nizami 10, apt 5, Baku, AZ1000</span>
+                </li>
+                <li>
+                    <strong>Aysel Məmmədova · +994 50 123 45 67</strong>
+                    <span>Həsən bəy Zərdabi 44, Baku, AZ1102</span>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <div class="admin-stack">
+        <section class="admin-card">
+            <div class="admin-profile">
+                <span class="admin-avatar admin-avatar-lg" aria-hidden="true">A</span>
+                <div>
+                    <strong>Aysel Məmmədova</strong>
+                    <span>aysel.m@mail.az</span>
+                </div>
+            </div>
+            <dl class="admin-facts">
+                <dt>Joined</dt><dd>02.10.2026</dd>
+                <dt>Orders</dt><dd>3</dd>
+                <dt>Spent</dt><dd>₼214.50</dd>
+                <dt>Reviews</dt><dd>2</dd>
+            </dl>
+        </section>
+        <section class="admin-card">
+            <h2>Role</h2>
+            <form class="admin-status-form" method="post" data-demo action="#">
+                <select name="role" aria-label="Role">
+                    <option value="User" selected>User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                <button type="submit" class="admin-btn">Save</button>
+            </form>
+        </section>
+        <section class="admin-card">
+            <h2>Access</h2>
+            <p class="admin-note" data-block-note>A blocked user cannot sign in or place orders. Their orders and reviews stay.</p>
+            <form method="post" data-demo data-block action="#">
+                <button type="submit" class="admin-btn is-danger-ghost">Block user</button>
+            </form>
+        </section>
+    </div>
+</div>
+<a class="admin-link" href="users.html"><i class="bi bi-arrow-left"></i> Back to users</a>
+            </div>
+
+            <footer class="admin-footer">
+                <span>© 2026 Janz</span>
+                <span>Admin panel</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
+        document.querySelector(".admin-theme").addEventListener("click", function () {
+            var day = document.documentElement.classList.toggle("theme-day");
+            localStorage.setItem("janz-theme", day ? "day" : "night");
+        });
+        // Silmədən əvvəl soruşulur
+        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+            form.addEventListener("submit", function (event) {
+                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+            });
+        });
+    </script>
+    
+    <script src="js/admin-demo.js"></script>
+</body>
+</html>
