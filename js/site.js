@@ -1797,3 +1797,67 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
     // Başqa tabda məqalə oxunanda geri qayıdanda yenilənsin
     window.addEventListener("pageshow", renderRecent);
 }
+
+// ---- Header: bildirişlər ----
+// Hələlik nümunədir: oxunanlar və "Clear" yalnız bu brauzerdə yadda qalır (janz-notify); backend gələndə API-dən gələcək
+(function () {
+    var box = document.querySelector(".notify");
+    if (!box) return;
+    var items = box.querySelectorAll(".notify-item");
+    var count = box.querySelector(".notify-count");
+    var allTab = box.querySelector('.notify-tabs [data-kind="all"] span');
+    var empty = box.querySelector(".notify-empty");
+    var state = {};
+    try { state = JSON.parse(localStorage.getItem("janz-notify") || "{}"); } catch (e) { state = {}; }
+
+    function save() {
+        try { localStorage.setItem("janz-notify", JSON.stringify(state)); } catch (e) { }
+    }
+
+    function refresh() {
+        var fresh = 0;
+        var visible = 0;
+        items.forEach(function (item) {
+            var key = item.getAttribute("href") + item.querySelector("time").getAttribute("datetime");
+            item.hidden = item.hidden || !!state.cleared;
+            if (state.read && state.read[key]) item.classList.remove("is-new");
+            if (!item.hidden) visible += 1;
+            if (!state.cleared && item.classList.contains("is-new")) fresh += 1;
+        });
+        count.textContent = fresh;
+        count.hidden = fresh === 0;
+        if (allTab) allTab.textContent = fresh || "";
+        box.querySelector(".notify-btn").setAttribute("aria-label", fresh ? "Notifications, " + fresh + " new" : "Notifications");
+        empty.hidden = visible > 0;
+    }
+
+    box.querySelectorAll(".notify-tabs button").forEach(function (button) {
+        button.addEventListener("click", function () {
+            var kind = button.getAttribute("data-kind");
+            box.querySelectorAll(".notify-tabs button").forEach(function (other) {
+                other.classList.toggle("is-on", other === button);
+            });
+            items.forEach(function (item) {
+                item.hidden = !!state.cleared || (kind !== "all" && item.getAttribute("data-kind") !== kind);
+            });
+            refresh();
+        });
+    });
+
+    // Bildirişə basanda oxunmuş sayılır, sonra öz səhifəsi açılır
+    items.forEach(function (item) {
+        item.addEventListener("click", function () {
+            state.read = state.read || {};
+            state.read[item.getAttribute("href") + item.querySelector("time").getAttribute("datetime")] = true;
+            save();
+        });
+    });
+
+    box.querySelector(".notify-clear").addEventListener("click", function () {
+        state.cleared = true;
+        save();
+        refresh();
+    });
+
+    refresh();
+})();
