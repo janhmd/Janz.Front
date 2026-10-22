@@ -6766,7 +6766,7 @@ html.theme-day .notify-btn { color: var(--text); }
     height: 17px;
     padding: 0 4px;
     border-radius: 999px;
-    background: #fff;
+    background: #b08cff;
     color: #111;
     font-size: .66rem;
     font-weight: 800;
@@ -6786,4 +6786,7 @@ html.theme-day .notify-btn { color: var(--text); }
 .product-actions button.is-on { border-color: var(--gold); color: var(--gold); }
 .product-actions button.is-on[aria-label="Remove from wishlist"] svg path { fill: currentColor; }
 
-html.theme-day .icon-count { background: var(--ink); color: #fff; }
+
+/* Səbətdə sayğac ikonun üstündə olsun, "pcs" yazısının yox */
+.cart-link { position: relative; }
+.cart-link .icon-count { top: -7px; left: 8px; right: auto; }

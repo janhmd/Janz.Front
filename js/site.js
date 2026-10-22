@@ -869,12 +869,26 @@ function readCartCount() {
     }
 }
 
-function showCartCount() {
+function showCartCount(bump) {
     var count = readCartCount();
     document.querySelectorAll(".cart-link").forEach(function (link) {
         var label = link.querySelector("span");
         if (label) label.textContent = count + " pcs";
         link.setAttribute("aria-label", "Cart, " + count + (count === 1 ? " item" : " items"));
+        // Ürək və tərəzidəki kimi səbətin üstündə də sayğac
+        var badge = link.querySelector(".icon-count");
+        if (!badge) {
+            badge = document.createElement("b");
+            badge.className = "icon-count";
+            link.appendChild(badge);
+        }
+        if (bump && badge.textContent !== String(count)) {
+            badge.classList.remove("is-bump");
+            void badge.offsetWidth;
+            badge.classList.add("is-bump");
+        }
+        badge.textContent = count;
+        badge.hidden = count === 0;
     });
 }
 
@@ -883,7 +897,7 @@ document.querySelectorAll(".price").forEach(function (button) {
         try {
             localStorage.setItem(cartCountKey, String(readCartCount() + 1));
         } catch (error) {}
-        showCartCount();
+        showCartCount(true);
         showToast("Added to cart");
     });
 });
