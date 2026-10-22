@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roles - Janz Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/janz-admin.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="logo" aria-label="Janz admin" href="index.html">
+                            <span class="logo-mark" aria-hidden="true">J</span>
+                            <span class="logo-name">Janz</span>
+                            <span class="logo-tag">Admin</span>
+                        </a>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block" aria-label="Close menu"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="bi bi-grid-1x2"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Shop</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="products.html">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="categories.html">
+                                <i class="bi bi-layers"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="tags.html">
+                                <i class="bi bi-tags"></i>
+                                <span>Tags</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="orders.html">
+                                <i class="bi bi-bag-check"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="coupons.html">
+                                <i class="bi bi-percent"></i>
+                                <span>Coupons</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="loyalty.html">
+                                <i class="bi bi-trophy"></i>
+                                <span>Discount levels</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Content</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="articles.html">
+                                <i class="bi bi-journal-text"></i>
+                                <span>Journal</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="community.html">
+                                <i class="bi bi-chat-square-text"></i>
+                                <span>Community</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="pages.html">
+                                <i class="bi bi-file-earmark-text"></i>
+                                <span>Pages</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Customers</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="users.html">
+                                <i class="bi bi-people"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="roles.html">
+                                <i class="bi bi-shield-lock"></i>
+                                <span>Roles</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="reviews.html">
+                                <i class="bi bi-star"></i>
+                                <span>Reviews</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="notifications.html">
+                                <i class="bi bi-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">System</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="settings.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Account</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="../index.html">
+                                <i class="bi bi-shop"></i>
+                                <span>Go to site</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="post" data-demo action="#">
+                                <button type="submit" class="sidebar-link sidebar-button">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span>Sign out</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="admin-top">
+                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                <div class="admin-top-title">Roles</div>
+                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                <div class="admin-user">
+                    <span class="admin-avatar" aria-hidden="true">J</span>
+                    <div>
+                        <div class="admin-user-name">Janz Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-heading">
+<section class="admin-head">
+    <div>
+        <p class="admin-eyebrow">Customers</p>
+        <h1>Roles <span>6</span></h1>
+    </div>
+    <form class="admin-inline-form" method="post" data-demo data-new-role action="#">
+        <input name="name" placeholder="New role name" aria-label="New role name" required maxlength="30" />
+        <button type="submit" class="admin-btn"><i class="bi bi-plus"></i> Add role</button>
+    </form>
+</section>
+
+<section class="admin-roles">
+        <article class="admin-role is-gold">
+            <div class="admin-role-top">
+                <h3>Admin</h3>
+                <span class="admin-count">1</span>
+            </div>
+            <p>Everything, including roles and settings</p>
+        </article>
+        <article class="admin-role">
+            <div class="admin-role-top">
+                <h3>Manager</h3>
+                <span class="admin-count">1</span>
+            </div>
+            <p>Products, categories, orders, coupons and discounts</p>
+        </article>
+        <article class="admin-role">
+            <div class="admin-role-top">
+                <h3>Editor</h3>
+                <span class="admin-count">1</span>
+            </div>
+            <p>Journal articles and info pages</p>
+        </article>
+        <article class="admin-role">
+            <div class="admin-role-top">
+                <h3>Moderator</h3>
+                <span class="admin-count">1</span>
+            </div>
+            <p>Community posts, comments and reviews</p>
+        </article>
+        <article class="admin-role">
+            <div class="admin-role-top">
+                <h3>Support</h3>
+                <span class="admin-count">0</span>
+            </div>
+            <p>Sees orders and users, changes order status</p>
+        </article>
+        <article class="admin-role is-muted">
+            <div class="admin-role-top">
+                <h3>User</h3>
+                <span class="admin-count">4</span>
+            </div>
+            <p>Customer of the shop, no admin access</p>
+        </article>
+</section>
+
+<form class="admin-card admin-card-flush" method="post" data-demo action="#">
+    <div class="admin-card-head admin-card-pad">
+        <h2>Permissions</h2>
+        <button type="submit" class="admin-btn">Save permissions</button>
+    </div>
+    <div class="table-responsive">
+        <table class="admin-table admin-perms">
+            <thead>
+                <tr>
+                    <th>Permission</th>
+                    <th class="center">Admin</th>
+                    <th class="center">Manager</th>
+                    <th class="center">Editor</th>
+                    <th class="center">Moderator</th>
+                    <th class="center">Support</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="admin-perm-group"><td colspan="6">Shop</td></tr>
+                <tr>
+                    <td>Products</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Products" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Products" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Products" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Products" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Products" /></td>
+                </tr>
+                <tr>
+                    <td>Categories and tags</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Categories and tags" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Categories and tags" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Categories and tags" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Categories and tags" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Categories and tags" /></td>
+                </tr>
+                <tr>
+                    <td>Orders: view</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Orders: view" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Orders: view" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Orders: view" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Orders: view" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Orders: view" checked /></td>
+                </tr>
+                <tr>
+                    <td>Orders: change status</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Orders: change status" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Orders: change status" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Orders: change status" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Orders: change status" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Orders: change status" checked /></td>
+                </tr>
+                <tr>
+                    <td>Coupons and discount levels</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Coupons and discount levels" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Coupons and discount levels" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Coupons and discount levels" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Coupons and discount levels" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Coupons and discount levels" /></td>
+                </tr>
+                <tr class="admin-perm-group"><td colspan="6">Content</td></tr>
+                <tr>
+                    <td>Journal articles</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Journal articles" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Journal articles" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Journal articles" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Journal articles" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Journal articles" /></td>
+                </tr>
+                <tr>
+                    <td>Info pages</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Info pages" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Info pages" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Info pages" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Info pages" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Info pages" /></td>
+                </tr>
+                <tr>
+                    <td>Community posts and comments</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Community posts and comments" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Community posts and comments" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Community posts and comments" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Community posts and comments" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Community posts and comments" /></td>
+                </tr>
+                <tr>
+                    <td>Reviews</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Reviews" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Reviews" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Reviews" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Reviews" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Reviews" /></td>
+                </tr>
+                <tr class="admin-perm-group"><td colspan="6">Customers</td></tr>
+                <tr>
+                    <td>Users: view</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Users: view" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Users: view" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Users: view" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Users: view" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Users: view" checked /></td>
+                </tr>
+                <tr>
+                    <td>Users: block, balance, title</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Users: block, balance, title" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Users: block, balance, title" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Users: block, balance, title" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Users: block, balance, title" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Users: block, balance, title" /></td>
+                </tr>
+                <tr>
+                    <td>Notifications</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Notifications" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Notifications" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Notifications" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Notifications" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Notifications" checked /></td>
+                </tr>
+                <tr class="admin-perm-group"><td colspan="6">System</td></tr>
+                <tr>
+                    <td>Roles and permissions</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Roles and permissions" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Roles and permissions" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Roles and permissions" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Roles and permissions" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Roles and permissions" /></td>
+                </tr>
+                <tr>
+                    <td>Settings</td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Settings" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Manager: Settings" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Settings" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Moderator: Settings" /></td>
+                    <td class="center"><input type="checkbox" aria-label="Support: Settings" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<p class="admin-note">Admin always has every permission. A user gets a role on their page in Users; the role decides which menu items they see here.</p>
+            </div>
+
+            <footer class="admin-footer">
+                <span>© 2026 Janz</span>
+                <span>Admin panel</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
+        document.querySelector(".admin-theme").addEventListener("click", function () {
+            var day = document.documentElement.classList.toggle("theme-day");
+            localStorage.setItem("janz-theme", day ? "day" : "night");
+        });
+        // Silmədən əvvəl soruşulur
+        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+            form.addEventListener("submit", function (event) {
+                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+            });
+        });
+    </script>
+    
+    <script src="js/admin-demo.js"></script>
+</body>
+</html>

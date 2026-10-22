@@ -53,6 +53,43 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
+        // Yeni rol: kartlara əlavə olunur
+        if (form.hasAttribute("data-new-role")) {
+            var name = form.querySelector("input[name=name]").value.trim();
+            var card = document.createElement("article");
+            card.className = "admin-role";
+            card.innerHTML = '<div class="admin-role-top"><h3></h3><span class="admin-count">0</span></div><p>New role. Tick its permissions below.</p>';
+            card.querySelector("h3").textContent = name;
+            document.querySelector(".admin-roles").appendChild(card);
+            form.reset();
+            adminFlash("Role " + name + " is added.");
+            return;
+        }
+
+        // Balans: məbləğ balansa əlavə olunur (mənfi isə çıxılır), sətir tarixçəyə düşür
+        if (form.hasAttribute("data-balance-form")) {
+            var amount = parseFloat(form.amount.value);
+            var balanceBox = document.querySelector("[data-balance]");
+            var total = parseFloat(balanceBox.textContent.replace("₼", "")) + amount;
+            balanceBox.textContent = "₼" + total.toFixed(2);
+            var line = document.createElement("li");
+            line.innerHTML = "<span></span><span>today</span><b></b>";
+            line.children[0].textContent = form.reason.value;
+            line.children[2].textContent = (amount >= 0 ? "+₼" : "−₼") + Math.abs(amount).toFixed(2);
+            line.children[2].className = amount >= 0 ? "is-plus" : "is-minus";
+            document.querySelector("[data-ledger]").prepend(line);
+            form.reset();
+            adminFlash("The balance is now ₼" + total.toFixed(2) + ".");
+            return;
+        }
+
+        // Community titulu
+        var title = form.querySelector("select[name=title]");
+        if (title) {
+            adminFlash("Community title changed to " + title.value + ".");
+            return;
+        }
+
         // Rol
         var role = form.querySelector("select[name=role]");
         if (role) {

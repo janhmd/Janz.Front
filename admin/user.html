@@ -247,10 +247,44 @@
             <form class="admin-status-form" method="post" data-demo action="#">
                 <select name="role" aria-label="Role">
                     <option value="User" selected>User</option>
+                    <option value="Support">Support</option>
+                    <option value="Moderator">Moderator</option>
+                    <option value="Editor">Editor</option>
+                    <option value="Manager">Manager</option>
                     <option value="Admin">Admin</option>
                 </select>
                 <button type="submit" class="admin-btn">Save</button>
             </form>
+            <p class="admin-note admin-note-top">What each role can do is set in <a class="admin-link" href="roles.html">Roles</a>.</p>
+        </section>
+        <section class="admin-card">
+            <h2>Community title</h2>
+            <form class="admin-status-form" method="post" data-demo action="#">
+                <select name="title" aria-label="Community title">
+                    <option value="Coffee lover" selected>Coffee lover</option>
+                    <option value="Home barista">Home barista</option>
+                    <option value="Expert">Expert</option>
+                    <option value="Ambassador">Ambassador</option>
+                    <option value="Support team">Support team</option>
+                </select>
+                <button type="submit" class="admin-btn">Save</button>
+            </form>
+            <p class="admin-note admin-note-top">Shown under the name in Community posts.</p>
+        </section>
+        <section class="admin-card">
+            <div class="admin-card-head">
+                <h2>Balance</h2>
+                <strong class="admin-balance" data-balance>₼25.00</strong>
+            </div>
+            <form class="admin-balance-form" method="post" data-demo data-balance-form action="#">
+                <input name="amount" type="number" step="0.01" placeholder="Amount: 10 or -5" aria-label="Amount" required />
+                <input name="reason" placeholder="Reason" aria-label="Reason" required maxlength="80" />
+                <button type="submit" class="admin-btn">Apply</button>
+            </form>
+            <ul class="admin-ledger" data-ledger>
+                <li><span>Top up by card</span><span>12.10.2026</span><b class="is-plus">+₼20.00</b></li>
+                <li><span>Refund for order #1031</span><span>15.10.2026</span><b class="is-plus">+₼5.00</b></li>
+            </ul>
         </section>
         <section class="admin-card">
             <h2>Access</h2>
