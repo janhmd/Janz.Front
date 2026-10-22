@@ -875,6 +875,8 @@ function writeCart(items) {
     try {
         localStorage.setItem(cartKey, JSON.stringify(items));
     } catch (error) {}
+    // Səbət dəyişdi: sifariş səhifəsi də yenilənsin
+    document.dispatchEvent(new CustomEvent("janz-cart-change"));
 }
 
 function readCartCount() {

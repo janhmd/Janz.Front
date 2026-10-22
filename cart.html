@@ -124,6 +124,257 @@
                 <a href="catalog.html">To catalog</a>
             </div>
 
+            <!-- Sifariş: səbətdə məhsul olanda görünür. Hələlik brauzerdəki səbətlə işləyir; MVC-də Orders/Create-ə göndəriləcək -->
+            <form class="checkout" id="checkout" method="post" action="#" novalidate hidden>
+                <div class="co-main">
+                    <div class="co-strip">
+                        <div class="co-dates">
+                            <div>
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.6 2-4.6.3 1.6 1 2.6 2 3C11 8.6 11 5.6 12 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                                <span><small>We’ll roast</small><b data-date="roast"></b></span>
+                            </div>
+                            <div>
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="7" cy="17.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="17.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                                <span><small>We’ll ship</small><b data-date="ship"></b></span>
+                            </div>
+                            <div>
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6zM8 8a4 4 0 0 1 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                                <span><small>Delivery</small><b data-date="deliver"></b></span>
+                            </div>
+                        </div>
+                        <div class="co-promise">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12a7 7 0 1 1-2-4.9M19 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <p>If you don’t like the coffee, we’ll refund the money or replace it with another one</p>
+                        </div>
+                    </div>
+
+                    <section class="co-card">
+                        <div class="co-card-head">
+                            <h1>Cart <span class="co-count"></span></h1>
+                            <button type="button" class="co-clear">Clear cart
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 13h8l1-13M10.5 11v5.5M13.5 11v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                        </div>
+                        <div class="co-lines"></div>
+                        <div class="co-gift">
+                            <span class="co-gift-box" aria-hidden="true"></span>
+                            <p class="co-gift-text"></p>
+                        </div>
+                    </section>
+
+                    <section class="co-card">
+                        <h2>Comment</h2>
+                        <textarea name="comment" rows="2" maxlength="500" placeholder="Comment on the order" aria-label="Comment on the order"></textarea>
+                    </section>
+
+                    <section class="co-card">
+                        <h2>Recipient</h2>
+                        <div class="co-fields">
+                            <label class="co-field">
+                                <span>Name and surname</span>
+                                <input name="name" autocomplete="name" required maxlength="80" />
+                                <em class="co-error">Write your name and surname</em>
+                            </label>
+                            <label class="co-field">
+                                <span>Phone</span>
+                                <span class="co-phone">
+                                    <b>+994</b>
+                                    <input name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(70) 217-55-57" required pattern="[0-9 ()-]{9,15}" />
+                                </span>
+                                <em class="co-error">Write a phone number with 9 digits</em>
+                            </label>
+                            <label class="co-field">
+                                <span>Email</span>
+                                <input name="email" type="email" autocomplete="email" required />
+                                <em class="co-error">Write a correct email</em>
+                            </label>
+                        </div>
+                        <label class="co-check co-line">
+                            <input type="checkbox" data-toggle="company" />
+                            <span>Order for a company</span>
+                        </label>
+                        <div class="co-fields co-extra" data-part="company" hidden>
+                            <label class="co-field">
+                                <span>Company name</span>
+                                <input name="company" maxlength="120" />
+                            </label>
+                            <label class="co-field">
+                                <span>VÖEN</span>
+                                <input name="voen" inputmode="numeric" maxlength="10" placeholder="10 digits" />
+                            </label>
+                        </div>
+                        <label class="co-check co-line">
+                            <input type="checkbox" data-toggle="other" />
+                            <span>Another recipient</span>
+                        </label>
+                        <div class="co-fields co-extra" data-part="other" hidden>
+                            <label class="co-field">
+                                <span>Recipient’s name</span>
+                                <input name="otherName" maxlength="80" />
+                            </label>
+                            <label class="co-field">
+                                <span>Recipient’s phone</span>
+                                <span class="co-phone">
+                                    <b>+994</b>
+                                    <input name="otherPhone" type="tel" inputmode="numeric" />
+                                </span>
+                            </label>
+                        </div>
+                    </section>
+
+                    <section class="co-card">
+                        <h2>Delivery</h2>
+                        <h3>Address</h3>
+                        <div class="co-addresses">
+                            <button type="button" class="co-address co-address-new">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                                <b>New address</b>
+                            </button>
+                            <label class="co-address">
+                                <input type="radio" name="address" value="Baku, Nesimi, Masud Davudoglu 171" checked />
+                                <span>Baku, Nesimi, Masud Davudoglu 171</span>
+                            </label>
+                        </div>
+                        <div class="co-fields co-extra co-address-form" hidden>
+                            <label class="co-field">
+                                <span>City</span>
+                                <input name="city" value="Baku" maxlength="60" />
+                            </label>
+                            <label class="co-field co-field-wide">
+                                <span>Street, house, apartment</span>
+                                <input name="street" maxlength="120" />
+                            </label>
+                            <button type="button" class="co-small-btn co-address-save">Add address</button>
+                        </div>
+
+                        <div class="co-tabs" role="tablist" aria-label="Delivery type">
+                            <button type="button" class="is-on" data-way="courier" role="tab" aria-selected="true">Courier</button>
+                            <button type="button" data-way="pickup" role="tab" aria-selected="false">Pickup point</button>
+                        </div>
+                        <div class="co-ways" data-way="courier">
+                            <label class="co-way">
+                                <input type="radio" name="delivery" value="courier" data-price="0" data-days="1" checked />
+                                <b>Janz courier</b>
+                                <span class="co-way-date" data-days="1"></span>
+                                <span class="co-way-price" data-free-over="50" data-base="4"></span>
+                                <small>Free from ₼50</small>
+                            </label>
+                            <label class="co-way">
+                                <input type="radio" name="delivery" value="express" data-price="8" data-days="0" />
+                                <b>Express</b>
+                                <span class="co-way-date">Today, in 2–3 hours</span>
+                                <span class="co-way-price">₼8.00</span>
+                                <small class="co-way-tag">Only in Baku</small>
+                            </label>
+                        </div>
+                        <div class="co-ways" data-way="pickup" hidden>
+                            <label class="co-way">
+                                <input type="radio" name="delivery" value="shop" data-price="0" data-days="1" />
+                                <b>Janz coffee point</b>
+                                <span class="co-way-date" data-days="1"></span>
+                                <span class="co-way-price">Free</span>
+                                <small>Nesimi, Masud Davudoglu 171</small>
+                            </label>
+                            <label class="co-way">
+                                <input type="radio" name="delivery" value="azerpost" data-price="3" data-days="3" />
+                                <b>Azerpost</b>
+                                <span class="co-way-date" data-days="3"></span>
+                                <span class="co-way-price">₼3.00</span>
+                                <small>Post offices all over Azerbaijan</small>
+                            </label>
+                        </div>
+                    </section>
+
+                    <section class="co-card">
+                        <div class="co-card-head">
+                            <h2>Payment methods</h2>
+                            <label class="co-check">
+                                <input type="checkbox" name="rememberPay" checked />
+                                <span>Remember payment method</span>
+                            </label>
+                        </div>
+                        <div class="co-pays">
+                            <label class="co-pay">
+                                <input type="radio" name="pay" value="Card online" />
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18M7 15h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                                <span>Card online, Visa or Mastercard</span>
+                            </label>
+                            <label class="co-pay">
+                                <input type="radio" name="pay" value="Card on delivery" />
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 7h6M9 17h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                                <span>Card on delivery</span>
+                            </label>
+                            <label class="co-pay">
+                                <input type="radio" name="pay" value="Cash on delivery" checked />
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                                <span>Cash on delivery</span>
+                            </label>
+                            <label class="co-pay">
+                                <input type="radio" name="pay" value="Balance" />
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4zM4 7V6a2 2 0 0 1 2-2h10v3M16 13h1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                <span>From Janz balance <small>₼12.40 available</small></span>
+                            </label>
+                        </div>
+                    </section>
+                </div>
+
+                <aside class="co-side">
+                    <div class="co-total">
+                        <div class="co-total-head">
+                            <h2>To pay</h2>
+                            <strong class="co-sum" data-sum="pay"></strong>
+                        </div>
+                        <dl class="co-rows">
+                            <div><dt>Items</dt><dd data-sum="items"></dd></div>
+                            <div class="co-row-discount"><dt>Discount</dt><dd data-sum="discount"></dd></div>
+                            <div class="co-row-promo" hidden><dt>Promo code</dt><dd data-sum="promo"></dd></div>
+                            <div><dt>Delivery</dt><dd data-sum="delivery"></dd></div>
+                        </dl>
+                        <div class="co-code">
+                            <input name="promo" placeholder="Promo code" aria-label="Promo code" maxlength="30" autocomplete="off" />
+                            <button type="button" class="co-code-btn" data-code="promo">Apply</button>
+                        </div>
+                        <p class="co-code-note" data-note="promo" hidden></p>
+                        <div class="co-code">
+                            <input name="gift" placeholder="Gift certificate" aria-label="Gift certificate" maxlength="30" autocomplete="off" />
+                            <button type="button" class="co-code-btn" data-code="gift">Apply</button>
+                        </div>
+                        <p class="co-code-note" data-note="gift" hidden></p>
+                        <p class="co-pay-line"><span data-sum="paywith"></span></p>
+                        <button type="submit" class="co-submit">Place an order</button>
+                        <label class="co-check co-agree">
+                            <input type="checkbox" name="agree" checked />
+                            <span>I agree to the terms of data processing, the user agreement and the offer</span>
+                        </label>
+                        <p class="co-error co-agree-error">You need to agree to the terms</p>
+                    </div>
+                    <div class="co-repeat">
+                        <label class="co-check">
+                            <input type="checkbox" name="repeat" />
+                            <span>Repeat the order</span>
+                        </label>
+                        <div class="co-repeat-box" hidden>
+                            <select name="repeatEvery" aria-label="Repeat every">
+                                <option>Every week</option>
+                                <option selected>Every 2 weeks</option>
+                                <option>Every month</option>
+                            </select>
+                            <p>We’ll make the same order and send it on this day. You can stop it in your account.</p>
+                        </div>
+                    </div>
+                </aside>
+            </form>
+
+            <div class="co-done" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.5l2.7 2.7L16.5 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <h1>Order <span class="co-done-number"></span> is placed</h1>
+                <p>We’ll send the details to <b class="co-done-email"></b>. You can follow the status in your account.</p>
+                <div class="co-done-actions">
+                    <a class="co-submit" href="account.html#orders">My orders</a>
+                    <a class="co-small-btn" href="catalog.html">Back to catalog</a>
+                </div>
+            </div>
+
             <h2 class="cart-like">You might like</h2>
             <div class="card-grid">
                 <article>
@@ -229,5 +480,6 @@
     </footer>
 
     <script src="js/site.js"></script>
+    <script src="js/checkout.js"></script>
 </body>
 </html>
