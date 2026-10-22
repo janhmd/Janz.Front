@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notifications - Janz Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/janz-admin.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="logo" aria-label="Janz admin" href="index.html">
+                            <span class="logo-mark" aria-hidden="true">J</span>
+                            <span class="logo-name">Janz</span>
+                            <span class="logo-tag">Admin</span>
+                        </a>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block" aria-label="Close menu"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="bi bi-grid-1x2"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Shop</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="products.html">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="categories.html">
+                                <i class="bi bi-layers"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="tags.html">
+                                <i class="bi bi-tags"></i>
+                                <span>Tags</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="orders.html">
+                                <i class="bi bi-bag-check"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="coupons.html">
+                                <i class="bi bi-percent"></i>
+                                <span>Coupons</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="loyalty.html">
+                                <i class="bi bi-trophy"></i>
+                                <span>Discount levels</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Content</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="articles.html">
+                                <i class="bi bi-journal-text"></i>
+                                <span>Journal</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="community.html">
+                                <i class="bi bi-chat-square-text"></i>
+                                <span>Community</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="pages.html">
+                                <i class="bi bi-file-earmark-text"></i>
+                                <span>Pages</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Customers</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="users.html">
+                                <i class="bi bi-people"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="roles.html">
+                                <i class="bi bi-shield-lock"></i>
+                                <span>Roles</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="reviews.html">
+                                <i class="bi bi-star"></i>
+                                <span>Reviews</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="notifications.html">
+                                <i class="bi bi-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">System</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="settings.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Account</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="../index.html">
+                                <i class="bi bi-shop"></i>
+                                <span>Go to site</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="post" data-demo action="#">
+                                <button type="submit" class="sidebar-link sidebar-button">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span>Sign out</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="admin-top">
+                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                <div class="admin-top-title">Notifications</div>
+                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                <div class="admin-user">
+                    <span class="admin-avatar" aria-hidden="true">J</span>
+                    <div>
+                        <div class="admin-user-name">Janz Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-heading">
+<section class="admin-head">
+    <div>
+        <p class="admin-eyebrow">Customers</p>
+        <h1>Notifications</h1>
+    </div>
+</section>
+
+<div class="admin-grid">
+    <form class="admin-card" method="post" data-demo data-send action="#">
+        <h2>New notification</h2>
+        <div class="admin-form-grid">
+            <label class="admin-field admin-field-wide">
+                <span>To</span>
+                <select name="audience" data-audience>
+                    <option value="all">All users</option>
+                    <option value="level">Users of a level and above</option>
+                    <option value="buyers">Users who bought a product</option>
+                    <option value="one">One user</option>
+                </select>
+            </label>
+            <label class="admin-field admin-field-wide" data-audience-extra="level" hidden>
+                <span>Level</span>
+                <select name="level"><option>Newcomer</option><option>Regular</option><option>Connoisseur</option><option>Gourmet</option></select>
+            </label>
+            <label class="admin-field admin-field-wide" data-audience-extra="buyers" hidden>
+                <span>Product</span>
+                <select name="product"><option>Floral</option><option>Guatemala Santiago</option><option>Candy</option><option>Aroma kit</option></select>
+            </label>
+            <label class="admin-field admin-field-wide" data-audience-extra="one" hidden>
+                <span>Email</span>
+                <input name="email" type="email" placeholder="user@mail.az" />
+            </label>
+            <label class="admin-field admin-field-wide">
+                <span>Title</span>
+                <input name="title" required maxlength="80" placeholder="New lots from Kenya" />
+            </label>
+            <label class="admin-field admin-field-wide">
+                <span>Text</span>
+                <textarea name="text" rows="4" required maxlength="500" placeholder="What the user sees in Account → Notifications"></textarea>
+            </label>
+            <label class="admin-field admin-field-wide">
+                <span>Link</span>
+                <input name="link" placeholder="/Products/Detail/7" />
+            </label>
+        </div>
+        <div class="admin-checks">
+            <label class="admin-check"><input type="checkbox" name="site" checked /><span>In the site</span></label>
+            <label class="admin-check"><input type="checkbox" name="email" /><span>By email</span></label>
+        </div>
+        <div class="admin-form-actions"><button type="submit" class="admin-btn"><i class="bi bi-megaphone"></i> Send</button></div>
+    </form>
+
+    <section class="admin-card">
+        <h2>Sent automatically</h2>
+        <ul class="admin-steps">
+            <li>Order status changed (Processing, Shipped, Delivered)</li>
+            <li>New discount level reached</li>
+            <li>Reply to the user's community post or comment</li>
+            <li>Balance topped up or changed by an admin</li>
+        </ul>
+    </section>
+</div>
+
+<section class="admin-card admin-card-flush admin-after-grid">
+    <div class="admin-card-head admin-card-pad"><h2>Sent</h2></div>
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>To</th>
+                    <th>Where</th>
+                    <th>Date</th>
+                    <th class="num">Users</th>
+                </tr>
+            </thead>
+            <tbody data-sent>
+                <tr>
+                    <td><strong>New lots from Kenya</strong></td>
+                    <td>All users</td>
+                    <td>In the site and email</td>
+                    <td>20.10.2026</td>
+                    <td class="num">7</td>
+                </tr>
+                <tr>
+                    <td><strong>Your level is now Connoisseur</strong></td>
+                    <td>Leyla Həsənova</td>
+                    <td>In the site</td>
+                    <td>18.10.2026</td>
+                    <td class="num">1</td>
+                </tr>
+                <tr>
+                    <td><strong>Autumn: 15% with AUTUMN15</strong></td>
+                    <td>Level: Regular and above</td>
+                    <td>In the site and email</td>
+                    <td>01.10.2026</td>
+                    <td class="num">4</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+            </div>
+
+            <footer class="admin-footer">
+                <span>© 2026 Janz</span>
+                <span>Admin panel</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
+        document.querySelector(".admin-theme").addEventListener("click", function () {
+            var day = document.documentElement.classList.toggle("theme-day");
+            localStorage.setItem("janz-theme", day ? "day" : "night");
+        });
+        // Silmədən əvvəl soruşulur
+        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+            form.addEventListener("submit", function (event) {
+                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+            });
+        });
+    </script>
+    
+    <script src="js/admin-demo.js"></script>
+</body>
+</html>

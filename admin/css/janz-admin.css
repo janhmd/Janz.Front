@@ -1018,3 +1018,8 @@ html.theme-day .status-scheduled { color: #1f5fbf; }
 .admin-card-foot { padding-bottom: 1.2rem; border-top: 1px solid var(--a-line); padding-top: 1rem; }
 .admin-steps { margin: 0; padding-left: 1.1rem; color: var(--a-muted); line-height: 1.7; font-size: .9rem; }
 .admin-steps li::marker { color: var(--a-gold); }
+
+/* ---- Notifications ---- */
+.admin-checks { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1rem; }
+.admin-field[hidden] { display: none; }
+.page-heading > .admin-after-grid { margin-top: 1.4rem; display: block; }

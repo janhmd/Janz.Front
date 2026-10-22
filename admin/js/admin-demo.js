@@ -53,6 +53,22 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
+        // Bildiriş göndərmək: "Sent" cədvəlinin başına düşür
+        if (form.hasAttribute("data-send")) {
+            var audience = form.audience.options[form.audience.selectedIndex].text;
+            var where = [form.site.checked ? "In the site" : "", form.email.checked ? "email" : ""].filter(Boolean).join(" and ");
+            var row = document.createElement("tr");
+            row.innerHTML = "<td><strong></strong></td><td></td><td></td><td>today</td><td class=\"num\">—</td>";
+            row.querySelector("strong").textContent = form.title.value;
+            row.children[1].textContent = audience;
+            row.children[2].textContent = where || "—";
+            document.querySelector("[data-sent]").prepend(row);
+            form.reset();
+            form.audience.dispatchEvent(new Event("change"));
+            adminFlash("The notification is sent.");
+            return;
+        }
+
         // Şikayət: həll olunanda sətir siyahıdan çıxır
         if (form.hasAttribute("data-resolve")) {
             form.closest("tr").remove();
@@ -308,5 +324,16 @@ document.querySelectorAll(".admin-tabs button[data-tab]").forEach(function (tab)
         });
         body.appendChild(row);
         row.querySelector("input").focus();
+    });
+})();
+
+// Bildiriş: "To" seçiminə görə əlavə sahə görünür
+(function () {
+    var select = document.querySelector("[data-audience]");
+    if (!select) return;
+    select.addEventListener("change", function () {
+        document.querySelectorAll("[data-audience-extra]").forEach(function (field) {
+            field.hidden = field.getAttribute("data-audience-extra") !== select.value;
+        });
     });
 })();
