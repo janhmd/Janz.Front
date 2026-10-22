@@ -858,15 +858,83 @@ document.querySelectorAll(".grind").forEach(function (menu) {
     });
 });
 
-// Səbətə əlavə: qiymət düyməsi. Hələlik yalnız sayğac və bildiriş; backend gələndə API-yə gedəcək
-var cartCountKey = "janz-cart-count";
+// Səbət: qiymət düyməsi məhsulu səbətə əlavə edir, header-də sayğac və hover paneli göstərir
+// Hələlik yalnız bu brauzerdə yadda qalır (janz-cart); MVC-də API-yə gedəcək
+var cartKey = "janz-cart";
+
+function readCart() {
+    try {
+        var items = JSON.parse(localStorage.getItem(cartKey) || "[]");
+        return Array.isArray(items) ? items : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function writeCart(items) {
+    try {
+        localStorage.setItem(cartKey, JSON.stringify(items));
+    } catch (error) {}
+}
 
 function readCartCount() {
-    try {
-        return parseInt(localStorage.getItem(cartCountKey), 10) || 0;
-    } catch (error) {
-        return 0;
-    }
+    return readCart().reduce(function (sum, item) { return sum + item.qty; }, 0);
+}
+
+function money(value) {
+    return "₼" + value.toFixed(2);
+}
+
+function priceOf(element) {
+    return element ? parseFloat(element.textContent.replace(/[^0-9.]/g, "")) || 0 : 0;
+}
+
+// Kartdan (və ya məhsul səhifəsindən) məhsulun məlumatlarını götürür
+function productFromButton(button) {
+    // Kartda məlumat kartın içindədir; məhsul səhifəsinin əsas düyməsində isə h1 və qalereyadadır
+    var inCard = button.closest("article, .product");
+    var card = inCard || button.closest(".coffee-buy") || document.body;
+    var title = inCard ? card.querySelector("h3") : document.querySelector("h1");
+    var photo = inCard ? card.querySelector(".product-photo") : document.querySelector(".gallery-photo");
+    var link = card.querySelector(".product-link");
+    var weights = [];
+    var weight = 0;
+    card.querySelectorAll(".weight").forEach(function (item, index) {
+        var off = item.querySelector("small");
+        weights.push({ label: item.firstChild.textContent.trim(), off: off ? off.textContent : "" });
+        if (item.classList.contains("is-on")) weight = index;
+    });
+    var grinds = [];
+    var grind = "";
+    card.querySelectorAll(".grind-list button").forEach(function (item) {
+        grinds.push(item.textContent.trim());
+        if (item.classList.contains("is-on")) grind = item.textContent.trim();
+    });
+    var oldPrice = priceOf(button.querySelector("s"));
+    return {
+        name: title ? title.textContent.trim() : "Coffee",
+        link: link ? link.getAttribute("href") : "product.html",
+        photo: photo ? photo.getAttribute("src") : "",
+        price: priceOf(button.querySelector("strong")) || priceOf(button),
+        oldPrice: oldPrice,
+        weights: weights,
+        weight: weight,
+        grinds: grinds,
+        grind: grind || grinds[0] || "",
+        qty: 1
+    };
+}
+
+function sameLine(a, b) {
+    return a.name === b.name && a.weight === b.weight && a.grind === b.grind;
+}
+
+function addToCart(product) {
+    var items = readCart();
+    var found = items.filter(function (item) { return sameLine(item, product); })[0];
+    if (found) found.qty += 1;
+    else items.push(product);
+    writeCart(items);
 }
 
 function showCartCount(bump) {
@@ -892,17 +960,156 @@ function showCartCount(bump) {
     });
 }
 
+// Header-də səbətin hover paneli
+function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+}
+
+var trashIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 13h8l1-13M10.5 11v5.5M13.5 11v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function renderMiniCart() {
+    document.querySelectorAll(".mini-cart").forEach(function (panel) {
+        var items = readCart();
+        panel.innerHTML = "";
+        panel.appendChild(el("div", "mini-cart-title", "Items in your cart"));
+
+        panel.classList.toggle("is-empty", !items.length);
+        if (!items.length) {
+            panel.appendChild(el("p", "mini-cart-empty", "Your cart is empty for now"));
+            var go = el("a", "mini-cart-order", "Go to catalog");
+            go.href = "catalog.html";
+            panel.appendChild(go);
+            return;
+        }
+
+        var list = el("div", "mini-cart-list");
+        items.forEach(function (item, index) {
+            var row = el("div", "mini-cart-row");
+
+            var photo = el("a", "mini-cart-photo");
+            photo.href = item.link || "product.html";
+            if (item.photo) {
+                var img = el("img");
+                img.src = item.photo;
+                img.alt = "";
+                photo.appendChild(img);
+            }
+            row.appendChild(photo);
+
+            var info = el("div", "mini-cart-info");
+            var name = el("a", "mini-cart-name", item.name);
+            name.href = item.link || "product.html";
+            info.appendChild(name);
+            var options = el("div", "mini-cart-options");
+            (item.weights || []).forEach(function (weight, weightIndex) {
+                var pill = el("button", "mini-cart-weight" + (weightIndex === item.weight ? " is-on" : ""), weight.label);
+                pill.type = "button";
+                if (weight.off) pill.appendChild(el("small", "", weight.off));
+                pill.addEventListener("click", function () { changeLine(index, { weight: weightIndex }); });
+                options.appendChild(pill);
+            });
+            if (item.grinds && item.grinds.length) {
+                var select = el("select", "mini-cart-grind");
+                select.setAttribute("aria-label", "Grind");
+                item.grinds.forEach(function (grind) {
+                    var option = el("option", "", grind);
+                    option.selected = grind === item.grind;
+                    select.appendChild(option);
+                });
+                select.addEventListener("change", function () { changeLine(index, { grind: select.value }); });
+                options.appendChild(select);
+            }
+            info.appendChild(options);
+            row.appendChild(info);
+
+            var qty = el("div", "mini-cart-qty");
+            var minus = el("button", "", "−");
+            minus.type = "button";
+            minus.setAttribute("aria-label", "Less");
+            minus.disabled = item.qty <= 1;
+            minus.addEventListener("click", function () { changeLine(index, { qty: item.qty - 1 }); });
+            var plus = el("button", "", "+");
+            plus.type = "button";
+            plus.setAttribute("aria-label", "More");
+            plus.addEventListener("click", function () { changeLine(index, { qty: item.qty + 1 }); });
+            qty.appendChild(minus);
+            qty.appendChild(el("span", "", String(item.qty)));
+            qty.appendChild(plus);
+            row.appendChild(qty);
+
+            var price = el("div", "mini-cart-price");
+            if (item.oldPrice) price.appendChild(el("s", "", money(item.oldPrice * item.qty)));
+            price.appendChild(el("strong", "", money(item.price * item.qty)));
+            row.appendChild(price);
+
+            var remove = el("button", "mini-cart-remove");
+            remove.type = "button";
+            remove.setAttribute("aria-label", "Remove " + item.name);
+            remove.innerHTML = trashIcon;
+            remove.addEventListener("click", function () { changeLine(index, null); });
+            row.appendChild(remove);
+
+            list.appendChild(row);
+        });
+        panel.appendChild(list);
+
+        var total = items.reduce(function (sum, item) { return sum + item.price * item.qty; }, 0);
+        var footer = el("div", "mini-cart-footer");
+        var order = el("a", "mini-cart-order", "Place an order");
+        order.href = "cart.html";
+        footer.appendChild(order);
+        footer.appendChild(el("span", "mini-cart-total", "Total " + money(total)));
+        panel.appendChild(footer);
+    });
+}
+
+// changes = null → sətri silir; yoxsa sətirin sahələrini dəyişir (eyni sətir yaranarsa birləşdirir)
+function changeLine(index, changes) {
+    var items = readCart();
+    if (!items[index]) return;
+    if (changes === null) {
+        items.splice(index, 1);
+    } else {
+        Object.keys(changes).forEach(function (key) { items[index][key] = changes[key]; });
+        for (var i = 0; i < items.length; i++) {
+            if (i !== index && sameLine(items[i], items[index])) {
+                items[i].qty += items[index].qty;
+                items.splice(index, 1);
+                break;
+            }
+        }
+    }
+    writeCart(items);
+    showCartCount(false);
+    renderMiniCart();
+}
+
+document.querySelectorAll(".header-actions .cart-link").forEach(function (link) {
+    var wrap = el("div", "cart-drop");
+    link.parentNode.insertBefore(wrap, link);
+    wrap.appendChild(link);
+    var panel = el("div", "mini-cart");
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", "Cart");
+    wrap.appendChild(panel);
+});
+
 document.querySelectorAll(".price").forEach(function (button) {
     button.addEventListener("click", function () {
-        try {
-            localStorage.setItem(cartCountKey, String(readCartCount() + 1));
-        } catch (error) {}
+        addToCart(productFromButton(button));
         showCartCount(true);
+        renderMiniCart();
         showToast("Added to cart");
     });
 });
 
+// Köhnə sayğac açarı artıq lazım deyil
+try { localStorage.removeItem("janz-cart-count"); } catch (error) {}
 showCartCount();
+renderMiniCart();
 
 document.querySelectorAll(".buy-row").forEach(function (row) {
     var weights = row.querySelectorAll(".weight");
