@@ -100,7 +100,7 @@ h1, h2, h3 { color: var(--a-text); }
 .sidebar-wrapper .menu { margin-top: .4rem; padding: 0 1rem; }
 
 .sidebar-wrapper .menu .sidebar-title {
-    margin: 1.4rem 0 .5rem;
+    margin: 1.1rem 0 .4rem;
     padding: 0 .9rem;
     color: var(--a-muted);
     font-size: .7rem;
@@ -113,7 +113,7 @@ h1, h2, h3 { color: var(--a-text); }
 
 .sidebar-wrapper .menu .sidebar-link {
     width: 100%;
-    padding: .65rem .9rem;
+    padding: .55rem .9rem;
     border-radius: 999px;
     color: var(--a-text);
     font-size: .92rem;
