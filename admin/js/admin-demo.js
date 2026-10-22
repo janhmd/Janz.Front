@@ -53,6 +53,15 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
+        // Şikayət: həll olunanda sətir siyahıdan çıxır
+        if (form.hasAttribute("data-resolve")) {
+            form.closest("tr").remove();
+            var alert = document.querySelector(".admin-tabs .is-alert");
+            if (alert) alert.textContent = Math.max(0, Number(alert.textContent) - 1);
+            adminFlash(form.getAttribute("data-resolve"));
+            return;
+        }
+
         // Mövzu / seriya əlavə etmək (Journal)
         if (form.hasAttribute("data-add-chip")) {
             var list = form.parentNode.querySelector("[data-chip-list]");
@@ -132,7 +141,8 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
 (function () {
     var filter = document.querySelector(".admin-filter");
     if (!filter) return;
-    var rows = document.querySelectorAll(".admin-table tbody tr, .admin-review");
+    // Filtr yalnız öz bölməsindəki sətirləri süzür (Community-də tablar var)
+    var rows = filter.parentNode.querySelectorAll(".admin-table tbody tr, .admin-review");
     var title = document.querySelector(".admin-head h1 span");
     var emptyBox = document.querySelector(".admin-reviews + .admin-empty");
 
@@ -269,3 +279,15 @@ document.addEventListener("click", function (event) {
         preview.textContent = slug.value || "...";
     });
 })();
+
+// Tablar: düymə öz bölməsini göstərir, qalanlarını gizlədir
+document.querySelectorAll(".admin-tabs button[data-tab]").forEach(function (tab) {
+    tab.addEventListener("click", function () {
+        document.querySelectorAll(".admin-tabs button[data-tab]").forEach(function (other) {
+            other.classList.toggle("is-on", other === tab);
+        });
+        document.querySelectorAll("[data-pane]").forEach(function (pane) {
+            pane.hidden = pane.getAttribute("data-pane") !== tab.getAttribute("data-tab");
+        });
+    });
+});

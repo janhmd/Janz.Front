@@ -986,3 +986,27 @@ html.theme-day .status-scheduled { color: #1f5fbf; }
 
 .admin-editor { font-family: Consolas, "Courier New", monospace; font-size: .9rem; line-height: 1.6; }
 @media (max-width: 991px) { .admin-grid-even { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- Tablar (Community) ---- */
+.admin-tabs { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--a-line); }
+
+.admin-tabs button {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .7rem 1rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--a-muted);
+    font-weight: 700;
+    margin-bottom: -1px;
+}
+
+.admin-tabs button:hover { color: var(--a-text); }
+.admin-tabs button.is-on { color: var(--a-text); border-bottom-color: var(--a-text); }
+.admin-tabs button span { padding: .05rem .45rem; border-radius: 999px; background: var(--a-card-2); font-size: .75rem; }
+.admin-tabs button span.is-alert { background: var(--a-danger); color: #fff; }
+
+.admin-table td.admin-wrap { white-space: normal; min-width: 12rem; }
+[data-pane][hidden] { display: none !important; }

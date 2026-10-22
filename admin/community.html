@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community - Janz Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/janz-admin.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="logo" aria-label="Janz admin" href="index.html">
+                            <span class="logo-mark" aria-hidden="true">J</span>
+                            <span class="logo-name">Janz</span>
+                            <span class="logo-tag">Admin</span>
+                        </a>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block" aria-label="Close menu"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="bi bi-grid-1x2"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Shop</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="products.html">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="categories.html">
+                                <i class="bi bi-layers"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="tags.html">
+                                <i class="bi bi-tags"></i>
+                                <span>Tags</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="orders.html">
+                                <i class="bi bi-bag-check"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="coupons.html">
+                                <i class="bi bi-percent"></i>
+                                <span>Coupons</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="loyalty.html">
+                                <i class="bi bi-trophy"></i>
+                                <span>Discount levels</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Content</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="articles.html">
+                                <i class="bi bi-journal-text"></i>
+                                <span>Journal</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="community.html">
+                                <i class="bi bi-chat-square-text"></i>
+                                <span>Community</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="pages.html">
+                                <i class="bi bi-file-earmark-text"></i>
+                                <span>Pages</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Customers</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="users.html">
+                                <i class="bi bi-people"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="roles.html">
+                                <i class="bi bi-shield-lock"></i>
+                                <span>Roles</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="reviews.html">
+                                <i class="bi bi-star"></i>
+                                <span>Reviews</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="notifications.html">
+                                <i class="bi bi-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">System</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="settings.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Account</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="../index.html">
+                                <i class="bi bi-shop"></i>
+                                <span>Go to site</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="post" data-demo action="#">
+                                <button type="submit" class="sidebar-link sidebar-button">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span>Sign out</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="admin-top">
+                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                <div class="admin-top-title">Community</div>
+                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                <div class="admin-user">
+                    <span class="admin-avatar" aria-hidden="true">J</span>
+                    <div>
+                        <div class="admin-user-name">Janz Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-heading">
+<section class="admin-head">
+    <div>
+        <p class="admin-eyebrow">Content</p>
+        <h1>Community</h1>
+    </div>
+</section>
+
+<nav class="admin-tabs" aria-label="Community sections">
+    <button type="button" class="is-on" data-tab="posts">Posts <span>5</span></button>
+    <button type="button" data-tab="comments">Comments <span>4</span></button>
+    <button type="button" data-tab="reports">Reports <span class="is-alert">2</span></button>
+</nav>
+
+<div data-pane="posts">
+    <nav class="admin-filter" aria-label="Filter posts">
+        <a class="is-on" href="community.html">All</a>
+        <a href="community.html#published">Published</a>
+        <a href="community.html#hidden">Hidden</a>
+        <a href="community.html#reported">Reported</a>
+    </nav>
+    <div class="admin-reviews">
+        <article class="admin-review" data-filter="published">
+            <div class="admin-review-top">
+                <span class="admin-person">
+                    <span class="admin-avatar admin-avatar-sm" aria-hidden="true">E</span>
+                    <span><strong>Elvin</strong><small>Expert, Sheki</small></span>
+                </span>
+                <span><span class="admin-status status-published">Published</span></span>
+            </div>
+            <p>We are extending summer with a new strawberry infusion. Who has tried it already?</p>
+            <div class="admin-review-foot">
+                <span><i class="bi bi-heart"></i> 38 · <i class="bi bi-chat"></i> 6 · 21.10.2026</span>
+                <span class="admin-actions">
+                    <form method="post" data-demo data-review-toggle action="#">
+                        <button type="submit" class="admin-btn-sm">Hide</button>
+                    </form>
+                    <form method="post" data-demo data-confirm="Delete this post with its comments?" action="#">
+                        <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+        </article>
+        <article class="admin-review" data-filter="published">
+            <div class="admin-review-top">
+                <span class="admin-person">
+                    <span class="admin-avatar admin-avatar-sm" aria-hidden="true">A</span>
+                    <span><strong>Aysel</strong><small>Coffee lover, Baku</small></span>
+                </span>
+                <span><span class="admin-status status-published">Published</span></span>
+            </div>
+            <p>Moka pot for dad is the best gift. Mine still uses the one we bought him five years ago!</p>
+            <div class="admin-review-foot">
+                <span><i class="bi bi-heart"></i> 24 · <i class="bi bi-chat"></i> 3 · 20.10.2026</span>
+                <span class="admin-actions">
+                    <form method="post" data-demo data-review-toggle action="#">
+                        <button type="submit" class="admin-btn-sm">Hide</button>
+                    </form>
+                    <form method="post" data-demo data-confirm="Delete this post with its comments?" action="#">
+                        <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+        </article>
+        <article class="admin-review" data-filter="published">
+            <div class="admin-review-top">
+                <span class="admin-person">
+                    <span class="admin-avatar admin-avatar-sm" aria-hidden="true">K</span>
+                    <span><strong>Kamran</strong><small>Home barista, Ganja</small></span>
+                </span>
+                <span><span class="admin-status status-published">Published</span></span>
+            </div>
+            <p>Kenya and country music, a perfect pair. Which Kenya was your favourite?</p>
+            <div class="admin-review-foot">
+                <span><i class="bi bi-heart"></i> 17 · <i class="bi bi-chat"></i> 9 · 19.10.2026</span>
+                <span class="admin-actions">
+                    <form method="post" data-demo data-review-toggle action="#">
+                        <button type="submit" class="admin-btn-sm">Hide</button>
+                    </form>
+                    <form method="post" data-demo data-confirm="Delete this post with its comments?" action="#">
+                        <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+        </article>
+        <article class="admin-review" data-filter="hidden reported">
+            <div class="admin-review-top">
+                <span class="admin-person">
+                    <span class="admin-avatar admin-avatar-sm" aria-hidden="true">T</span>
+                    <span><strong>Tural</strong><small>Coffee lover, Baku</small></span>
+                </span>
+                <span><span class="admin-status status-blocked">3 reports</span> <span class="admin-status status-hidden">Hidden</span></span>
+            </div>
+            <p>Cheap coffee here!!! Write to me in WhatsApp for prices</p>
+            <div class="admin-review-foot">
+                <span><i class="bi bi-heart"></i> 2 · <i class="bi bi-chat"></i> 1 · 19.10.2026</span>
+                <span class="admin-actions">
+                    <form method="post" data-demo data-review-toggle action="#">
+                        <button type="submit" class="admin-btn-sm">Show</button>
+                    </form>
+                    <form method="post" data-demo data-confirm="Delete this post with its comments?" action="#">
+                        <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+        </article>
+        <article class="admin-review" data-filter="published">
+            <div class="admin-review-top">
+                <span class="admin-person">
+                    <span class="admin-avatar admin-avatar-sm" aria-hidden="true">O</span>
+                    <span><strong>Our news</strong><small>Support team</small></span>
+                </span>
+                <span><span class="admin-status status-published">Published</span></span>
+            </div>
+            <p>Autumn countryside vibe: three new teas from Lankaran are in the shop.</p>
+            <div class="admin-review-foot">
+                <span><i class="bi bi-heart"></i> 51 · <i class="bi bi-chat"></i> 12 · 18.10.2026</span>
+                <span class="admin-actions">
+                    <form method="post" data-demo data-review-toggle action="#">
+                        <button type="submit" class="admin-btn-sm">Hide</button>
+                    </form>
+                    <form method="post" data-demo data-confirm="Delete this post with its comments?" action="#">
+                        <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+        </article>
+    </div>
+    <p class="admin-empty" hidden>No posts here.</p>
+</div>
+
+<section class="admin-card admin-card-flush" data-pane="comments" hidden>
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Author</th>
+                    <th>Comment</th>
+                    <th>On</th>
+                    <th>Date</th>
+                    <th class="actions">Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Sevda</strong></td>
+                    <td class="admin-wrap">Great article, now I want to try a washed Kenya.</td>
+                    <td class="admin-wrap"><span class="admin-sub">Journal</span>Kenya: the country of bright acidity</td>
+                    <td>19.10.2026</td>
+                    <td class="actions">
+                        <form method="post" data-demo data-confirm="Delete this comment?" action="#">
+                            <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Rashad</strong></td>
+                    <td class="admin-wrap">Nyeri AA, no doubt!</td>
+                    <td class="admin-wrap"><span class="admin-sub">Community</span>Kenya and country music, a perfect pair…</td>
+                    <td>19.10.2026</td>
+                    <td class="actions">
+                        <form method="post" data-demo data-confirm="Delete this comment?" action="#">
+                            <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Tural</strong></td>
+                    <td class="admin-wrap">Prices in WhatsApp, cheaper than here</td>
+                    <td class="admin-wrap"><span class="admin-sub">Community</span>We are extending summer with a new strawberry…</td>
+                    <td>19.10.2026</td>
+                    <td class="actions">
+                        <form method="post" data-demo data-confirm="Delete this comment?" action="#">
+                            <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Nigar</strong></td>
+                    <td class="admin-wrap">Thank you, finally understood why my espresso is sour.</td>
+                    <td class="admin-wrap"><span class="admin-sub">Journal</span>Light or dark: how roasting changes the cup</td>
+                    <td>15.10.2026</td>
+                    <td class="actions">
+                        <form method="post" data-demo data-confirm="Delete this comment?" action="#">
+                            <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="admin-card admin-card-flush" data-pane="reports" hidden>
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Content</th>
+                    <th>Reason</th>
+                    <th>Reported by</th>
+                    <th>Date</th>
+                    <th class="actions">Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Post by Tural</strong></td>
+                    <td>Spam or advertising</td>
+                    <td class="admin-wrap">Aysel, Kamran, Sevda</td>
+                    <td>19.10.2026</td>
+                    <td class="actions">
+                        <span class="admin-actions">
+                            <form method="post" data-demo data-resolve="Content hidden." action="#"><button type="submit" class="admin-btn-sm">Hide content</button></form>
+                            <form method="post" data-demo data-resolve="Report dismissed." action="#"><button type="submit" class="admin-btn-sm">Dismiss</button></form>
+                            <a class="admin-btn-sm is-danger" href="user.html">Block author</a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Comment by Tural</strong></td>
+                    <td>Spam or advertising</td>
+                    <td class="admin-wrap">Rashad</td>
+                    <td>19.10.2026</td>
+                    <td class="actions">
+                        <span class="admin-actions">
+                            <form method="post" data-demo data-resolve="Content hidden." action="#"><button type="submit" class="admin-btn-sm">Hide content</button></form>
+                            <form method="post" data-demo data-resolve="Report dismissed." action="#"><button type="submit" class="admin-btn-sm">Dismiss</button></form>
+                            <a class="admin-btn-sm is-danger" href="user.html">Block author</a>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<p class="admin-note">Community titles (Coffee lover, Home barista, Expert, Ambassador, Support team) are set on the user's page in Users. Users block each other themselves; blocking here closes the account.</p>
+            </div>
+
+            <footer class="admin-footer">
+                <span>© 2026 Janz</span>
+                <span>Admin panel</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
+        document.querySelector(".admin-theme").addEventListener("click", function () {
+            var day = document.documentElement.classList.toggle("theme-day");
+            localStorage.setItem("janz-theme", day ? "day" : "night");
+        });
+        // Silmədən əvvəl soruşulur
+        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+            form.addEventListener("submit", function (event) {
+                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+            });
+        });
+    </script>
+    
+    <script src="js/admin-demo.js"></script>
+</body>
+</html>
