@@ -337,7 +337,7 @@ h1, h2, h3 { color: var(--a-text); }
 }
 
 .admin-grid > * { margin-bottom: 0; }
-.admin-grid + * { margin-top: 1.4rem; display: inline-flex; gap: .4rem; align-items: center; }
+.admin-grid + .admin-link { margin-top: 1.4rem; display: inline-flex; gap: .4rem; align-items: center; }
 
 .admin-stack { display: flex; flex-direction: column; gap: 1.4rem; min-width: 0; }
 .admin-stack > .admin-card { margin: 0; }
@@ -860,7 +860,7 @@ html.theme-day .role-manager, html.theme-day .role-editor, html.theme-day .role-
 
 /* ---- Məhsul forması: tag-lar, şəkillər ---- */
 .admin-form .admin-grid > .admin-stack > .admin-card { margin: 0; }
-.admin-form .admin-grid + * { margin-top: 0; }
+
 
 .admin-chips-field { margin-top: 1rem; }
 .admin-chips { display: flex; flex-wrap: wrap; gap: .45rem; }
@@ -1004,6 +1004,8 @@ html.theme-day .status-scheduled { color: #1f5fbf; }
 }
 
 .admin-tabs button:hover { color: var(--a-text); }
+.admin-tabs button:focus { outline: none; }
+.admin-tabs button:focus-visible { color: var(--a-text); background: var(--a-card-2); border-radius: 10px 10px 0 0; }
 .admin-tabs button.is-on { color: var(--a-text); border-bottom-color: var(--a-text); }
 .admin-tabs button span { padding: .05rem .45rem; border-radius: 999px; background: var(--a-card-2); font-size: .75rem; }
 .admin-tabs button span.is-alert { background: var(--a-danger); color: #fff; }
@@ -1028,3 +1030,9 @@ html.theme-day .status-scheduled { color: #1f5fbf; }
 .admin-grid-top { margin-top: 0; }
 .admin-checks .admin-check { font-weight: 600; }
 .page-heading code { color: var(--a-gold); }
+
+/* ---- Shop reviews ---- */
+.admin-shop-rates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: .4rem 0 .6rem; }
+.admin-shop-rates > div > span:first-child { display: block; color: var(--a-muted); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.admin-shop-rates p { margin: .35rem 0 0; }
+@media (max-width: 575px) { .admin-shop-rates { grid-template-columns: 1fr; } }

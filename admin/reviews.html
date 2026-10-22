@@ -167,11 +167,16 @@
 <section class="admin-head">
     <div>
         <p class="admin-eyebrow">Customers</p>
-        <h1>Reviews <span>6</span></h1>
+        <h1>Reviews</h1>
     </div>
 </section>
 
-<div class="admin-grid admin-grid-side">
+<nav class="admin-tabs" aria-label="Review types">
+    <button type="button" class="is-on" data-tab="products">Products <span>6</span></button>
+    <button type="button" data-tab="shop">Shop and delivery <span>3</span></button>
+</nav>
+
+<div class="admin-grid admin-grid-side" data-pane="products">
     <div>
         <nav class="admin-filter" aria-label="Filter reviews">
             <a class="is-on" href="reviews.html">All</a>
@@ -332,6 +337,84 @@
         </div>
         <p class="admin-note">Hidden reviews are not shown on the product page and do not count in its rating.</p>
     </section>
+</div>
+
+<div data-pane="shop" hidden>
+    <div class="admin-reviews">
+        <article class="admin-review" data-filter="published">
+            <div class="admin-review-top">
+                <span class="admin-person">
+                    <span class="admin-avatar admin-avatar-sm" aria-hidden="true">B</span>
+                    <span><strong>Bagdagul</strong><small>Newcomer</small></span>
+                </span>
+                <span class="admin-status status-published">Published</span>
+            </div>
+            <div class="admin-shop-rates">
+                <div><span>Shop</span><span class="admin-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span><p>I'm happy with it</p></div>
+                <div><span>Delivery</span><span class="admin-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span><p>Fast</p></div>
+            </div>
+            <div class="admin-review-foot">
+                <span>14.08.2026</span>
+                <span class="admin-actions">
+                    <form method="post" data-demo data-review-toggle action="#">
+                        <button type="submit" class="admin-btn-sm">Hide</button>
+                    </form>
+                    <form method="post" data-demo data-confirm="Delete this review?" action="#">
+                        <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+        </article>
+        <article class="admin-review" data-filter="published">
+            <div class="admin-review-top">
+                <span class="admin-person">
+                    <span class="admin-avatar admin-avatar-sm" aria-hidden="true">C</span>
+                    <span><strong>Cavanshir</strong><small>Newcomer</small></span>
+                </span>
+                <span class="admin-status status-published">Published</span>
+            </div>
+            <div class="admin-shop-rates">
+                <div><span>Shop</span><span class="admin-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span><p>This was my first time at Janz. I liked everything. The welcome discount is nice too.</p></div>
+                <div><span>Delivery</span><span class="admin-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span><p>Delivery was fast. I am happy.</p></div>
+            </div>
+            <div class="admin-review-foot">
+                <span>13.07.2026</span>
+                <span class="admin-actions">
+                    <form method="post" data-demo data-review-toggle action="#">
+                        <button type="submit" class="admin-btn-sm">Hide</button>
+                    </form>
+                    <form method="post" data-demo data-confirm="Delete this review?" action="#">
+                        <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+        </article>
+        <article class="admin-review" data-filter="published low">
+            <div class="admin-review-top">
+                <span class="admin-person">
+                    <span class="admin-avatar admin-avatar-sm" aria-hidden="true">R</span>
+                    <span><strong>Ramin</strong><small>Regular</small></span>
+                </span>
+                <span class="admin-status status-published">Published</span>
+            </div>
+            <div class="admin-shop-rates">
+                <div><span>Shop</span><span class="admin-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></span><p>Coffee is great as always.</p></div>
+                <div><span>Delivery</span><span class="admin-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i></span><p>The courier was two hours late.</p></div>
+            </div>
+            <div class="admin-review-foot">
+                <span>09.10.2026</span>
+                <span class="admin-actions">
+                    <form method="post" data-demo data-review-toggle action="#">
+                        <button type="submit" class="admin-btn-sm">Hide</button>
+                    </form>
+                    <form method="post" data-demo data-confirm="Delete this review?" action="#">
+                        <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                    </form>
+                </span>
+            </div>
+        </article>
+    </div>
+    <p class="admin-note admin-note-top">These are the reviews on the Reviews page of the site. The customer's discount level is shown under the name.</p>
 </div>
             </div>
 
