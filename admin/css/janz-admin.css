@@ -946,3 +946,43 @@ html.theme-day .role-manager, html.theme-day .role-editor, html.theme-day .role-
 
 .admin-cell-input:hover,
 .admin-cell-input:focus { border-color: var(--a-line); background: var(--a-card-2); }
+
+/* ---- Journal ---- */
+.admin-sub { display: block; color: var(--a-muted); font-size: .78rem; font-weight: 400; }
+.admin-product a:hover { color: var(--a-gold); }
+.status-draft { color: var(--a-muted); }
+.status-scheduled { color: #6aa9ff; border-color: rgba(106, 169, 255, .45); }
+html.theme-day .status-scheduled { color: #1f5fbf; }
+
+.admin-grid-even { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 1.4rem; }
+.page-heading > .admin-grid-even + * { margin-top: 0; }
+
+.admin-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .35rem .5rem .35rem .85rem;
+    border: 1px solid var(--a-line);
+    border-radius: 999px;
+    font-size: .82rem;
+    font-weight: 600;
+}
+
+.admin-tag button {
+    width: 22px;
+    height: 22px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--a-card-2);
+    color: var(--a-muted);
+    line-height: 1;
+}
+
+.admin-tag button:hover { color: var(--a-danger); }
+
+.admin-inline-small { margin-top: 1rem; }
+.admin-inline-small input { min-width: 0; flex: 1; height: 40px; }
+.admin-inline-small .admin-btn { height: 40px; }
+
+.admin-editor { font-family: Consolas, "Courier New", monospace; font-size: .9rem; line-height: 1.6; }
+@media (max-width: 991px) { .admin-grid-even { grid-template-columns: minmax(0, 1fr); } }

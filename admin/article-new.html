@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New article - Janz Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/janz-admin.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="logo" aria-label="Janz admin" href="index.html">
+                            <span class="logo-mark" aria-hidden="true">J</span>
+                            <span class="logo-name">Janz</span>
+                            <span class="logo-tag">Admin</span>
+                        </a>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block" aria-label="Close menu"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="bi bi-grid-1x2"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Shop</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="products.html">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="categories.html">
+                                <i class="bi bi-layers"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="tags.html">
+                                <i class="bi bi-tags"></i>
+                                <span>Tags</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="orders.html">
+                                <i class="bi bi-bag-check"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="coupons.html">
+                                <i class="bi bi-percent"></i>
+                                <span>Coupons</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="loyalty.html">
+                                <i class="bi bi-trophy"></i>
+                                <span>Discount levels</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Content</li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="articles.html">
+                                <i class="bi bi-journal-text"></i>
+                                <span>Journal</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="community.html">
+                                <i class="bi bi-chat-square-text"></i>
+                                <span>Community</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="pages.html">
+                                <i class="bi bi-file-earmark-text"></i>
+                                <span>Pages</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Customers</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="users.html">
+                                <i class="bi bi-people"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="roles.html">
+                                <i class="bi bi-shield-lock"></i>
+                                <span>Roles</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="reviews.html">
+                                <i class="bi bi-star"></i>
+                                <span>Reviews</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="notifications.html">
+                                <i class="bi bi-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">System</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="settings.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Account</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="../index.html">
+                                <i class="bi bi-shop"></i>
+                                <span>Go to site</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="post" data-demo action="#">
+                                <button type="submit" class="sidebar-link sidebar-button">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span>Sign out</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="admin-top">
+                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                <div class="admin-top-title">New article</div>
+                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                <div class="admin-user">
+                    <span class="admin-avatar" aria-hidden="true">J</span>
+                    <div>
+                        <div class="admin-user-name">Janz Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-heading">
+<section class="admin-head">
+    <div>
+        <p class="admin-eyebrow"><a href="articles.html">Journal</a> / New</p>
+        <h1>New article</h1>
+    </div>
+</section>
+
+<form class="admin-form" method="post" data-demo enctype="multipart/form-data" action="#">
+    <div class="admin-grid">
+        <div class="admin-stack">
+            <section class="admin-card">
+                <div class="admin-form-grid">
+                    <label class="admin-field admin-field-wide">
+                        <span>Title</span>
+                        <input name="title" value="" required maxlength="140" data-slug-source />
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Address</span>
+                        <input name="slug" value="" pattern="[a-z0-9-]+" data-slug placeholder="how-to-dial-in-espresso" />
+                        <small>/Journal/Article/<b data-slug-preview>...</b></small>
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Lead</span>
+                        <textarea name="lead" rows="2" maxlength="300" placeholder="One or two sentences under the title and on the card"></textarea>
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Text</span>
+                        <textarea class="admin-editor" name="body" rows="16" placeholder="## Section heading&#10;&#10;Paragraph text…"></textarea>
+                        <small>## for a section heading, an empty line between paragraphs, ![alt](image) for a picture.</small>
+                    </label>
+                </div>
+            </section>
+        </div>
+
+        <div class="admin-stack">
+            <section class="admin-card">
+                <h2>Publishing</h2>
+                <div class="admin-form-grid">
+                    <label class="admin-field admin-field-wide">
+                        <span>Status</span>
+                        <select name="status">
+                            <option selected>Draft</option>
+                            <option>Published</option>
+                            <option>Scheduled</option>
+                        </select>
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Publish date</span>
+                        <input name="publishAt" type="date" value="" />
+                    </label>
+                </div>
+                <label class="admin-check admin-note-top">
+                    <input name="isFeatured" type="checkbox" />
+                    <span>Featured on the journal page</span>
+                </label>
+                <div class="admin-form-actions">
+                    <button type="submit" class="admin-btn">Create</button>
+                    <a class="admin-btn is-ghost" href="articles.html">Cancel</a>
+                </div>
+            </section>
+            <section class="admin-card">
+                <h2>Topic and series</h2>
+                <div class="admin-form-grid">
+                    <label class="admin-field admin-field-wide">
+                        <span>Topic</span>
+                        <select name="topic">
+                            <option>Brewing</option>
+                            <option>Brewing guides</option>
+                            <option>Growing</option>
+                            <option>Roasting</option>
+                            <option>Industry</option>
+                            <option>Tea</option>
+                            <option>Marketing</option>
+                        </select>
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Series</span>
+                        <select name="series">
+                            <option selected>None</option>
+                            <option>Brewing espresso</option>
+                            <option>Coffee origins</option>
+                            <option>Tea at home</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="admin-field admin-chips-field">
+                    <span>Tags</span>
+                    <div class="admin-chips">
+                        <label class="admin-chip"><input type="checkbox" name="tags" value="Espresso" /><span>Espresso</span></label>
+                        <label class="admin-chip"><input type="checkbox" name="tags" value="Filter" /><span>Filter</span></label>
+                        <label class="admin-chip"><input type="checkbox" name="tags" value="Ethiopia" /><span>Ethiopia</span></label>
+                        <label class="admin-chip"><input type="checkbox" name="tags" value="Kenya" /><span>Kenya</span></label>
+                        <label class="admin-chip"><input type="checkbox" name="tags" value="Milk" /><span>Milk</span></label>
+                        <label class="admin-chip"><input type="checkbox" name="tags" value="Tea" /><span>Tea</span></label>
+                        <label class="admin-chip"><input type="checkbox" name="tags" value="Equipment" /><span>Equipment</span></label>
+                    </div>
+                </div>
+            </section>
+            <section class="admin-card">
+                <h2>Cover</h2>
+                <div class="admin-thumbs" data-thumbs>
+                </div>
+                <label class="admin-drop">
+                    <input type="file" name="cover" accept="image/*" data-image-input />
+                    <i class="bi bi-image" aria-hidden="true"></i>
+                    <span>Choose a cover</span>
+                    <small>Shown on the card and at the top of the article.</small>
+                </label>
+            </section>
+        </div>
+    </div>
+</form>
+            </div>
+
+            <footer class="admin-footer">
+                <span>© 2026 Janz</span>
+                <span>Admin panel</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
+        document.querySelector(".admin-theme").addEventListener("click", function () {
+            var day = document.documentElement.classList.toggle("theme-day");
+            localStorage.setItem("janz-theme", day ? "day" : "night");
+        });
+        // Silmədən əvvəl soruşulur
+        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+            form.addEventListener("submit", function (event) {
+                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+            });
+        });
+    </script>
+    
+    <script src="js/admin-demo.js"></script>
+</body>
+</html>

@@ -53,6 +53,21 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
+        // Mövzu / seriya əlavə etmək (Journal)
+        if (form.hasAttribute("data-add-chip")) {
+            var list = form.parentNode.querySelector("[data-chip-list]");
+            var value = form.querySelector("input").value.trim();
+            var chip = document.createElement("span");
+            chip.className = "admin-tag";
+            chip.innerHTML = '<span></span><button type="button" data-remove-chip>×</button>';
+            chip.firstChild.textContent = value;
+            chip.lastChild.setAttribute("aria-label", "Remove " + value);
+            list.appendChild(chip);
+            form.reset();
+            adminFlash(value + " is added.");
+            return;
+        }
+
         // Yeni rol: kartlara əlavə olunur
         if (form.hasAttribute("data-new-role")) {
             var name = form.querySelector("input[name=name]").value.trim();
@@ -217,5 +232,40 @@ document.querySelectorAll("[data-generate]").forEach(function (button) {
         var first = box.querySelector(".admin-thumb");
         if (first && !box.querySelector(".admin-thumb.is-main")) markMain(first);
         event.target.value = "";
+    });
+})();
+
+// Mövzu / seriya silmək
+document.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-remove-chip]");
+    if (!button) return;
+    button.closest(".admin-tag").remove();
+});
+
+// Məqalənin ünvanı başlıqdan yaranır (istifadəçi özü dəyişməyibsə)
+(function () {
+    var source = document.querySelector("[data-slug-source]");
+    var slug = document.querySelector("[data-slug]");
+    var preview = document.querySelector("[data-slug-preview]");
+    if (!source || !slug) return;
+    var touched = slug.value !== "";
+
+    function make(text) {
+        return text.toLowerCase()
+            .replace(/ə/g, "e").replace(/ı/g, "i").replace(/ö/g, "o").replace(/ü/g, "u")
+            .replace(/ş/g, "s").replace(/ç/g, "c").replace(/ğ/g, "g")
+            .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    }
+
+    source.addEventListener("input", function () {
+        if (touched) return;
+        slug.value = make(source.value);
+        preview.textContent = slug.value || "...";
+    });
+
+    slug.addEventListener("input", function () {
+        touched = true;
+        slug.value = make(slug.value);
+        preview.textContent = slug.value || "...";
     });
 })();
