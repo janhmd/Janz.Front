@@ -1861,3 +1861,99 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
 
     refresh();
 })();
+
+// ---- Seçilmişlər (ürək) və müqayisə (tərəzi) ----
+// Hələlik yalnız bu brauzerdə yadda qalır (janz-wishlist, janz-compare); MVC-də API-yə gedəcək
+(function () {
+    var lists = {
+        wishlist: { key: "janz-wishlist", add: "Add to wishlist", remove: "Remove from wishlist", added: "Added to wishlist", removed: "Removed from wishlist" },
+        compare: { key: "janz-compare", add: "Compare", remove: "Remove from compare", added: "Added to compare", removed: "Removed from compare" }
+    };
+
+    function read(list) {
+        try { return JSON.parse(localStorage.getItem(list.key) || "[]"); } catch (e) { return []; }
+    }
+
+    function write(list, items) {
+        try { localStorage.setItem(list.key, JSON.stringify(items)); } catch (e) { }
+    }
+
+    // Məhsulun adı onun açarıdır: kartda h3, məhsul səhifəsində h1
+    function productName(button) {
+        var card = button.closest("article, .product");
+        var title = card && card.querySelector("h3");
+        if (!title) title = document.querySelector("main h1, h1");
+        return title ? title.textContent.trim() : "";
+    }
+
+    function headerLink(name) {
+        return document.querySelectorAll('.header-actions a[aria-label^="' + (name === "wishlist" ? "Wishlist" : "Compare") + '"]');
+    }
+
+    function showCount(name, bump) {
+        var count = read(lists[name]).length;
+        headerLink(name).forEach(function (link) {
+            var badge = link.querySelector(".icon-count");
+            if (!badge) {
+                badge = document.createElement("span");
+                badge.className = "icon-count";
+                link.classList.add("has-count");
+                link.appendChild(badge);
+            }
+            badge.textContent = count;
+            badge.hidden = count === 0;
+            link.setAttribute("aria-label", (name === "wishlist" ? "Wishlist" : "Compare") + (count ? ", " + count : ""));
+            if (bump) {
+                badge.classList.remove("is-bump");
+                void badge.offsetWidth;
+                badge.classList.add("is-bump");
+            }
+        });
+    }
+
+    function markButtons(name) {
+        var list = lists[name];
+        var items = read(list);
+        document.querySelectorAll(".product-actions button").forEach(function (button) {
+            if (button.dataset.list !== name) return;
+            var on = items.indexOf(productName(button)) !== -1;
+            button.classList.toggle("is-on", on);
+            button.setAttribute("aria-label", on ? list.remove : list.add);
+            button.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+    }
+
+    document.querySelectorAll(".product-actions button").forEach(function (button) {
+        var label = button.getAttribute("aria-label");
+        if (label === lists.wishlist.add) button.dataset.list = "wishlist";
+        else if (label === lists.compare.add) button.dataset.list = "compare";
+        else if (label === "Product details") {
+            // Ətraflı düyməsi məhsulun səhifəsini açır
+            button.addEventListener("click", function () {
+                var card = button.closest("article, .product");
+                var link = card && card.querySelector(".product-link");
+                window.location.href = link ? link.getAttribute("href") : "product.html";
+            });
+            return;
+        } else return;
+
+        button.addEventListener("click", function () {
+            var name = button.dataset.list;
+            var list = lists[name];
+            var items = read(list);
+            var product = productName(button);
+            var index = items.indexOf(product);
+            if (index === -1) items.push(product);
+            else items.splice(index, 1);
+            write(list, items);
+            markButtons(name);
+            showCount(name, index === -1);
+            if (typeof showToast === "function") showToast(index === -1 ? list.added : list.removed);
+        });
+    });
+
+    ["wishlist", "compare"].forEach(function (name) {
+        markButtons(name);
+        showCount(name, false);
+    });
+})();

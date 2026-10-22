@@ -6754,3 +6754,36 @@ html.theme-day .notify-item span { color: #2f6fd6; }
 html.theme-day .notify-all { background: var(--ink); color: #fff; }
 html.theme-day .notify-clear { border-color: var(--line); color: var(--text); }
 html.theme-day .notify-btn { color: var(--text); }
+
+/* ---- Header: seçilmişlər və müqayisə sayğacı ---- */
+.icon-btn.has-count { position: relative; }
+
+.icon-count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #fff;
+    color: #111;
+    font-size: .66rem;
+    font-weight: 800;
+    line-height: 17px;
+    text-align: center;
+}
+
+.icon-count[hidden] { display: none; }
+
+.icon-count.is-bump { animation: count-bump .35s ease; }
+
+@keyframes count-bump {
+    50% { transform: scale(1.35); }
+}
+
+/* Kartda seçilmiş düymə */
+.product-actions button.is-on { border-color: var(--gold); color: var(--gold); }
+.product-actions button.is-on[aria-label="Remove from wishlist"] svg path { fill: currentColor; }
+
+html.theme-day .icon-count { background: var(--ink); color: #fff; }
