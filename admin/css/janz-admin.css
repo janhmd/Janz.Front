@@ -635,7 +635,7 @@ html.theme-day .status-delivered { color: #1d7a45; }
 .admin-avatar-sm { width: 34px; height: 34px; font-size: .85rem; flex: 0 0 auto; }
 .admin-avatar-lg { width: 56px; height: 56px; font-size: 1.3rem; flex: 0 0 auto; }
 
-.role-admin { color: var(--a-gold); border-color: var(--a-gold); }
+.role-superadmin { color: var(--a-gold); border-color: var(--a-gold); }
 .role-user { color: var(--a-muted); }
 .status-active { color: #5fcf8f; border-color: rgba(95, 207, 143, .45); }
 .status-blocked { color: var(--a-danger); border-color: var(--a-danger); }
@@ -820,8 +820,8 @@ html.theme-day .admin-field input[type="date"] { color-scheme: light; }
     background: none !important;
 }
 
-.role-manager, .role-editor, .role-moderator, .role-support { color: #6aa9ff; border-color: rgba(106, 169, 255, .45); }
-html.theme-day .role-manager, html.theme-day .role-editor, html.theme-day .role-moderator, html.theme-day .role-support { color: #1f5fbf; }
+.role-admin, .role-editor, .role-support { color: #6aa9ff; border-color: rgba(106, 169, 255, .45); }
+html.theme-day .role-admin, html.theme-day .role-editor, html.theme-day .role-support { color: #1f5fbf; }
 
 /* ---- User: balans və titul ---- */
 .admin-note-top { margin: .8rem 0 0; }

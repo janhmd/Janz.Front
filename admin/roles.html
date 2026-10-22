@@ -158,7 +158,7 @@
                     <span class="admin-avatar" aria-hidden="true">J</span>
                     <div>
                         <div class="admin-user-name">Janz Admin</div>
-                        <div class="admin-user-role">Administrator</div>
+                        <div class="admin-user-role">SuperAdmin</div>
                     </div>
                 </div>
             </header>
@@ -167,49 +167,38 @@
 <section class="admin-head">
     <div>
         <p class="admin-eyebrow">Customers</p>
-        <h1>Roles <span>6</span></h1>
+        <h1>Roles <span>5</span></h1>
     </div>
-    <form class="admin-inline-form" method="post" data-demo data-new-role action="#">
-        <input name="name" placeholder="New role name" aria-label="New role name" required maxlength="30" />
-        <button type="submit" class="admin-btn"><i class="bi bi-plus"></i> Add role</button>
-    </form>
 </section>
 
 <section class="admin-roles">
         <article class="admin-role is-gold">
             <div class="admin-role-top">
-                <h3>Admin</h3>
+                <h3>SuperAdmin</h3>
                 <span class="admin-count">1</span>
             </div>
-            <p>Everything, including roles and settings</p>
+            <p>Everything, plus giving roles and changing settings</p>
         </article>
         <article class="admin-role">
             <div class="admin-role-top">
-                <h3>Manager</h3>
+                <h3>Admin</h3>
                 <span class="admin-count">1</span>
             </div>
-            <p>Products, categories, orders, coupons and discounts</p>
+            <p>Runs the shop and content; cannot give roles or change settings</p>
         </article>
         <article class="admin-role">
             <div class="admin-role-top">
                 <h3>Editor</h3>
                 <span class="admin-count">1</span>
             </div>
-            <p>Journal articles and info pages</p>
-        </article>
-        <article class="admin-role">
-            <div class="admin-role-top">
-                <h3>Moderator</h3>
-                <span class="admin-count">1</span>
-            </div>
-            <p>Community posts, comments and reviews</p>
+            <p>Journal articles, info pages, community and reviews</p>
         </article>
         <article class="admin-role">
             <div class="admin-role-top">
                 <h3>Support</h3>
-                <span class="admin-count">0</span>
+                <span class="admin-count">1</span>
             </div>
-            <p>Sees orders and users, changes order status</p>
+            <p>Sees orders and users, changes order status, sends notifications</p>
         </article>
         <article class="admin-role is-muted">
             <div class="admin-role-top">
@@ -230,135 +219,120 @@
             <thead>
                 <tr>
                     <th>Permission</th>
+                    <th class="center">SuperAdmin</th>
                     <th class="center">Admin</th>
-                    <th class="center">Manager</th>
                     <th class="center">Editor</th>
-                    <th class="center">Moderator</th>
                     <th class="center">Support</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="admin-perm-group"><td colspan="6">Shop</td></tr>
+                <tr class="admin-perm-group"><td colspan="5">Shop</td></tr>
                 <tr>
                     <td>Products</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Products" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Products" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Products" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Products" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Products" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Products" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Products" /></td>
                 </tr>
                 <tr>
                     <td>Categories and tags</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Categories and tags" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Categories and tags" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Categories and tags" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Categories and tags" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Categories and tags" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Categories and tags" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Categories and tags" /></td>
                 </tr>
                 <tr>
                     <td>Orders: view</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Orders: view" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Orders: view" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Orders: view" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Orders: view" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Orders: view" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Orders: view" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Orders: view" checked /></td>
                 </tr>
                 <tr>
                     <td>Orders: change status</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Orders: change status" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Orders: change status" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Orders: change status" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Orders: change status" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Orders: change status" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Orders: change status" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Orders: change status" checked /></td>
                 </tr>
                 <tr>
                     <td>Coupons and discount levels</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Coupons and discount levels" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Coupons and discount levels" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Coupons and discount levels" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Coupons and discount levels" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Coupons and discount levels" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Coupons and discount levels" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Coupons and discount levels" /></td>
                 </tr>
-                <tr class="admin-perm-group"><td colspan="6">Content</td></tr>
+                <tr class="admin-perm-group"><td colspan="5">Content</td></tr>
                 <tr>
                     <td>Journal articles</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Journal articles" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Journal articles" /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Journal articles" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Journal articles" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Journal articles" checked /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Journal articles" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Journal articles" /></td>
                 </tr>
                 <tr>
                     <td>Info pages</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Info pages" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Info pages" /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Info pages" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Info pages" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Info pages" checked /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Info pages" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Info pages" /></td>
                 </tr>
                 <tr>
                     <td>Community posts and comments</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Community posts and comments" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Community posts and comments" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Editor: Community posts and comments" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Community posts and comments" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Community posts and comments" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Community posts and comments" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Community posts and comments" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Community posts and comments" /></td>
                 </tr>
                 <tr>
                     <td>Reviews</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Reviews" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Reviews" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Editor: Reviews" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Reviews" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Reviews" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Reviews" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Reviews" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Reviews" /></td>
                 </tr>
-                <tr class="admin-perm-group"><td colspan="6">Customers</td></tr>
+                <tr class="admin-perm-group"><td colspan="5">Customers</td></tr>
                 <tr>
                     <td>Users: view</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Users: view" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Users: view" checked /></td>
-                    <td class="center"><input type="checkbox" aria-label="Editor: Users: view" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Users: view" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Users: view" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Users: view" checked /></td>
+                    <td class="center"><input type="checkbox" aria-label="Editor: Users: view" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Users: view" checked /></td>
                 </tr>
                 <tr>
                     <td>Users: block, balance, title</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Users: block, balance, title" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Users: block, balance, title" /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Users: block, balance, title" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Users: block, balance, title" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Users: block, balance, title" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Users: block, balance, title" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Users: block, balance, title" /></td>
                 </tr>
                 <tr>
                     <td>Notifications</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Notifications" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Notifications" /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Notifications" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Notifications" checked /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Notifications" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Notifications" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Notifications" checked /></td>
                 </tr>
-                <tr class="admin-perm-group"><td colspan="6">System</td></tr>
+                <tr class="admin-perm-group"><td colspan="5">System</td></tr>
                 <tr>
                     <td>Roles and permissions</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Roles and permissions" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Roles and permissions" /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Roles and permissions" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Roles and permissions" /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Roles and permissions" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Roles and permissions" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Roles and permissions" /></td>
                 </tr>
                 <tr>
                     <td>Settings</td>
-                    <td class="center"><input type="checkbox" aria-label="Admin: Settings" checked disabled /></td>
-                    <td class="center"><input type="checkbox" aria-label="Manager: Settings" /></td>
+                    <td class="center"><input type="checkbox" aria-label="SuperAdmin: Settings" checked disabled /></td>
+                    <td class="center"><input type="checkbox" aria-label="Admin: Settings" /></td>
                     <td class="center"><input type="checkbox" aria-label="Editor: Settings" /></td>
-                    <td class="center"><input type="checkbox" aria-label="Moderator: Settings" /></td>
                     <td class="center"><input type="checkbox" aria-label="Support: Settings" /></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </form>
-<p class="admin-note">Admin always has every permission. A user gets a role on their page in Users; the role decides which menu items they see here.</p>
+<p class="admin-note">SuperAdmin always has every permission and is the only one who can give roles; the last SuperAdmin cannot lose the role or be blocked. A user gets a role on their page in Users, and the role decides which menu items they see here. Community titles like Coffee lover or Ambassador are not roles; they are set on the user page.</p>
             </div>
 
             <footer class="admin-footer">

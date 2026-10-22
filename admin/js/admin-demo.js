@@ -93,19 +93,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
-        // Yeni rol: kartlara əlavə olunur
-        if (form.hasAttribute("data-new-role")) {
-            var name = form.querySelector("input[name=name]").value.trim();
-            var card = document.createElement("article");
-            card.className = "admin-role";
-            card.innerHTML = '<div class="admin-role-top"><h3></h3><span class="admin-count">0</span></div><p>New role. Tick its permissions below.</p>';
-            card.querySelector("h3").textContent = name;
-            document.querySelector(".admin-roles").appendChild(card);
-            form.reset();
-            adminFlash("Role " + name + " is added.");
-            return;
-        }
-
         // Balans: məbləğ balansa əlavə olunur (mənfi isə çıxılır), sətir tarixçəyə düşür
         if (form.hasAttribute("data-balance-form")) {
             var amount = parseFloat(form.amount.value);
