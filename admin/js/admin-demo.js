@@ -177,3 +177,45 @@ document.querySelectorAll("[data-generate]").forEach(function (button) {
         button.parentNode.querySelector("input").value = code;
     });
 });
+
+// Məhsul şəkilləri: əsas şəkli seçmək, silmək, yenilərini əlavə etmək (yalnız səhifədə)
+(function () {
+    var box = document.querySelector("[data-thumbs]");
+    if (!box) return;
+
+    function markMain(figure) {
+        box.querySelectorAll(".admin-thumb").forEach(function (item) {
+            item.classList.toggle("is-main", item === figure);
+            item.querySelector("[data-main]").textContent = item === figure ? "Main" : "Make main";
+        });
+    }
+
+    box.addEventListener("click", function (event) {
+        var figure = event.target.closest(".admin-thumb");
+        if (!figure) return;
+        if (event.target.closest("[data-main]")) {
+            box.prepend(figure);
+            markMain(figure);
+        }
+        if (event.target.closest("[data-remove-image]")) {
+            var wasMain = figure.classList.contains("is-main");
+            figure.remove();
+            var first = box.querySelector(".admin-thumb");
+            if (wasMain && first) markMain(first);
+        }
+    });
+
+    document.querySelector("[data-image-input]").addEventListener("change", function (event) {
+        Array.prototype.forEach.call(event.target.files, function (file) {
+            var figure = document.createElement("figure");
+            figure.className = "admin-thumb";
+            figure.innerHTML = '<img alt="" /><figcaption><button type="button" class="admin-btn-sm" data-main>Make main</button>' +
+                '<button type="button" class="admin-btn-sm is-danger" data-remove-image aria-label="Remove image"><i class="bi bi-trash"></i></button></figcaption>';
+            figure.querySelector("img").src = URL.createObjectURL(file);
+            box.appendChild(figure);
+        });
+        var first = box.querySelector(".admin-thumb");
+        if (first && !box.querySelector(".admin-thumb.is-main")) markMain(first);
+        event.target.value = "";
+    });
+})();

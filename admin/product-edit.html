@@ -164,58 +164,142 @@
             </header>
 
             <div class="page-heading">
-                <section class="admin-head">
+<section class="admin-head">
     <div>
         <p class="admin-eyebrow"><a href="products.html">Products</a> / #1</p>
         <h1>Edit product</h1>
     </div>
 </section>
-<form class="admin-form admin-card" method="post" data-demo enctype="multipart/form-data" action="#">
-    <input type="hidden" data-val="true" data-val-required="The Id field is required." id="Id" name="Id" value="1" />
-    <div class="admin-form-grid">
-        <label class="admin-field admin-field-wide">
-            <span>Name</span>
-            <input required maxlength="100" type="text" data-val="true" data-val-required="The Name field is required." id="Name" name="Name" value="Floral" />
-        </label>
-        <label class="admin-field">
-            <span>Category</span>
-            <select required data-val="true" data-val-required="The CategoryId field is required." id="CategoryId" name="CategoryId">
-                <option value="">Choose a category</option>
-                    <option value="1" selected="selected">Coffee</option>
-                    <option value="2">Tea</option>
-                    <option value="3">Chocolate and syrups</option>
-                    <option value="4">Sets</option>
-            </select>
-        </label>
-        <label class="admin-field">
-            <span>Price, ₼</span>
-            <input type="number" step="0.01" min="0" required data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" value="29.9" /><input name="__Invariant" type="hidden" value="Price" />
-        </label>
-        <label class="admin-field">
-            <span>Stock</span>
-            <input type="number" min="0" required data-val="true" data-val-required="The Stock field is required." id="Stock" name="Stock" value="48" /><input name="__Invariant" type="hidden" value="Stock" />
-        </label>
-        <label class="admin-field">
-            <span>Image</span>
-            <input type="file" accept="image/*" id="Image" name="Image" />
-        </label>
-        <label class="admin-field admin-field-wide">
-            <span>Description</span>
-            <textarea rows="5" data-val="true" data-val-required="The Description field is required." id="Description" name="Description">
-Light roast with jasmine and peach notes.</textarea>
-        </label>
-    </div>
-        <div class="admin-current-image">
-            <img src="../images/floral-bag.png" alt="" />
-            <span>Current image. Choose a file only to replace it.</span>
+
+<form class="admin-form" method="post" data-demo enctype="multipart/form-data" action="#">
+    <div class="admin-grid">
+        <div class="admin-stack">
+            <section class="admin-card">
+                <h2>Main</h2>
+                <div class="admin-form-grid">
+                    <label class="admin-field admin-field-wide">
+                        <span>Name</span>
+                        <input name="name" value="Floral" required maxlength="100" />
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Description</span>
+                        <textarea name="description" rows="4">An espresso blend of 100% arabica from two Ethiopian coffees, one natural and one washed. Notes of flowers, dark berries and citrus.</textarea>
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Brewing</span>
+                        <textarea name="brewing" rows="3" placeholder="Espresso: 18 g in, 36 g out, 27–30 s">Espresso: 18 g in, 36 g out, 27–30 s. Filter: 15 g per 250 ml, 93 °C.</textarea>
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Storage</span>
+                        <textarea name="storage" rows="2" placeholder="Keep closed, away from light and heat">Keep the bag closed, away from light and heat. Best within a month after opening.</textarea>
+                    </label>
+                </div>
+            </section>
+            <section class="admin-card">
+                <h2>Details</h2>
+                <div class="admin-form-grid">
+                    <label class="admin-field"><span>Roast level</span><input name="roast" value="Espresso" placeholder="Espresso" /></label>
+                    <label class="admin-field"><span>Region</span><input name="region" value="Ethiopia" placeholder="Ethiopia" /></label>
+                    <label class="admin-field"><span>Processing</span><input name="processing" value="Blend" placeholder="Washed" /></label>
+                    <label class="admin-field"><span>Caffeine</span><input name="caffeine" value="1.24%" placeholder="1.2%" /></label>
+                </div>
+                <p class="admin-note admin-note-top">Shown in the Details block on the product page. Empty fields are hidden.</p>
+            </section>
+            <section class="admin-card">
+                <h2>Images</h2>
+                <div class="admin-thumbs" data-thumbs>
+            <figure class="admin-thumb is-main">
+                <img src="../images/floral-bag.png" alt="" />
+                <figcaption>
+                    <button type="button" class="admin-btn-sm" data-main>Main</button>
+                    <button type="button" class="admin-btn-sm is-danger" data-remove-image aria-label="Remove image"><i class="bi bi-trash"></i></button>
+                </figcaption>
+            </figure>
+            <figure class="admin-thumb">
+                <img src="../images/floral.png" alt="" />
+                <figcaption>
+                    <button type="button" class="admin-btn-sm" data-main>Make main</button>
+                    <button type="button" class="admin-btn-sm is-danger" data-remove-image aria-label="Remove image"><i class="bi bi-trash"></i></button>
+                </figcaption>
+            </figure>
+            <figure class="admin-thumb">
+                <img src="../images/floral-beans.jpg" alt="" />
+                <figcaption>
+                    <button type="button" class="admin-btn-sm" data-main>Make main</button>
+                    <button type="button" class="admin-btn-sm is-danger" data-remove-image aria-label="Remove image"><i class="bi bi-trash"></i></button>
+                </figcaption>
+            </figure>
+                </div>
+                <label class="admin-drop">
+                    <input type="file" name="images" accept="image/*" multiple data-image-input />
+                    <i class="bi bi-images" aria-hidden="true"></i>
+                    <span>Add images</span>
+                    <small>The main image is shown in the catalog. Up to 2 MB each.</small>
+                </label>
+            </section>
         </div>
-    <div class="admin-form-actions">
-        <button type="submit" class="admin-btn">Save</button>
-        <a class="admin-btn is-ghost" href="products.html">Cancel</a>
+
+        <div class="admin-stack">
+            <section class="admin-card">
+                <h2>Price and stock</h2>
+                <div class="admin-form-grid">
+                    <label class="admin-field"><span>Price, ₼</span><input name="price" type="number" step="0.01" min="0" value="29.90" required /></label>
+                    <label class="admin-field"><span>Old price, ₼</span><input name="oldPrice" type="number" step="0.01" min="0" value="" placeholder="for Sale" /></label>
+                    <label class="admin-field admin-field-wide"><span>Stock</span><input name="stock" type="number" min="0" value="48" required /></label>
+                </div>
+            </section>
+            <section class="admin-card">
+                <h2>Catalog</h2>
+                <div class="admin-form-grid">
+                    <label class="admin-field admin-field-wide">
+                        <span>Category</span>
+                        <select name="categoryId" required>
+                            <option value="">Choose a category</option>
+                <option value="1" selected>Coffee</option>
+                <option value="2">Tea</option>
+                <option value="3">Chocolate and syrups</option>
+                <option value="4">Sets</option>
+                        </select>
+                    </label>
+                    <label class="admin-field admin-field-wide">
+                        <span>Badge</span>
+                        <select name="badge">
+                <option>None</option>
+                <option selected>Coffee of the week</option>
+                <option>New</option>
+                <option>Sale</option>
+                <option>Limited</option>
+                        </select>
+                        <small>"Coffee of the week" puts the product in that block on the home page.</small>
+                    </label>
+                </div>
+                <div class="admin-field admin-field-wide admin-chips-field">
+                    <span>Tags</span>
+                    <div class="admin-chips">
+                <label class="admin-chip"><input type="checkbox" name="tags" value="Espresso" checked /><span>Espresso</span></label>
+                <label class="admin-chip"><input type="checkbox" name="tags" value="Filter" /><span>Filter</span></label>
+                <label class="admin-chip"><input type="checkbox" name="tags" value="Milk drinks" /><span>Milk drinks</span></label>
+                <label class="admin-chip"><input type="checkbox" name="tags" value="Decaf" /><span>Decaf</span></label>
+                <label class="admin-chip"><input type="checkbox" name="tags" value="Single origin" /><span>Single origin</span></label>
+                <label class="admin-chip"><input type="checkbox" name="tags" value="Blend" checked /><span>Blend</span></label>
+                <label class="admin-chip"><input type="checkbox" name="tags" value="Gift" /><span>Gift</span></label>
+                    </div>
+                    <small><a class="admin-link" href="tags.html">Manage tags</a></small>
+                </div>
+            </section>
+            <section class="admin-card">
+                <label class="admin-check">
+                    <input name="isVisible" type="checkbox" checked />
+                    <span>Visible in the shop</span>
+                </label>
+                <div class="admin-form-actions">
+                    <button type="submit" class="admin-btn">Save</button>
+                    <a class="admin-btn is-ghost" href="products.html">Cancel</a>
+                </div>
+            </section>
+        </div>
     </div>
 </form>
-
-
             </div>
 
             <footer class="admin-footer">
