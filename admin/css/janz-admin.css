@@ -1023,3 +1023,8 @@ html.theme-day .status-scheduled { color: #1f5fbf; }
 .admin-checks { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 1rem; }
 .admin-field[hidden] { display: none; }
 .page-heading > .admin-after-grid { margin-top: 1.4rem; display: block; }
+
+/* ---- Settings ---- */
+.admin-grid-top { margin-top: 0; }
+.admin-checks .admin-check { font-weight: 600; }
+.page-heading code { color: var(--a-gold); }
