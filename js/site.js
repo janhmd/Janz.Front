@@ -2177,4 +2177,10 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
         markButtons(name);
         showCount(name, false);
     });
+
+    // Müqayisə səhifəsi siyahını dəyişəndə header-dəki sayğacı yeniləmək üçün
+    window.refreshCompareCount = function () {
+        markButtons("compare");
+        showCount("compare", true);
+    };
 })();
