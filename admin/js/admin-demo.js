@@ -291,3 +291,22 @@ document.querySelectorAll(".admin-tabs button[data-tab]").forEach(function (tab)
         });
     });
 });
+
+// Endirim səviyyəsi əlavə etmək: sonuncu sətrin boş surəti
+(function () {
+    var button = document.querySelector("[data-add-level]");
+    if (!button) return;
+    button.addEventListener("click", function () {
+        var body = document.querySelector("[data-level-rows]");
+        var row = body.lastElementChild.cloneNode(true);
+        row.querySelectorAll("input").forEach(function (input) { input.value = ""; });
+        row.querySelector(".num:nth-child(5)").textContent = "0";
+        row.querySelector("form").setAttribute("data-confirm", "Delete this level?");
+        row.querySelector("form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            if (confirm("Delete this level?")) row.remove();
+        });
+        body.appendChild(row);
+        row.querySelector("input").focus();
+    });
+})();

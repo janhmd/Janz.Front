@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discount levels - Janz Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="vendors/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/janz-admin.css" />
+    <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="logo" aria-label="Janz admin" href="index.html">
+                            <span class="logo-mark" aria-hidden="true">J</span>
+                            <span class="logo-name">Janz</span>
+                            <span class="logo-tag">Admin</span>
+                        </a>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block" aria-label="Close menu"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="bi bi-grid-1x2"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Shop</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="products.html">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="categories.html">
+                                <i class="bi bi-layers"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="tags.html">
+                                <i class="bi bi-tags"></i>
+                                <span>Tags</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="orders.html">
+                                <i class="bi bi-bag-check"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="coupons.html">
+                                <i class="bi bi-percent"></i>
+                                <span>Coupons</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="loyalty.html">
+                                <i class="bi bi-trophy"></i>
+                                <span>Discount levels</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Content</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="articles.html">
+                                <i class="bi bi-journal-text"></i>
+                                <span>Journal</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="community.html">
+                                <i class="bi bi-chat-square-text"></i>
+                                <span>Community</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="pages.html">
+                                <i class="bi bi-file-earmark-text"></i>
+                                <span>Pages</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Customers</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="users.html">
+                                <i class="bi bi-people"></i>
+                                <span>Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="roles.html">
+                                <i class="bi bi-shield-lock"></i>
+                                <span>Roles</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="reviews.html">
+                                <i class="bi bi-star"></i>
+                                <span>Reviews</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="notifications.html">
+                                <i class="bi bi-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">System</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="settings.html">
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-title">Account</li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="../index.html">
+                                <i class="bi bi-shop"></i>
+                                <span>Go to site</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <form method="post" data-demo action="#">
+                                <button type="submit" class="sidebar-link sidebar-button">
+                                    <i class="bi bi-box-arrow-left"></i>
+                                    <span>Sign out</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <header class="admin-top">
+                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                <div class="admin-top-title">Discount levels</div>
+                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                <div class="admin-user">
+                    <span class="admin-avatar" aria-hidden="true">J</span>
+                    <div>
+                        <div class="admin-user-name">Janz Admin</div>
+                        <div class="admin-user-role">Administrator</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-heading">
+<section class="admin-head">
+    <div>
+        <p class="admin-eyebrow">Shop</p>
+        <h1>Discount levels <span>4</span></h1>
+    </div>
+</section>
+
+<form class="admin-card admin-card-flush" method="post" data-demo action="#">
+    <div class="admin-card-head admin-card-pad">
+        <h2>Levels</h2>
+        <button type="submit" class="admin-btn">Save levels</button>
+    </div>
+    <div class="table-responsive">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Level</th>
+                    <th class="num">Spent from</th>
+                    <th class="num">Discount</th>
+                    <th>Perks</th>
+                    <th class="num">Customers</th>
+                    <th class="actions">Operations</th>
+                </tr>
+            </thead>
+            <tbody data-level-rows>
+                <tr>
+                    <td><input class="admin-cell-input" name="name" value="Newcomer" aria-label="Level name" /></td>
+                    <td class="num"><span class="admin-cell-unit">₼<input class="admin-cell-input admin-cell-num" name="minSpent" type="number" min="0" value="0" aria-label="Spent from" /></span></td>
+                    <td class="num"><span class="admin-cell-unit"><input class="admin-cell-input admin-cell-num" name="discount" type="number" min="0" max="50" value="0" aria-label="Discount" />%</span></td>
+                    <td><input class="admin-cell-input admin-cell-wide" name="perks" value="Welcome discount on the first order" placeholder="—" aria-label="Perks" /></td>
+                    <td class="num">3</td>
+                    <td class="actions">
+                        <form method="post" data-demo data-confirm="Delete the level Newcomer?" action="#">
+                            <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input class="admin-cell-input" name="name" value="Regular" aria-label="Level name" /></td>
+                    <td class="num"><span class="admin-cell-unit">₼<input class="admin-cell-input admin-cell-num" name="minSpent" type="number" min="0" value="100" aria-label="Spent from" /></span></td>
+                    <td class="num"><span class="admin-cell-unit"><input class="admin-cell-input admin-cell-num" name="discount" type="number" min="0" max="50" value="3" aria-label="Discount" />%</span></td>
+                    <td><input class="admin-cell-input admin-cell-wide" name="perks" value="" placeholder="—" aria-label="Perks" /></td>
+                    <td class="num">2</td>
+                    <td class="actions">
+                        <form method="post" data-demo data-confirm="Delete the level Regular?" action="#">
+                            <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input class="admin-cell-input" name="name" value="Connoisseur" aria-label="Level name" /></td>
+                    <td class="num"><span class="admin-cell-unit">₼<input class="admin-cell-input admin-cell-num" name="minSpent" type="number" min="0" value="300" aria-label="Spent from" /></span></td>
+                    <td class="num"><span class="admin-cell-unit"><input class="admin-cell-input admin-cell-num" name="discount" type="number" min="0" max="50" value="5" aria-label="Discount" />%</span></td>
+                    <td><input class="admin-cell-input admin-cell-wide" name="perks" value="Free delivery" placeholder="—" aria-label="Perks" /></td>
+                    <td class="num">1</td>
+                    <td class="actions">
+                        <form method="post" data-demo data-confirm="Delete the level Connoisseur?" action="#">
+                            <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input class="admin-cell-input" name="name" value="Gourmet" aria-label="Level name" /></td>
+                    <td class="num"><span class="admin-cell-unit">₼<input class="admin-cell-input admin-cell-num" name="minSpent" type="number" min="0" value="700" aria-label="Spent from" /></span></td>
+                    <td class="num"><span class="admin-cell-unit"><input class="admin-cell-input admin-cell-num" name="discount" type="number" min="0" max="50" value="8" aria-label="Discount" />%</span></td>
+                    <td><input class="admin-cell-input admin-cell-wide" name="perks" value="Free delivery, early access to new lots" placeholder="—" aria-label="Perks" /></td>
+                    <td class="num">1</td>
+                    <td class="actions">
+                        <form method="post" data-demo data-confirm="Delete the level Gourmet?" action="#">
+                            <button type="submit" class="admin-btn-sm is-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="admin-card-pad admin-card-foot">
+        <button type="button" class="admin-btn is-ghost" data-add-level><i class="bi bi-plus"></i> Add level</button>
+    </div>
+</form>
+
+<div class="admin-grid admin-grid-even">
+    <form class="admin-card" method="post" data-demo action="#">
+        <h2>Welcome discount</h2>
+        <div class="admin-form-grid">
+            <label class="admin-field"><span>Discount, %</span><input name="welcome" type="number" min="0" max="50" value="10" /></label>
+            <label class="admin-field"><span>Min order, ₼</span><input name="welcomeMin" type="number" min="0" value="20" /></label>
+        </div>
+        <p class="admin-note admin-note-top">Applied once, on a new customer's first order ("Sign in, and it gets cheaper" on the site).</p>
+        <div class="admin-form-actions"><button type="submit" class="admin-btn">Save</button></div>
+    </form>
+    <section class="admin-card">
+        <h2>How it works</h2>
+        <ul class="admin-steps">
+            <li>The level depends on what the customer has spent on delivered orders.</li>
+            <li>The level's discount is applied to every order automatically.</li>
+            <li>A coupon and the level discount do not add up: the bigger one is used.</li>
+            <li>The level name is shown next to the customer's reviews.</li>
+        </ul>
+    </section>
+</div>
+            </div>
+
+            <footer class="admin-footer">
+                <span>© 2026 Janz</span>
+                <span>Admin panel</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
+        document.querySelector(".admin-theme").addEventListener("click", function () {
+            var day = document.documentElement.classList.toggle("theme-day");
+            localStorage.setItem("janz-theme", day ? "day" : "night");
+        });
+        // Silmədən əvvəl soruşulur
+        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+            form.addEventListener("submit", function (event) {
+                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+            });
+        });
+    </script>
+    
+    <script src="js/admin-demo.js"></script>
+</body>
+</html>
