@@ -1,5 +1,12 @@
-// Janz.Front: admin panelin statik nümunəsi. Formalar heç yerə göndərilmir, yalnız bildiriş göstərilir;
-// MVC-də (Areas/Admin) eyni səhifələr API ilə işləyir.
+document.querySelector(".admin-theme").addEventListener("click", function () {
+    var day = document.documentElement.classList.toggle("theme-day");
+    localStorage.setItem("janz-theme", day ? "day" : "night");
+});
+document.querySelectorAll("form[data-confirm]").forEach(function (form) {
+    form.addEventListener("submit", function (event) {
+        if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
+    });
+});
 
 function adminFlash(text, isError) {
     var box = document.querySelector(".admin-flash");
@@ -19,7 +26,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
         var button = form.querySelector("[type=submit]");
         var label = button ? button.textContent.trim().toLowerCase() : "";
 
-        // "Delete": cədvəl sətri və ya rəy kartı silinir
         if (label === "delete") {
             var row = form.closest("tr, .admin-review");
             if (row) row.remove();
@@ -29,7 +35,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
-        // Rəyi gizlətmək / göstərmək
         if (form.hasAttribute("data-review-toggle")) {
             var card = form.closest(".admin-review");
             var badgeReview = card.querySelector(".admin-status");
@@ -42,7 +47,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
-        // İstifadəçini bloklamaq / blokdan çıxarmaq: başlıqdakı nişan və düymə dəyişir
         if (form.hasAttribute("data-block")) {
             var badgeUser = document.querySelector("[data-user-status]");
             var blocked = badgeUser.textContent.trim() === "Blocked";
@@ -53,7 +57,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
-        // Bildiriş göndərmək: "Sent" cədvəlinin başına düşür
         if (form.hasAttribute("data-send")) {
             var audience = form.audience.options[form.audience.selectedIndex].text;
             var where = [form.site.checked ? "In the site" : "", form.email.checked ? "email" : ""].filter(Boolean).join(" and ");
@@ -69,7 +72,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
-        // Şikayət: həll olunanda sətir siyahıdan çıxır
         if (form.hasAttribute("data-resolve")) {
             form.closest("tr").remove();
             var alert = document.querySelector(".admin-tabs .is-alert");
@@ -78,7 +80,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
-        // Mövzu / seriya əlavə etmək (Journal)
         if (form.hasAttribute("data-add-chip")) {
             var list = form.parentNode.querySelector("[data-chip-list]");
             var value = form.querySelector("input").value.trim();
@@ -93,7 +94,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
-        // Balans: məbləğ balansa əlavə olunur (mənfi isə çıxılır), sətir tarixçəyə düşür
         if (form.hasAttribute("data-balance-form")) {
             var amount = parseFloat(form.amount.value);
             var balanceBox = document.querySelector("[data-balance]");
@@ -110,21 +110,18 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
             return;
         }
 
-        // Community titulu
         var title = form.querySelector("select[name=title]");
         if (title) {
             adminFlash("Community title changed to " + title.value + ".");
             return;
         }
 
-        // Rol
         var role = form.querySelector("select[name=role]");
         if (role) {
             adminFlash("Role changed to " + role.value + ".");
             return;
         }
 
-        // Sifarişin statusu: başlıqdakı nişan da dəyişir
         var select = form.querySelector("select[name=status]");
         if (select) {
             var badge = document.querySelector(".admin-head .admin-status");
@@ -140,12 +137,11 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
     });
 });
 
-// Orders: statusa görə filtr (orders.html#shipped)
 (function () {
     var filter = document.querySelector(".admin-filter");
     if (!filter) return;
-    // Filtr yalnız öz bölməsindəki sətirləri süzür (Community-də tablar var)
-    var rows = filter.parentNode.querySelectorAll(".admin-table tbody tr, .admin-review");
+    var scope = filter.closest("[data-pane]") || document;
+    var rows = scope.querySelectorAll(".admin-table tbody tr, .admin-review");
     var title = document.querySelector(".admin-head h1 span");
     var emptyBox = document.querySelector(".admin-reviews + .admin-empty");
 
@@ -171,7 +167,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
     apply();
 })();
 
-// Axtarış (Users): ad və ya email-ə görə sətirləri süzür
 (function () {
     var input = document.querySelector(".admin-search input");
     if (!input) return;
@@ -190,7 +185,6 @@ document.querySelectorAll("form[data-demo]").forEach(function (form) {
     });
 })();
 
-// Kupon kodu: böyük hərflə yazılır, "Generate" təsadüfi kod yaradır
 document.querySelectorAll("input[data-upper]").forEach(function (input) {
     input.addEventListener("input", function () {
         input.value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -206,7 +200,6 @@ document.querySelectorAll("[data-generate]").forEach(function (button) {
     });
 });
 
-// Məhsul şəkilləri: əsas şəkli seçmək, silmək, yenilərini əlavə etmək (yalnız səhifədə)
 (function () {
     var box = document.querySelector("[data-thumbs]");
     if (!box) return;
@@ -248,14 +241,12 @@ document.querySelectorAll("[data-generate]").forEach(function (button) {
     });
 })();
 
-// Mövzu / seriya silmək
 document.addEventListener("click", function (event) {
     var button = event.target.closest("[data-remove-chip]");
     if (!button) return;
     button.closest(".admin-tag").remove();
 });
 
-// Məqalənin ünvanı başlıqdan yaranır (istifadəçi özü dəyişməyibsə)
 (function () {
     var source = document.querySelector("[data-slug-source]");
     var slug = document.querySelector("[data-slug]");
@@ -283,7 +274,6 @@ document.addEventListener("click", function (event) {
     });
 })();
 
-// Tablar: düymə öz bölməsini göstərir, qalanlarını gizlədir
 document.querySelectorAll(".admin-tabs button[data-tab]").forEach(function (tab) {
     tab.addEventListener("click", function () {
         document.querySelectorAll(".admin-tabs button[data-tab]").forEach(function (other) {
@@ -295,7 +285,6 @@ document.querySelectorAll(".admin-tabs button[data-tab]").forEach(function (tab)
     });
 });
 
-// Endirim səviyyəsi əlavə etmək: sonuncu sətrin boş surəti
 (function () {
     var button = document.querySelector("[data-add-level]");
     if (!button) return;
@@ -314,7 +303,6 @@ document.querySelectorAll(".admin-tabs button[data-tab]").forEach(function (tab)
     });
 })();
 
-// Bildiriş: "To" seçiminə görə əlavə sahə görünür
 (function () {
     var select = document.querySelector("[data-audience]");
     if (!select) return;

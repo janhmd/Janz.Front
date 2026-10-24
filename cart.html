@@ -124,7 +124,6 @@
                 <a href="catalog.html">To catalog</a>
             </div>
 
-            <!-- Sifariş: səbətdə məhsul olanda görünür. Hələlik brauzerdəki səbətlə işləyir; MVC-də Orders/Create-ə göndəriləcək -->
             <form class="checkout" id="checkout" method="post" action="#" novalidate hidden>
                 <div class="co-main">
                     <div class="co-strip">
@@ -148,7 +147,7 @@
                         </div>
                     </div>
 
-                    <section class="co-card">
+                    <div class="co-card">
                         <div class="co-card-head">
                             <h1>Cart <span class="co-count"></span></h1>
                             <button type="button" class="co-clear">Clear cart
@@ -160,14 +159,14 @@
                             <span class="co-gift-box" aria-hidden="true"></span>
                             <p class="co-gift-text"></p>
                         </div>
-                    </section>
+                    </div>
 
-                    <section class="co-card">
+                    <div class="co-card">
                         <h2>Comment</h2>
                         <textarea name="comment" rows="2" maxlength="500" placeholder="Comment on the order" aria-label="Comment on the order"></textarea>
-                    </section>
+                    </div>
 
-                    <section class="co-card">
+                    <div class="co-card">
                         <h2>Recipient</h2>
                         <div class="co-fields">
                             <label class="co-field">
@@ -220,9 +219,9 @@
                                 </span>
                             </label>
                         </div>
-                    </section>
+                    </div>
 
-                    <section class="co-card">
+                    <div class="co-card">
                         <h2>Delivery</h2>
                         <h3>Address</h3>
                         <div class="co-addresses">
@@ -283,9 +282,9 @@
                                 <small>Post offices all over Azerbaijan</small>
                             </label>
                         </div>
-                    </section>
+                    </div>
 
-                    <section class="co-card">
+                    <div class="co-card">
                         <div class="co-card-head">
                             <h2>Payment methods</h2>
                             <label class="co-check">
@@ -315,10 +314,10 @@
                                 <span>From Janz balance <small>₼12.40 available</small></span>
                             </label>
                         </div>
-                    </section>
+                    </div>
                 </div>
 
-                <aside class="co-side">
+                <div class="co-side">
                     <div class="co-total">
                         <div class="co-total-head">
                             <h2>To pay</h2>
@@ -362,7 +361,7 @@
                             <p>We’ll make the same order and send it on this day. You can stop it in your account.</p>
                         </div>
                     </div>
-                </aside>
+                </div>
             </form>
 
             <div class="co-done" hidden>
@@ -480,6 +479,5 @@
     </footer>
 
     <script src="js/site.js"></script>
-    <script src="js/checkout.js"></script>
 </body>
 </html>

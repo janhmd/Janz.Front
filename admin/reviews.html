@@ -12,8 +12,8 @@
     <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
 </head>
 <body>
-    <div id="app">
-        <div id="sidebar" class="active">
+    <div class="app">
+        <div class="sidebar active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between align-items-center">
@@ -149,43 +149,49 @@
             </div>
         </div>
 
-        <div id="main">
-            <header class="admin-top">
-                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
-                <div class="admin-top-title">Reviews</div>
-                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
-                <div class="admin-user">
-                    <span class="admin-avatar" aria-hidden="true">J</span>
-                    <div>
-                        <div class="admin-user-name">Janz Admin</div>
-                        <div class="admin-user-role">SuperAdmin</div>
+        <div class="main">
+            <header>
+                <div class="admin-top">
+                    <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                    <div class="admin-top-title">Reviews</div>
+                    <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                    <div class="admin-user">
+                        <span class="admin-avatar" aria-hidden="true">J</span>
+                        <div>
+                            <div class="admin-user-name">Janz Admin</div>
+                            <div class="admin-user-role">SuperAdmin</div>
+                        </div>
                     </div>
                 </div>
             </header>
 
             <div class="page-heading">
-<section class="admin-head">
+<div class="admin-head">
     <div>
         <p class="admin-eyebrow">Customers</p>
         <h1>Reviews</h1>
     </div>
-</section>
+</div>
 
-<nav class="admin-tabs" aria-label="Review types">
-    <button type="button" class="is-on" data-tab="products">Products <span>6</span></button>
-    <button type="button" data-tab="shop">Shop and delivery <span>3</span></button>
+<nav aria-label="Review types">
+    <div class="admin-tabs">
+        <button type="button" class="is-on" data-tab="products">Products <span>6</span></button>
+        <button type="button" data-tab="shop">Shop and delivery <span>3</span></button>
+    </div>
 </nav>
 
 <div class="admin-grid admin-grid-side" data-pane="products">
     <div>
-        <nav class="admin-filter" aria-label="Filter reviews">
-            <a class="is-on" href="reviews.html">All</a>
-            <a href="reviews.html#published">Published</a>
-            <a href="reviews.html#hidden">Hidden</a>
-            <a href="reviews.html#low">1–2 stars</a>
+        <nav aria-label="Filter reviews">
+            <div class="admin-filter">
+                <a class="is-on" href="reviews.html">All</a>
+                <a href="reviews.html#published">Published</a>
+                <a href="reviews.html#hidden">Hidden</a>
+                <a href="reviews.html#low">1–2 stars</a>
+            </div>
         </nav>
         <div class="admin-reviews">
-    <article class="admin-review" data-filter="published">
+    <div class="admin-review" data-filter="published">
         <div class="admin-review-top">
             <span class="admin-product">
                 <img src="../images/floral-bag.png" alt="" />
@@ -206,8 +212,8 @@
                 </form>
             </span>
         </div>
-    </article>
-    <article class="admin-review" data-filter="published">
+    </div>
+    <div class="admin-review" data-filter="published">
         <div class="admin-review-top">
             <span class="admin-product">
                 <img src="../images/aroma-kit.png" alt="" />
@@ -228,8 +234,8 @@
                 </form>
             </span>
         </div>
-    </article>
-    <article class="admin-review" data-filter="hidden low">
+    </div>
+    <div class="admin-review" data-filter="hidden low">
         <div class="admin-review-top">
             <span class="admin-product">
                 <img src="../images/guatemala.png" alt="" />
@@ -250,8 +256,8 @@
                 </form>
             </span>
         </div>
-    </article>
-    <article class="admin-review" data-filter="published">
+    </div>
+    <div class="admin-review" data-filter="published">
         <div class="admin-review-top">
             <span class="admin-product">
                 <img src="../images/candy.png" alt="" />
@@ -272,8 +278,8 @@
                 </form>
             </span>
         </div>
-    </article>
-    <article class="admin-review" data-filter="published low">
+    </div>
+    <div class="admin-review" data-filter="published low">
         <div class="admin-review-top">
             <span class="admin-product">
                 <img src="../images/set-drip.png" alt="" />
@@ -294,8 +300,8 @@
                 </form>
             </span>
         </div>
-    </article>
-    <article class="admin-review" data-filter="published">
+    </div>
+    <div class="admin-review" data-filter="published">
         <div class="admin-review-top">
             <span class="admin-product">
                 <img src="../images/set-french.png" alt="" />
@@ -316,12 +322,12 @@
                 </form>
             </span>
         </div>
-    </article>
+    </div>
         </div>
         <p class="admin-empty" hidden>No reviews here.</p>
     </div>
 
-    <section class="admin-card admin-rating">
+    <div class="admin-card admin-rating">
         <h2>Rating</h2>
         <div class="admin-rating-big">
             <strong>3.5</strong>
@@ -336,12 +342,12 @@
             <div class="admin-bar"><span>1</span><i class="bi bi-star-fill"></i><b style="--w:17%"></b><span>1</span></div>
         </div>
         <p class="admin-note">Hidden reviews are not shown on the product page and do not count in its rating.</p>
-    </section>
+    </div>
 </div>
 
 <div data-pane="shop" hidden>
     <div class="admin-reviews">
-        <article class="admin-review" data-filter="published">
+        <div class="admin-review" data-filter="published">
             <div class="admin-review-top">
                 <span class="admin-person">
                     <span class="admin-avatar admin-avatar-sm" aria-hidden="true">B</span>
@@ -364,8 +370,8 @@
                     </form>
                 </span>
             </div>
-        </article>
-        <article class="admin-review" data-filter="published">
+        </div>
+        <div class="admin-review" data-filter="published">
             <div class="admin-review-top">
                 <span class="admin-person">
                     <span class="admin-avatar admin-avatar-sm" aria-hidden="true">C</span>
@@ -388,8 +394,8 @@
                     </form>
                 </span>
             </div>
-        </article>
-        <article class="admin-review" data-filter="published low">
+        </div>
+        <div class="admin-review" data-filter="published low">
             <div class="admin-review-top">
                 <span class="admin-person">
                     <span class="admin-avatar admin-avatar-sm" aria-hidden="true">R</span>
@@ -412,15 +418,17 @@
                     </form>
                 </span>
             </div>
-        </article>
+        </div>
     </div>
     <p class="admin-note admin-note-top">These are the reviews on the Reviews page of the site. The customer's discount level is shown under the name.</p>
 </div>
             </div>
 
-            <footer class="admin-footer">
-                <span>© 2026 Janz</span>
-                <span>Admin panel</span>
+            <footer>
+                <div class="admin-footer">
+                    <span>© 2026 Janz</span>
+                    <span>Admin panel</span>
+                </div>
             </footer>
         </div>
     </div>
@@ -428,19 +436,6 @@
     <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
-        document.querySelector(".admin-theme").addEventListener("click", function () {
-            var day = document.documentElement.classList.toggle("theme-day");
-            localStorage.setItem("janz-theme", day ? "day" : "night");
-        });
-        // Silmədən əvvəl soruşulur
-        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
-            form.addEventListener("submit", function (event) {
-                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
-            });
-        });
-    </script>
     
     <script src="js/admin-demo.js"></script>
 </body>

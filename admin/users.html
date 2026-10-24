@@ -12,8 +12,8 @@
     <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
 </head>
 <body>
-    <div id="app">
-        <div id="sidebar" class="active">
+    <div class="app">
+        <div class="sidebar active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between align-items-center">
@@ -149,22 +149,24 @@
             </div>
         </div>
 
-        <div id="main">
-            <header class="admin-top">
-                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
-                <div class="admin-top-title">Users</div>
-                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
-                <div class="admin-user">
-                    <span class="admin-avatar" aria-hidden="true">J</span>
-                    <div>
-                        <div class="admin-user-name">Janz Admin</div>
-                        <div class="admin-user-role">SuperAdmin</div>
+        <div class="main">
+            <header>
+                <div class="admin-top">
+                    <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                    <div class="admin-top-title">Users</div>
+                    <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                    <div class="admin-user">
+                        <span class="admin-avatar" aria-hidden="true">J</span>
+                        <div>
+                            <div class="admin-user-name">Janz Admin</div>
+                            <div class="admin-user-role">SuperAdmin</div>
+                        </div>
                     </div>
                 </div>
             </header>
 
             <div class="page-heading">
-<section class="admin-head">
+<div class="admin-head">
     <div>
         <p class="admin-eyebrow">Customers</p>
         <h1>Users <span>8</span></h1>
@@ -173,15 +175,17 @@
         <i class="bi bi-search" aria-hidden="true"></i>
         <input type="search" placeholder="Search by name or email" aria-label="Search users" />
     </label>
-</section>
+</div>
 
-<nav class="admin-filter" aria-label="Filter users">
-    <a class="is-on" href="users.html">All</a>
-    <a href="users.html#staff">Staff</a>
-    <a href="users.html#blocked">Blocked</a>
+<nav aria-label="Filter users">
+    <div class="admin-filter">
+        <a class="is-on" href="users.html">All</a>
+        <a href="users.html#staff">Staff</a>
+        <a href="users.html#blocked">Blocked</a>
+    </div>
 </nav>
 
-<section class="admin-card admin-card-flush">
+<div class="admin-card admin-card-flush">
     <div class="table-responsive">
         <table class="admin-table">
             <thead>
@@ -336,12 +340,14 @@
         </table>
     </div>
     <p class="admin-empty" hidden>No users found.</p>
-</section>
+</div>
             </div>
 
-            <footer class="admin-footer">
-                <span>© 2026 Janz</span>
-                <span>Admin panel</span>
+            <footer>
+                <div class="admin-footer">
+                    <span>© 2026 Janz</span>
+                    <span>Admin panel</span>
+                </div>
             </footer>
         </div>
     </div>
@@ -349,19 +355,6 @@
     <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
-        document.querySelector(".admin-theme").addEventListener("click", function () {
-            var day = document.documentElement.classList.toggle("theme-day");
-            localStorage.setItem("janz-theme", day ? "day" : "night");
-        });
-        // Silmədən əvvəl soruşulur
-        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
-            form.addEventListener("submit", function (event) {
-                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
-            });
-        });
-    </script>
     
     <script src="js/admin-demo.js"></script>
 </body>

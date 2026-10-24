@@ -2216,7 +2216,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
     gap: 1rem;
 }
 
-/* Post kartı: başlıq, mətn, şəkillər, məhsul, taglar, düymələr və şərh sahəsi. Mətn və şəkil istəyə bağlıdır */
 .feed-card {
     padding: 1.6rem 1.8rem 1.5rem;
     border: 1px solid #2a2a2a;
@@ -2255,7 +2254,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
     background: #111;
 }
 
-/* Kiçik gülən üz: ambassador və komanda nişanı */
 .feed-badge {
     position: absolute;
     right: -3px;
@@ -2340,7 +2338,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
 .feed-text p { margin: 0; }
 .feed-text p + p { margin-top: 1.1rem; }
 
-/* Şəkillər: bir və ya bir neçə şəkil, sürüşdürmək və ya nöqtələrə basmaqla dəyişir */
 .feed-photos { margin-top: 1.4rem; }
 
 .feed-frame {
@@ -2474,7 +2471,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
 
 .feed-actions .push { margin-left: auto; }
 
-/* Şərh: mətn və istəyə görə şəkil */
 .feed-comment {
     display: flex;
     gap: .9rem;
@@ -2544,7 +2540,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
 .feed-comment-send svg { width: 22px; height: 22px; }
 .feed-comment-send:hover { background: #2a2a2a; }
 
-/* Şərhlər: şərh düyməsinə basanda postun altında açılır. Cavablar "N replies" ilə açılır */
 .feed-thread {
     margin-top: 1.4rem;
     border-top: 1px solid #2a2a2a;
@@ -2698,7 +2693,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
     .feed-replies { padding-left: .9rem; }
 }
 
-/* ⋮ menyusu: post və şərhdə Block / Share */
 .feed-head,
 .feed-note-head { position: relative; }
 
@@ -2733,7 +2727,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
 
 .feed-menu button:hover { background: #2a2a2a; color: #fff; }
 
-/* Paylaşma pəncərəsi: link buferə kopyalanıb */
 .share-overlay {
     position: fixed;
     inset: 0;
@@ -2812,7 +2805,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
 
 .share-socials svg { width: 22px; height: 22px; }
 
-/* Bildiriş: solda aşağıda çıxır, xətt bitəndə özü bağlanır */
 .toast {
     position: fixed;
     left: 1.6rem;
@@ -2944,7 +2936,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
 
 .journal-topics span { color: #8a8a8a; }
 
-/* Əsas məqalə: şəkil bütün kartı tutur, mətn aşağıda qaranlıq fonun üstündədir */
 .journal-hero {
     position: relative;
     min-height: 420px;
@@ -3000,7 +2991,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
     font-size: 1.05rem;
 }
 
-/* Hero-da düymələrin fonu yoxdur, yalnız ikon və rəqəm */
 .journal-hero .article-like,
 .journal-hero .article-discuss,
 .journal-hero .article-save {
@@ -3101,7 +3091,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
 
 .journal-none[hidden] { display: none; }
 
-/* Məqalə kartı: şəkil, oxunma xətti, mövzu və tarix, başlıq, qısa mətn, statistika */
 .article-card[hidden] { display: none; }
 
 .article-card-photo {
@@ -3122,7 +3111,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
 
 .article-card-photo:hover img { transform: scale(1.04); }
 
-/* Nə qədər oxunub: şəklin altındakı nazik xətt (heç oxunmayıbsa görünmür) */
 .article-progress {
     position: absolute;
     left: 0;
@@ -3218,7 +3206,6 @@ html.theme-day .theme-toggle { color: var(--ink); }
     color: #ececec;
 }
 
-/* "Recently read": açılan məqalələr, sonuncu birinci */
 .journal-recent { margin-bottom: 3rem; }
 .journal-recent[hidden] { display: none; }
 
@@ -3715,7 +3702,6 @@ a.journal-card:hover { transform: translateY(-3px); }
     height: 14px;
 }
 
-/* Boş olanda Orders-dakı kimi: tablar və mətn bir blok olaraq pane-in ortasındadır */
 .reading-board.is-empty {
     display: flex;
     flex-direction: column;
@@ -3758,7 +3744,6 @@ a.journal-card:hover { transform: translateY(-3px); }
 
 .cabinet-pane[hidden] { display: none; }
 
-/* Blacklist: community-də bloklanan istifadəçilər. Bloku yalnız burdan götürmək olur */
 .cabinet-pane[data-pane="blacklist"].is-filled:not([hidden]) {
     display: block;
     width: 100%;
@@ -3855,7 +3840,6 @@ a.journal-card:hover { transform: translateY(-3px); }
 .blacklist-none[hidden],
 .blacklist-empty[hidden] { display: none; }
 
-/* "Remove from blacklist" təsdiqi */
 .unblock-overlay {
     position: fixed;
     inset: 0;
@@ -3916,7 +3900,6 @@ a.journal-card:hover { transform: translateY(-3px); }
     margin-top: 0;
     border-radius: 14px;
 }
-
 
 .cabinet-pane-title {
     margin: 0 0 1.4rem;
@@ -6605,7 +6588,6 @@ html.theme-day {
 .edit-fold { border-top-color: #ececec; }
 }
 
-/* ---- Header: bildirişlər (zəng düyməsi) ---- */
 .notify {
     position: relative;
     display: flex;
@@ -6647,7 +6629,6 @@ html.theme-day {
     z-index: 40;
 }
 
-/* Siçan düymədən panelə keçəndə panel bağlanmasın */
 .notify-panel::before {
     content: "";
     position: absolute;
@@ -6742,7 +6723,6 @@ html.theme-day {
 .notify-clear:hover { border-color: #8d8d8d; }
 
 @media (max-width: 900px) {
-    /* Telefonda hover yoxdur: zəng birbaşa Account → Notifications-a aparır */
     .notify-panel { display: none !important; }
 }
 
@@ -6755,7 +6735,6 @@ html.theme-day .notify-all { background: var(--ink); color: #fff; }
 html.theme-day .notify-clear { border-color: var(--line); color: var(--text); }
 html.theme-day .notify-btn { color: var(--text); }
 
-/* ---- Header: seçilmişlər və müqayisə sayğacı ---- */
 .icon-btn.has-count { position: relative; }
 
 .icon-count {
@@ -6782,16 +6761,12 @@ html.theme-day .notify-btn { color: var(--text); }
     50% { transform: scale(1.35); }
 }
 
-/* Kartda seçilmiş düymə */
 .product-actions button.is-on { border-color: var(--gold); color: var(--gold); }
 .product-actions button.is-on[aria-label="Remove from wishlist"] svg path { fill: currentColor; }
 
-
-/* Səbətdə sayğac ikonun üstündə olsun, "pcs" yazısının yox */
 .cart-link { position: relative; }
 .cart-link .icon-count { top: -7px; left: 8px; right: auto; }
 
-/* ---- Header: səbətin hover paneli ---- */
 .cart-drop {
     position: relative;
     display: flex;
@@ -6927,7 +6902,6 @@ html.theme-day .notify-btn { color: var(--text); }
 .mini-cart-empty { margin: .4rem 0 1rem; color: #8d8d8d; }
 
 @media (max-width: 900px) {
-    /* Telefonda hover yoxdur: səbət düyməsi birbaşa səbət səhifəsini açır */
     .mini-cart { display: none !important; }
 }
 
@@ -6941,8 +6915,6 @@ html.theme-day .mini-cart-qty button,
 html.theme-day .mini-cart-remove { border-color: var(--line); background: var(--hover); color: var(--text); }
 html.theme-day .mini-cart-order { background: var(--ink); color: #fff; }
 
-
-/* ---- Müqayisə səhifəsi ---- */
 #compare { padding: 2rem 2.4rem 4rem; }
 
 #compare h1 {
@@ -7113,7 +7085,6 @@ html.theme-day .mini-cart-order { background: var(--ink); color: #fff; }
 .compare-taste .note-peanut { background: #e3c9a0; color: #1a1006; }
 .compare-taste .note-fruity { background: #e8573a; color: #fff; }
 
-/* Pəncərə */
 body.is-locked { overflow: hidden; }
 
 .compare-modal {
@@ -7250,7 +7221,6 @@ html.theme-day .compare-search input { color: var(--text); }
 html.theme-day .compare-pick-item { background: var(--hover); }
 html.theme-day .compare-confirm { background: var(--ink); color: #fff; }
 
-/* ---- Sifariş (cart.html) ---- */
 .cart-empty[hidden] { display: none; }
 
 .checkout {
@@ -7656,7 +7626,6 @@ html.theme-day .co-gift-box { border-color: #bdbdbd; }
 .cart-like[hidden],
 #cart > .card-grid[hidden] { display: none; }
 
-/* ---- İstifadəçi profili (profile.html) ---- */
 #user-profile { padding: 2rem 2.4rem 4rem; }
 
 #user-profile > h1 {
@@ -7842,7 +7811,6 @@ html.theme-day #user-profile {
     --up-c5: #b08cff; --up-c6: #8a8a8a; --up-c7: #f2c46a; --up-c8: #bdbdbd;
 }
 
-/* Diaqramda ipucu */
 .up-donut-wrap { position: relative; width: 150px; height: 150px; }
 .up-donut circle { cursor: pointer; transition: stroke-width .15s ease, opacity .15s ease; }
 .up-donut:has(circle.is-on) circle:not(.is-on) { opacity: .45; }

@@ -12,8 +12,8 @@
     <script>if (localStorage.getItem("janz-theme") === "day") document.documentElement.classList.add("theme-day");</script>
 </head>
 <body>
-    <div id="app">
-        <div id="sidebar" class="active">
+    <div class="app">
+        <div class="sidebar active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between align-items-center">
@@ -149,37 +149,41 @@
             </div>
         </div>
 
-        <div id="main">
-            <header class="admin-top">
-                <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
-                <div class="admin-top-title">Journal</div>
-                <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
-                <div class="admin-user">
-                    <span class="admin-avatar" aria-hidden="true">J</span>
-                    <div>
-                        <div class="admin-user-name">Janz Admin</div>
-                        <div class="admin-user-role">SuperAdmin</div>
+        <div class="main">
+            <header>
+                <div class="admin-top">
+                    <a href="#" class="burger-btn d-block d-xl-none" aria-label="Open menu"><i class="bi bi-list"></i></a>
+                    <div class="admin-top-title">Journal</div>
+                    <button class="admin-theme" type="button" aria-label="Day mode"><i class="bi bi-sun"></i></button>
+                    <div class="admin-user">
+                        <span class="admin-avatar" aria-hidden="true">J</span>
+                        <div>
+                            <div class="admin-user-name">Janz Admin</div>
+                            <div class="admin-user-role">SuperAdmin</div>
+                        </div>
                     </div>
                 </div>
             </header>
 
             <div class="page-heading">
-<section class="admin-head">
+<div class="admin-head">
     <div>
         <p class="admin-eyebrow">Content</p>
         <h1>Journal <span>6</span></h1>
     </div>
     <a class="admin-btn" href="article-new.html"><i class="bi bi-plus"></i> New article</a>
-</section>
+</div>
 
-<nav class="admin-filter" aria-label="Filter articles">
-    <a class="is-on" href="articles.html">All</a>
-    <a href="articles.html#published">Published</a>
-    <a href="articles.html#scheduled">Scheduled</a>
-    <a href="articles.html#draft">Drafts</a>
+<nav aria-label="Filter articles">
+    <div class="admin-filter">
+        <a class="is-on" href="articles.html">All</a>
+        <a href="articles.html#published">Published</a>
+        <a href="articles.html#scheduled">Scheduled</a>
+        <a href="articles.html#draft">Drafts</a>
+    </div>
 </nav>
 
-<section class="admin-card admin-card-flush">
+<div class="admin-card admin-card-flush">
     <div class="table-responsive">
         <table class="admin-table">
             <thead>
@@ -334,31 +338,33 @@
             </tbody>
         </table>
     </div>
-</section>
+</div>
 
 <div class="admin-grid admin-grid-even">
-    <section class="admin-card">
+    <div class="admin-card">
         <div class="admin-card-head"><h2>Topics</h2><span class="admin-count">7</span></div>
         <div class="admin-chips" data-chip-list><span class="admin-tag">Brewing<button type="button" aria-label="Remove Brewing" data-remove-chip>×</button></span><span class="admin-tag">Brewing guides<button type="button" aria-label="Remove Brewing guides" data-remove-chip>×</button></span><span class="admin-tag">Growing<button type="button" aria-label="Remove Growing" data-remove-chip>×</button></span><span class="admin-tag">Roasting<button type="button" aria-label="Remove Roasting" data-remove-chip>×</button></span><span class="admin-tag">Industry<button type="button" aria-label="Remove Industry" data-remove-chip>×</button></span><span class="admin-tag">Tea<button type="button" aria-label="Remove Tea" data-remove-chip>×</button></span><span class="admin-tag">Marketing<button type="button" aria-label="Remove Marketing" data-remove-chip>×</button></span></div>
         <form class="admin-inline-form admin-inline-small" method="post" data-demo data-add-chip action="#">
             <input name="name" placeholder="New topic" aria-label="New topic" required maxlength="30" />
             <button type="submit" class="admin-btn is-ghost">Add</button>
         </form>
-    </section>
-    <section class="admin-card">
+    </div>
+    <div class="admin-card">
         <div class="admin-card-head"><h2>Series</h2><span class="admin-count">3</span></div>
         <div class="admin-chips" data-chip-list><span class="admin-tag">Brewing espresso<button type="button" aria-label="Remove Brewing espresso" data-remove-chip>×</button></span><span class="admin-tag">Coffee origins<button type="button" aria-label="Remove Coffee origins" data-remove-chip>×</button></span><span class="admin-tag">Tea at home<button type="button" aria-label="Remove Tea at home" data-remove-chip>×</button></span></div>
         <form class="admin-inline-form admin-inline-small" method="post" data-demo data-add-chip action="#">
             <input name="name" placeholder="New series" aria-label="New series" required maxlength="40" />
             <button type="submit" class="admin-btn is-ghost">Add</button>
         </form>
-    </section>
+    </div>
 </div>
             </div>
 
-            <footer class="admin-footer">
-                <span>© 2026 Janz</span>
-                <span>Admin panel</span>
+            <footer>
+                <div class="admin-footer">
+                    <span>© 2026 Janz</span>
+                    <span>Admin panel</span>
+                </div>
             </footer>
         </div>
     </div>
@@ -366,19 +372,6 @@
     <script src="vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        // Gündüz/gecə: saytla eyni açar (janz-theme), ona görə seçim hər iki tərəfdə eyni qalır
-        document.querySelector(".admin-theme").addEventListener("click", function () {
-            var day = document.documentElement.classList.toggle("theme-day");
-            localStorage.setItem("janz-theme", day ? "day" : "night");
-        });
-        // Silmədən əvvəl soruşulur
-        document.querySelectorAll("form[data-confirm]").forEach(function (form) {
-            form.addEventListener("submit", function (event) {
-                if (!confirm(form.getAttribute("data-confirm"))) { event.preventDefault(); event.stopImmediatePropagation(); }
-            });
-        });
-    </script>
     
     <script src="js/admin-demo.js"></script>
 </body>

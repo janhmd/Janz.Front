@@ -125,15 +125,17 @@
                 </div>
             </div>
             <div class="cabinet-row">
-                <nav class="cabinet-nav" aria-label="Account">
-                    <a href="#statistics" class="cabinet-tab" data-pane="statistics">Statistics</a>
-                    <a href="#orders" class="cabinet-tab is-on" data-pane="orders">Orders</a>
-                    <a href="#notifications" class="cabinet-tab" data-pane="notifications">Notifications</a>
-                    <a href="#community" class="cabinet-tab" data-pane="community">Community profile</a>
-                    <a href="#details" class="cabinet-tab" data-pane="details">My details</a>
-                    <a href="#ledger" class="cabinet-tab" data-pane="ledger">Internal account</a>
-                    <a href="#journal" class="cabinet-tab" data-pane="journal">Reading in the journal</a>
-                    <a href="#blacklist" class="cabinet-tab" data-pane="blacklist">Blacklist</a>
+                <nav aria-label="Account">
+                    <div class="cabinet-nav">
+                        <a href="#statistics" class="cabinet-tab" data-pane="statistics">Statistics</a>
+                        <a href="#orders" class="cabinet-tab is-on" data-pane="orders">Orders</a>
+                        <a href="#notifications" class="cabinet-tab" data-pane="notifications">Notifications</a>
+                        <a href="#community" class="cabinet-tab" data-pane="community">Community profile</a>
+                        <a href="#details" class="cabinet-tab" data-pane="details">My details</a>
+                        <a href="#ledger" class="cabinet-tab" data-pane="ledger">Internal account</a>
+                        <a href="#journal" class="cabinet-tab" data-pane="journal">Reading in the journal</a>
+                        <a href="#blacklist" class="cabinet-tab" data-pane="blacklist">Blacklist</a>
+                    </div>
                 </nav>
                 <div class="cabinet-main">
                     <div class="cabinet-pane" data-pane="orders">
@@ -154,7 +156,7 @@
                             </div>
                         </div>
                         <div class="notice-list">
-                            <article class="notice" data-kind="community">
+                            <div class="notice" data-kind="community">
                                 <div class="notice-head">
                                     <span class="notice-source">
                                         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="10" r="2.1" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15.4" cy="10.6" r="1.7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.6 16.4a3.6 3.6 0 0 1 6.8 0M13.2 16.6a3 3 0 0 1 5.2 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -167,8 +169,8 @@
                                     <img src="images/roast.png" alt="" />
                                     <strong>This is true — we have our own coffee community</strong>
                                 </a>
-                            </article>
-                            <article class="notice" data-kind="shop">
+                            </div>
+                            <div class="notice" data-kind="shop">
                                 <div class="notice-head">
                                     <span class="notice-source">
                                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1.2 11H5.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 8V6.4A4 4 0 0 1 16 6.4V8" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -212,7 +214,7 @@
                                         </div>
                                     </article>
                                 </div>
-                            </article>
+                            </div>
                         </div>
                         <div class="cabinet-empty notice-empty" hidden>
                             <h2>No notifications yet</h2>
@@ -366,7 +368,7 @@
                                     <a href="community.html">Go to community</a>
                                 </div>
                             </div>
-                            <aside class="profile-card">
+                            <div class="profile-card">
                                 <div class="profile-card-top">
                                     <h2>My profile</h2>
                                     <button type="button" aria-label="Share">
@@ -430,7 +432,7 @@
                                     </div>
                                     <div class="profile-cook-list"></div>
                                 </div>
-                            </aside>
+                            </div>
                         </div>
                     </div>
                     <div class="cabinet-pane" data-pane="details" hidden>

@@ -176,7 +176,7 @@ if (addressOverlay && addressForm) {
         if (addressForm.primary.checked && addressList) {
             addressList.querySelectorAll("em").forEach(function (mark) { mark.remove(); });
         }
-        var card = document.createElement("article");
+        var card = document.createElement("div");
         card.className = "details-address-card";
         var head = document.createElement("strong");
         head.textContent = title;
@@ -240,7 +240,7 @@ if (cardOverlay && cardForm) {
         if (cardForm.primary.checked && cardList) {
             cardList.querySelectorAll("em").forEach(function (mark) { mark.remove(); });
         }
-        var item = document.createElement("article");
+        var item = document.createElement("div");
         item.className = "details-card-item";
         var num = document.createElement("strong");
         num.textContent = "•••• " + last;
@@ -383,7 +383,7 @@ function renderCookList() {
         var option = cookForm.querySelector('.cook-option[data-name="' + name + '"]');
         var icon = option ? option.querySelector("svg") : null;
         var title = name === "Other" && cookOtherText ? cookOtherText : name;
-        var card = document.createElement("article");
+        var card = document.createElement("div");
         card.className = "profile-cook-item";
         if (icon) {
             card.appendChild(icon.cloneNode(true));
@@ -858,8 +858,6 @@ document.querySelectorAll(".grind").forEach(function (menu) {
     });
 });
 
-// Səbət: qiymət düyməsi məhsulu səbətə əlavə edir, header-də sayğac və hover paneli göstərir
-// Hələlik yalnız bu brauzerdə yadda qalır (janz-cart); MVC-də API-yə gedəcək
 var cartKey = "janz-cart";
 
 function readCart() {
@@ -875,7 +873,6 @@ function writeCart(items) {
     try {
         localStorage.setItem(cartKey, JSON.stringify(items));
     } catch (error) {}
-    // Səbət dəyişdi: sifariş səhifəsi də yenilənsin
     document.dispatchEvent(new CustomEvent("janz-cart-change"));
 }
 
@@ -891,9 +888,7 @@ function priceOf(element) {
     return element ? parseFloat(element.textContent.replace(/[^0-9.]/g, "")) || 0 : 0;
 }
 
-// Kartdan (və ya məhsul səhifəsindən) məhsulun məlumatlarını götürür
 function productFromButton(button) {
-    // Kartda məlumat kartın içindədir; məhsul səhifəsinin əsas düyməsində isə h1 və qalereyadadır
     var inCard = button.closest("article, .product");
     var card = inCard || button.closest(".coffee-buy") || document.body;
     var title = inCard ? card.querySelector("h3") : document.querySelector("h1");
@@ -945,7 +940,6 @@ function showCartCount(bump) {
         var label = link.querySelector("span");
         if (label) label.textContent = count + " pcs";
         link.setAttribute("aria-label", "Cart, " + count + (count === 1 ? " item" : " items"));
-        // Ürək və tərəzidəki kimi səbətin üstündə də sayğac
         var badge = link.querySelector(".icon-count");
         if (!badge) {
             badge = document.createElement("b");
@@ -962,7 +956,6 @@ function showCartCount(bump) {
     });
 }
 
-// Header-də səbətin hover paneli
 function el(tag, className, text) {
     var node = document.createElement(tag);
     if (className) node.className = className;
@@ -1068,7 +1061,6 @@ function renderMiniCart() {
     });
 }
 
-// changes = null → sətri silir; yoxsa sətirin sahələrini dəyişir (eyni sətir yaranarsa birləşdirir)
 function changeLine(index, changes) {
     var items = readCart();
     if (!items[index]) return;
@@ -1108,7 +1100,6 @@ document.querySelectorAll(".price").forEach(function (button) {
     });
 });
 
-// Köhnə sayğac açarı artıq lazım deyil
 try { localStorage.removeItem("janz-cart-count"); } catch (error) {}
 showCartCount();
 renderMiniCart();
@@ -1318,7 +1309,6 @@ if (articleRoot && articleRoot.getAttribute("data-id")) {
 
     window.addEventListener("scroll", trackArticle, { passive: true });
 
-    // Məqalə açılan kimi Journal-dakı "Recently read" siyahısına düşür
     rememberArticle(articleRoot, { seenAt: Date.now() });
 
     if (bookmarkBtn) {
@@ -1402,10 +1392,7 @@ if (readingBoard) {
     renderReading();
 }
 
-// Community postları: şəkil karuseli, like/dislike, yadda saxlama, izləmə, şərhlər və cavablar.
-// Hələlik hər şey səhifədədir; backend gələndə düymələr API-yə sorğu göndərəcək
 
-// Like +1 edir, dislike sayı göstərmir; ikisi eyni anda seçilə bilməz. Post və hər şərh üçün ayrıca işləyir
 function bindVotes(box) {
     var like = box.querySelector(":scope > .feed-like");
     var dislike = box.querySelector(":scope > .feed-dislike");
@@ -1433,7 +1420,6 @@ function bindNote(note, card) {
     var actions = note.querySelector(":scope > .feed-note-actions");
     if (actions) bindVotes(actions);
 
-    // "Reply" şərh sahəsinə müəllifin adını yazır
     var reply = actions ? actions.querySelector(".feed-reply") : null;
     var input = card.querySelector(".feed-comment input[type='text']");
     if (reply && input) {
@@ -1462,13 +1448,11 @@ function escapeHtml(text) {
     return box.innerHTML;
 }
 
-// Paylaşma pəncərəsi, bildiriş və ⋮ menyusu yalnız community postları olan səhifədə yaranır
 var shareOverlay = null;
 var toastBox = null;
 var toastTimer = null;
 
 function postLink(card, note) {
-    // Hələlik səhifənin öz ünvanı; backend gələndə /community?post=ID olacaq
     var link = location.href.split(/[?#]/)[0] + "?post=" + card.getAttribute("data-post-id");
     if (note) link += "&comment=" + note.getAttribute("data-comment-id");
     return link;
@@ -1495,7 +1479,6 @@ function closeShare() {
 function showToast(text) {
     if (!toastBox) return;
     toastBox.querySelector(".toast-text").textContent = text;
-    // Animasiya hər dəfə əvvəldən başlasın deyə sinif çıxarılıb yenidən əlavə olunur
     toastBox.classList.remove("is-on");
     void toastBox.offsetWidth;
     toastBox.classList.add("is-on");
@@ -1513,7 +1496,6 @@ function closeMenus(except) {
     });
 }
 
-// Bildiriş (toast) bütün səhifələrdə var: blok, səbətə əlavə və s.
 toastBox = document.createElement("div");
 toastBox.className = "toast";
 toastBox.setAttribute("role", "status");
@@ -1559,7 +1541,6 @@ if (document.querySelector(".feed-card")) {
         }
     });
 
-    // ⋮ basanda menyu açılır; menyudan kənara basanda bağlanır
     document.addEventListener("click", function (event) {
         var more = event.target.closest(".feed-more");
         if (!more) {
@@ -1582,7 +1563,6 @@ if (document.querySelector(".feed-card")) {
 
             menu.querySelector("[data-menu='block']").addEventListener("click", function () {
                 menu.hidden = true;
-                // Backend gələndə istifadəçi qara siyahıya yazılacaq (Account → Blacklist)
                 showToast("You blocked the user");
             });
             menu.querySelector("[data-menu='share']").addEventListener("click", function () {
@@ -1621,7 +1601,6 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
             });
         });
 
-        // Bir şəkil varsa sürüşdürmək lazım deyil
         if (count > 1) {
             frame.addEventListener("pointerdown", function (event) {
                 startX = event.clientX;
@@ -1640,7 +1619,6 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
             function endDrag() {
                 if (startX === null) return;
                 frame.classList.remove("is-dragging");
-                // Şəklin beşdə biri qədər çəkilibsə növbəti/əvvəlki şəkil açılır
                 if (Math.abs(deltaX) > frame.clientWidth / 5) {
                     showPhoto(index + (deltaX < 0 ? 1 : -1));
                 } else {
@@ -1685,7 +1663,6 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
         });
     }
 
-    // Şərh düyməsi şərhləri açıb-bağlayır
     var thread = card.querySelector(".feed-thread");
     var commentsBtn = card.querySelector(".feed-comments");
     var commentsCount = commentsBtn ? commentsBtn.querySelector("span") : null;
@@ -1718,7 +1695,6 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
             });
         }
 
-        // Boş şərh göndərilmir: ya mətn, ya şəkil olmalıdır. Yeni şərh siyahının sonuna düşür
         comment.addEventListener("submit", function (event) {
             event.preventDefault();
             var value = text.value.trim();
@@ -1732,7 +1708,7 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
                 var today = new Date();
                 var date = ("0" + today.getDate()).slice(-2) + "." + ("0" + (today.getMonth() + 1)).slice(-2) + "." + today.getFullYear();
                 var template = thread.querySelector(".feed-note");
-                var note = document.createElement("article");
+                var note = document.createElement("div");
                 note.className = "feed-note";
                 note.innerHTML =
                     '<div class="feed-note-head">' +
@@ -1765,7 +1741,6 @@ document.querySelectorAll(".feed-card").forEach(function (card) {
     }
 });
 
-// Blacklist (Account): axtarış və bloku götürmək. Hələlik yalnız səhifədə; backend gələndə API-dən silinəcək
 var blacklistPane = document.querySelector(".cabinet-pane[data-pane='blacklist']");
 var unblockOverlay = document.querySelector(".unblock-overlay");
 
@@ -1776,7 +1751,6 @@ if (blacklistPane && unblockOverlay) {
     var blacklistEmpty = blacklistPane.querySelector(".blacklist-empty");
     var unblockTarget = null;
 
-    // Siyahı boşdursa "Blacklist is empty" görünür, axtarışda heç kim tapılmasa "Nobody found"
     function syncBlacklist() {
         var items = blacklistPane.querySelectorAll(".blacklist-item");
         var query = blacklistSearch.value.trim().toLowerCase();
@@ -1831,8 +1805,6 @@ if (blacklistPane && unblockOverlay) {
 }
 
 
-// Journal: mövzu və tag filtri, sıralama, like, bookmark, oxunma xətti və "Recently read".
-// Bookmark və oxunma Account → "Reading in the journal" ilə ortaqdır (janz-reading)
 var journalGrid = document.querySelector(".journal-grid");
 
 if (journalGrid && journalGrid.querySelector(".article-card")) {
@@ -1857,7 +1829,6 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
         });
     }
 
-    // Soldakı mövzuların yanındakı rəqəmlər kartlardan hesablanır
     document.querySelectorAll(".journal-topics a[data-topic]").forEach(function (link) {
         var topic = link.getAttribute("data-topic");
         var count = link.querySelector("span");
@@ -1921,7 +1892,6 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
 
     if (journalSort) journalSort.addEventListener("change", renderJournal);
 
-    // Kartın (və hero-nun) düymələri və oxunma xətti janz-reading-dən oxunur
     function syncArticle(card) {
         var item = loadReading()[card.getAttribute("data-id")] || {};
         var like = card.querySelector(".article-like");
@@ -1966,7 +1936,6 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
                 syncAll();
             });
         }
-        // Məqaləyə keçəndə "Recently read"-ə düşür
         card.querySelectorAll("a[href^='article.html']").forEach(function (link) {
             link.addEventListener("click", function () {
                 rememberArticle(card, { seenAt: Date.now() });
@@ -1987,14 +1956,13 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
 
         journalRecentRow.innerHTML = "";
         seen.forEach(function (item) {
-            // Kart artıq səhifədədirsə ondan kopyalanır, yoxdursa yadda saxlanan məlumatdan qurulur
             var source = document.querySelector(".article-card[data-id='" + item.id + "'], .journal-hero[data-id='" + item.id + "']");
             var card;
             if (source && source.classList.contains("article-card")) {
                 card = source.cloneNode(true);
                 card.hidden = false;
             } else {
-                card = document.createElement("article");
+                card = document.createElement("div");
                 card.className = "article-card";
                 ["id", "title", "topic", "date", "lead", "image", "href", "likes", "comments", "views", "mins"].forEach(function (key) {
                     if (item[key]) card.setAttribute("data-" + key, item[key]);
@@ -2017,12 +1985,9 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
     renderJournal();
     renderRecent();
 
-    // Başqa tabda məqalə oxunanda geri qayıdanda yenilənsin
     window.addEventListener("pageshow", renderRecent);
 }
 
-// ---- Header: bildirişlər ----
-// Hələlik nümunədir: oxunanlar və "Clear" yalnız bu brauzerdə yadda qalır (janz-notify); backend gələndə API-dən gələcək
 (function () {
     var box = document.querySelector(".notify");
     if (!box) return;
@@ -2067,7 +2032,6 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
         });
     });
 
-    // Bildirişə basanda oxunmuş sayılır, sonra öz səhifəsi açılır
     items.forEach(function (item) {
         item.addEventListener("click", function () {
             state.read = state.read || {};
@@ -2085,8 +2049,6 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
     refresh();
 })();
 
-// ---- Seçilmişlər (ürək) və müqayisə (tərəzi) ----
-// Hələlik yalnız bu brauzerdə yadda qalır (janz-wishlist, janz-compare); MVC-də API-yə gedəcək
 (function () {
     var lists = {
         wishlist: { key: "janz-wishlist", add: "Add to wishlist", remove: "Remove from wishlist", added: "Added to wishlist", removed: "Removed from wishlist" },
@@ -2101,7 +2063,6 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
         try { localStorage.setItem(list.key, JSON.stringify(items)); } catch (e) { }
     }
 
-    // Məhsulun adı onun açarıdır: kartda h3, məhsul səhifəsində h1
     function productName(button) {
         var card = button.closest("article, .product");
         var title = card && card.querySelector("h3");
@@ -2151,7 +2112,6 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
         if (label === lists.wishlist.add) button.dataset.list = "wishlist";
         else if (label === lists.compare.add) button.dataset.list = "compare";
         else if (label === "Product details") {
-            // Ətraflı düyməsi məhsulun səhifəsini açır
             button.addEventListener("click", function () {
                 var card = button.closest("article, .product");
                 var link = card && card.querySelector(".product-link");
@@ -2180,9 +2140,1017 @@ if (journalGrid && journalGrid.querySelector(".article-card")) {
         showCount(name, false);
     });
 
-    // Müqayisə səhifəsi siyahını dəyişəndə header-dəki sayğacı yeniləmək üçün
     window.refreshCompareCount = function () {
         markButtons("compare");
         showCount("compare", true);
     };
+})();
+
+(function () {
+    var table = document.querySelector(".compare-table");
+    if (!table) return;
+
+    var products = [
+        {
+            "name": "Floral",
+            "link": "product.html",
+            "photo": "images/floral.png",
+            "process": "Blend",
+            "acidity": 72,
+            "density": 38,
+            "taste": "A light coffee with notes of <span class=\"note note-flowers\">flowers</span>, <span class=\"note note-berries\">dark berries</span> and <span class=\"note note-citrus\">citrus</span>",
+            "price": 29.9,
+            "oldPrice": 32.5,
+            "rating": "4.6",
+            "reviews": "687",
+            "roast": "Espresso",
+            "variety": "Bourbon, Catuai",
+            "altitude": "1200–1600 m",
+            "caffeine": "1.21%",
+            "qScore": "83"
+        },
+        {
+            "name": "Guatemala Santiago",
+            "link": "#",
+            "photo": "images/guatemala.png",
+            "process": "Washed",
+            "acidity": 48,
+            "density": 64,
+            "taste": "A sweet coffee with notes of <span class=\"note note-orange\">orange</span>, <span class=\"note note-fruit\">dried fruit</span> and <span class=\"note note-chocolate\">milk chocolate</span>",
+            "price": 27.5,
+            "oldPrice": 29.9,
+            "rating": "4.6",
+            "reviews": "1041",
+            "roast": "Filter",
+            "variety": "Caturra, Bourbon",
+            "altitude": "1500–1800 m",
+            "caffeine": "1.08%",
+            "qScore": "84"
+        },
+        {
+            "name": "Indonesia Sumatra Strawberry Karo",
+            "link": "#",
+            "photo": "images/guatemala.png",
+            "process": "Infused",
+            "acidity": 84,
+            "density": 58,
+            "taste": "A bright coffee with notes of <span class=\"note note-strawberry\">strawberry</span>, <span class=\"note note-cherry\">cherry</span>, <span class=\"note note-caramel\">cream caramel</span> and <span class=\"note note-chocolate\">milk chocolate</span>",
+            "price": 24.9,
+            "oldPrice": 29.7,
+            "rating": "5",
+            "reviews": "67",
+            "roast": "Filter",
+            "variety": "Ateng, Tim Tim",
+            "altitude": "1400–1600 m",
+            "caffeine": "1.15%",
+            "qScore": "85"
+        },
+        {
+            "name": "Costa Rica Reposado",
+            "link": "#",
+            "photo": "images/floral.png",
+            "process": "Natural",
+            "acidity": 52,
+            "density": 70,
+            "taste": "A bright coffee with notes of <span class=\"note note-tangerine\">tangerine</span>, <span class=\"note note-mango\">mango</span>, <span class=\"note note-apricot\">apricot</span> and <span class=\"note note-lemon\">lemon drops</span>",
+            "price": 24.2,
+            "oldPrice": 28.5,
+            "rating": "0",
+            "reviews": "6",
+            "roast": "Espresso",
+            "variety": "Catuai",
+            "altitude": "1500–1700 m",
+            "caffeine": "1.12%",
+            "qScore": "86"
+        },
+        {
+            "name": "Costa Rica Vista Al Santo",
+            "link": "#",
+            "photo": "images/guatemala.png",
+            "process": "Natural",
+            "acidity": 72,
+            "density": 50,
+            "taste": "A bright coffee with notes of <span class=\"note note-passion\">passion fruit</span>, <span class=\"note note-peach\">peach</span>, <span class=\"note note-raspberry\">raspberry</span> and <span class=\"note note-dark-chocolate\">dark chocolate</span>",
+            "price": 24.9,
+            "oldPrice": 29.5,
+            "rating": "0",
+            "reviews": "2",
+            "roast": "Filter",
+            "variety": "Villa Sarchi",
+            "altitude": "1600–1800 m",
+            "caffeine": "1.05%",
+            "qScore": "87"
+        },
+        {
+            "name": "Indonesia Sumatra Karo Funky",
+            "link": "#",
+            "photo": "images/floral.png",
+            "process": "Natural funky",
+            "acidity": 66,
+            "density": 72,
+            "taste": "A bright coffee with notes of <span class=\"note note-pineapple\">pineapple</span>, <span class=\"note note-passion\">passion fruit</span>, <span class=\"note note-vermouth\">berry vermouth</span> and <span class=\"note note-dark-chocolate\">dark chocolate</span>",
+            "price": 24.7,
+            "oldPrice": 29.0,
+            "rating": "0",
+            "reviews": "4",
+            "roast": "Espresso",
+            "variety": "Ateng, Gayo 1",
+            "altitude": "1400–1700 m",
+            "caffeine": "1.18%",
+            "qScore": "86"
+        },
+        {
+            "name": "Candy",
+            "link": "#",
+            "photo": "images/candy.png",
+            "process": "Blend",
+            "acidity": 26,
+            "density": 88,
+            "taste": "A dense coffee with notes of <span class=\"note note-dark-caramel\">dark caramel</span>, <span class=\"note note-candied\">candied fruit</span> and <span class=\"note note-spices\">spices</span>",
+            "price": 33.2,
+            "oldPrice": 0,
+            "rating": "4.7",
+            "reviews": "3454",
+            "roast": "Espresso",
+            "variety": "-",
+            "altitude": "-",
+            "caffeine": "1.19%",
+            "qScore": "-"
+        },
+        {
+            "name": "Ethiopia Yirgacheffe",
+            "link": "#",
+            "photo": "images/floral.png",
+            "process": "Natural",
+            "acidity": 50,
+            "density": 54,
+            "taste": "A sweet coffee with notes of <span class=\"note note-berries\">dark berries</span>, <span class=\"note note-citrus\">citrus</span> and <span class=\"note note-chocolate\">milk chocolate</span>",
+            "price": 31.2,
+            "oldPrice": 0,
+            "rating": "4.7",
+            "reviews": "6073",
+            "roast": "Espresso",
+            "variety": "Heirloom",
+            "altitude": "1900–2200 m",
+            "caffeine": "1.02%",
+            "qScore": "85"
+        },
+        {
+            "name": "Brazil Cerrado",
+            "link": "#",
+            "photo": "images/floral.png",
+            "process": "Natural",
+            "acidity": 34,
+            "density": 70,
+            "taste": "A dense coffee with notes of <span class=\"note note-nuts\">roasted nuts</span>, <span class=\"note note-chocolate\">chocolate</span> and <span class=\"note note-caramel\">caramel</span>",
+            "price": 28.8,
+            "oldPrice": 0,
+            "rating": "4.7",
+            "reviews": "6715",
+            "roast": "Espresso",
+            "variety": "Mundo Novo, Catuai",
+            "altitude": "900–1100 m",
+            "caffeine": "1.30%",
+            "qScore": "82"
+        },
+        {
+            "name": "Colombia Magdalena",
+            "link": "#",
+            "photo": "images/guatemala.png",
+            "process": "Washed",
+            "acidity": 80,
+            "density": 56,
+            "taste": "A juicy coffee with notes of <span class=\"note note-apple\">red apple</span>, <span class=\"note note-grapes\">dark grapes</span> and <span class=\"note note-cocoa\">cocoa</span>",
+            "price": 33.2,
+            "oldPrice": 0,
+            "rating": "4.6",
+            "reviews": "2031",
+            "roast": "Filter",
+            "variety": "Castillo, Caturra",
+            "altitude": "1600–1900 m",
+            "caffeine": "1.10%",
+            "qScore": "84"
+        },
+        {
+            "name": "Brazil Iguassu",
+            "link": "#",
+            "photo": "images/guatemala.png",
+            "process": "Natural",
+            "acidity": 42,
+            "density": 50,
+            "taste": "A sweet coffee with notes of <span class=\"note note-peanut\">peanut</span>, <span class=\"note note-cocoa\">cocoa powder</span> and <span class=\"note note-lemon\">lemon zest</span>",
+            "price": 29.9,
+            "oldPrice": 0,
+            "rating": "4.6",
+            "reviews": "2856",
+            "roast": "Filter",
+            "variety": "Yellow Catuai",
+            "altitude": "1000–1200 m",
+            "caffeine": "1.26%",
+            "qScore": "83"
+        },
+        {
+            "name": "Batch Brew",
+            "link": "#",
+            "photo": "images/guatemala.png",
+            "process": "Blend",
+            "acidity": 62,
+            "density": 60,
+            "taste": "A sweet <span class=\"note note-fruity\">fruity</span> coffee made for batch brew",
+            "price": 33.9,
+            "oldPrice": 0,
+            "rating": "4.5",
+            "reviews": "2463",
+            "roast": "Filter",
+            "variety": "-",
+            "altitude": "-",
+            "caffeine": "1.14%",
+            "qScore": "-"
+        },
+        {
+            "name": "Nutty",
+            "link": "#",
+            "photo": "images/candy.png",
+            "process": "Blend",
+            "acidity": 30,
+            "density": 82,
+            "taste": "A dense coffee with notes of <span class=\"note note-nuts\">roasted nuts</span>, <span class=\"note note-caramel\">cookies</span> and <span class=\"note note-chocolate\">nougat</span>",
+            "price": 28.8,
+            "oldPrice": 0,
+            "rating": "4.7",
+            "reviews": "5512",
+            "roast": "Espresso",
+            "variety": "-",
+            "altitude": "-",
+            "caffeine": "1.24%",
+            "qScore": "-"
+        },
+        {
+            "name": "Brownie",
+            "link": "#",
+            "photo": "images/candy.png",
+            "process": "Blend",
+            "acidity": 16,
+            "density": 90,
+            "taste": "A dense coffee with notes of <span class=\"note note-dark-chocolate\">dark chocolate</span>, <span class=\"note note-fruit\">raisins</span> and <span class=\"note note-nuts\">nut paste</span>",
+            "price": 32.0,
+            "oldPrice": 0,
+            "rating": "4.7",
+            "reviews": "1175",
+            "roast": "Espresso",
+            "variety": "-",
+            "altitude": "-",
+            "caffeine": "1.28%",
+            "qScore": "-"
+        },
+        {
+            "name": "Fruity",
+            "link": "#",
+            "photo": "images/floral.png",
+            "process": "Blend",
+            "acidity": 46,
+            "density": 58,
+            "taste": "A juicy coffee with notes of <span class=\"note note-orange\">orange</span>, <span class=\"note note-chocolate\">milk chocolate</span> and <span class=\"note note-fruit\">dried fruit</span>",
+            "price": 33.2,
+            "oldPrice": 0,
+            "rating": "4.6",
+            "reviews": "511",
+            "roast": "Espresso",
+            "variety": "-",
+            "altitude": "-",
+            "caffeine": "1.16%",
+            "qScore": "-"
+        },
+        {
+            "name": "Rwanda Kagano",
+            "link": "#",
+            "photo": "images/floral.png",
+            "process": "Microlot",
+            "acidity": 60,
+            "density": 52,
+            "taste": "A sweet coffee with notes of <span class=\"note note-peach\">nectarine</span>, <span class=\"note note-cherry\">bird cherry</span>, <span class=\"note note-lemon\">yellow apple</span> and <span class=\"note note-berries\">prune</span>",
+            "price": 36.0,
+            "oldPrice": 0,
+            "rating": "4.5",
+            "reviews": "157",
+            "roast": "Espresso",
+            "variety": "Red Bourbon",
+            "altitude": "1700–1900 m",
+            "caffeine": "1.04%",
+            "qScore": "86"
+        },
+        {
+            "name": "Batch Brew Lowcaf",
+            "link": "#",
+            "photo": "images/floral.png",
+            "process": "50% caffeine, ethyl acetate + funky",
+            "acidity": 70,
+            "density": 44,
+            "taste": "A bright coffee with notes of <span class=\"note note-peach\">peach</span>, <span class=\"note note-fruit\">plum</span>, <span class=\"note note-berries\">dark berries</span> and <span class=\"note note-caramel\">caramel</span>",
+            "price": 42.8,
+            "oldPrice": 0,
+            "rating": "4.1",
+            "reviews": "137",
+            "roast": "Omni",
+            "variety": "-",
+            "altitude": "-",
+            "caffeine": "0.61%",
+            "qScore": "-"
+        }
+    ];
+
+    var compareKey = "janz-compare";
+    var diffBox = document.querySelector(".compare-diff input");
+    var modal = document.querySelector(".compare-modal");
+    var pick = modal.querySelector(".compare-pick");
+    var search = modal.querySelector(".compare-search input");
+    var pickEmpty = modal.querySelector(".compare-pick-empty");
+
+    var rows = [
+        { label: "Acidity", key: "acidity", bar: true },
+        { label: "Density", key: "density", bar: true },
+        { label: "Taste", key: "taste", html: true },
+        { label: "Processing", key: "process" },
+        { label: "Roast", key: "roast" },
+        { label: "Variety", key: "variety" },
+        { label: "Altitude", key: "altitude" },
+        { label: "Caffeine", key: "caffeine" },
+        { label: "Q-grader score", key: "qScore" }
+    ];
+
+    var trashIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 13h8l1-13M10.5 11v5.5M13.5 11v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var bagIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 8h15v11.5a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8M9.5 13l2 2 3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var starIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" /></svg>';
+    var talkIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.6 7.1L4 20l1.4-4.2A8 8 0 1 1 20 11.5z" /></svg>';
+    var plusIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+
+    function readList() {
+        try {
+            var list = JSON.parse(localStorage.getItem(compareKey) || "[]");
+            return Array.isArray(list) ? list : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function writeList(list) {
+        try { localStorage.setItem(compareKey, JSON.stringify(list)); } catch (error) {}
+        if (window.refreshCompareCount) window.refreshCompareCount();
+    }
+
+    function findProduct(name) {
+        return products.filter(function (item) { return item.name === name; })[0];
+    }
+
+    function el(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    }
+
+    function money(value) {
+        return "₼" + value.toFixed(2);
+    }
+
+    function plusTile() {
+        var add = el("button", "compare-add");
+        add.type = "button";
+        add.setAttribute("aria-label", "Add products to compare");
+        add.innerHTML = plusIcon;
+        add.addEventListener("click", openModal);
+        return add;
+    }
+
+    function render() {
+        var chosen = readList().map(findProduct).filter(Boolean);
+        table.innerHTML = "";
+        table.style.setProperty("--compare-cols", chosen.length + 1);
+        table.classList.toggle("is-empty", !chosen.length);
+        diffBox.disabled = chosen.length < 2;
+
+        var head = el("div", "compare-row compare-head");
+        head.appendChild(el("div", "compare-label"));
+        chosen.forEach(function (item) {
+            var card = el("div", "compare-card");
+            var top = el("div", "compare-card-top");
+            var name = el("a", "compare-name", item.name);
+            name.href = item.link;
+            top.appendChild(name);
+            var remove = el("button", "compare-remove");
+            remove.type = "button";
+            remove.setAttribute("aria-label", "Remove " + item.name + " from compare");
+            remove.innerHTML = trashIcon;
+            remove.addEventListener("click", function () {
+                writeList(readList().filter(function (name) { return name !== item.name; }));
+                render();
+                showToast("Removed from compare");
+            });
+            top.appendChild(remove);
+            card.appendChild(top);
+
+            var photo = el("a", "compare-photo");
+            photo.href = item.link;
+            var img = el("img");
+            img.src = item.photo;
+            img.alt = item.name;
+            photo.appendChild(img);
+            card.appendChild(photo);
+
+            var buy = el("button", "compare-buy");
+            buy.type = "button";
+            buy.setAttribute("aria-label", "Add " + item.name + " to cart");
+            buy.innerHTML = (item.oldPrice ? "<s>" + money(item.oldPrice) + "</s>" : "") + "<strong>" + money(item.price) + "</strong>" + bagIcon;
+            buy.addEventListener("click", function () {
+                addToCart({ name: item.name, link: item.link, photo: item.photo, price: item.price, oldPrice: item.oldPrice,
+                    weights: [{ label: "250 g", off: "" }, { label: "1000 g", off: "" }], weight: 0,
+                    grinds: ["Whole beans"], grind: "Whole beans", qty: 1 });
+                showCartCount(true);
+                renderMiniCart();
+                showToast("Added to cart");
+            });
+            card.appendChild(buy);
+            head.appendChild(card);
+        });
+        var addCell = el("div", "compare-add-cell");
+        addCell.appendChild(plusTile());
+        head.appendChild(addCell);
+        table.appendChild(head);
+
+        if (!chosen.length) return;
+
+        var rate = el("div", "compare-row compare-rating");
+        rate.appendChild(el("div", "compare-label"));
+        chosen.forEach(function (item) {
+            var cell = el("div", "compare-cell");
+            cell.innerHTML = '<span>' + starIcon + item.rating + '</span><span>' + talkIcon + item.reviews + '</span>';
+            rate.appendChild(cell);
+        });
+        rate.appendChild(el("div"));
+        table.appendChild(rate);
+
+        rows.forEach(function (rowInfo) {
+            var row = el("div", "compare-row");
+            var values = chosen.map(function (item) { return String(item[rowInfo.key]); });
+            row.dataset.same = values.every(function (value) { return value === values[0]; }) ? "true" : "false";
+            row.appendChild(el("div", "compare-label", rowInfo.label));
+            chosen.forEach(function (item) {
+                var cell = el("div", "compare-cell");
+                if (rowInfo.bar) {
+                    var bar = el("i", "compare-bar");
+                    var fill = el("b");
+                    fill.style.width = item[rowInfo.key] + "%";
+                    bar.appendChild(fill);
+                    bar.setAttribute("aria-label", rowInfo.label + " " + item[rowInfo.key] + "%");
+                    cell.appendChild(bar);
+                } else if (rowInfo.html) {
+                    cell.classList.add("compare-taste");
+                    cell.innerHTML = item[rowInfo.key];
+                } else {
+                    cell.textContent = item[rowInfo.key];
+                }
+                row.appendChild(cell);
+            });
+            row.appendChild(el("div"));
+            table.appendChild(row);
+        });
+        applyDiff();
+    }
+
+    function applyDiff() {
+        var only = diffBox.checked && !diffBox.disabled;
+        table.querySelectorAll(".compare-row[data-same]").forEach(function (row) {
+            row.hidden = only && row.dataset.same === "true";
+        });
+    }
+
+    diffBox.addEventListener("change", applyDiff);
+
+    function fillPick() {
+        var chosen = readList();
+        pick.innerHTML = "";
+        products.forEach(function (item) {
+            var label = el("label", "compare-pick-item");
+            label.dataset.name = item.name.toLowerCase();
+            var box = el("input");
+            box.type = "checkbox";
+            box.value = item.name;
+            box.checked = chosen.indexOf(item.name) !== -1;
+            label.appendChild(box);
+            var img = el("img");
+            img.src = item.photo;
+            img.alt = "";
+            label.appendChild(img);
+            label.appendChild(el("span", "", item.name));
+            pick.appendChild(label);
+        });
+    }
+
+    function filterPick() {
+        var text = search.value.trim().toLowerCase();
+        var shown = 0;
+        pick.querySelectorAll(".compare-pick-item").forEach(function (item) {
+            item.hidden = text !== "" && item.dataset.name.indexOf(text) === -1;
+            if (!item.hidden) shown += 1;
+        });
+        pickEmpty.hidden = shown > 0;
+    }
+
+    var lastFocus = null;
+
+    function openModal() {
+        lastFocus = document.activeElement;
+        fillPick();
+        search.value = "";
+        filterPick();
+        modal.hidden = false;
+        document.body.classList.add("is-locked");
+        search.focus();
+    }
+
+    function closeModal() {
+        modal.hidden = true;
+        document.body.classList.remove("is-locked");
+        if (lastFocus) lastFocus.focus();
+    }
+
+    search.addEventListener("input", filterPick);
+    modal.querySelector(".compare-modal-close").addEventListener("click", closeModal);
+    modal.addEventListener("click", function (event) {
+        if (event.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && !modal.hidden) closeModal();
+    });
+
+    modal.querySelector(".compare-confirm").addEventListener("click", function () {
+        var old = readList();
+        var picked = [];
+        pick.querySelectorAll("input:checked").forEach(function (box) { picked.push(box.value); });
+        var list = old.filter(function (name) { return picked.indexOf(name) !== -1; });
+        picked.forEach(function (name) { if (list.indexOf(name) === -1) list.push(name); });
+        writeList(list);
+        closeModal();
+        render();
+    });
+
+    render();
+})();
+
+(function () {
+    var form = document.getElementById("checkout");
+    if (!form) return;
+
+    var emptyBlock = document.querySelector(".cart-empty");
+    var doneBlock = document.querySelector(".co-done");
+    var lines = form.querySelector(".co-lines");
+    var isDone = false;
+    var likeBlocks = document.querySelectorAll("#cart > .cart-like, #cart > .card-grid");
+    var codes = { promo: null, gift: null };
+
+    var promoCodes = { JANZ10: 10, COFFEE15: 15 };
+    var giftCards = { "GIFT-2026": 20 };
+
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function el(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    }
+
+    function dayFrom(days) {
+        var date = new Date();
+        date.setDate(date.getDate() + days);
+        return date.getDate() + " " + months[date.getMonth()];
+    }
+
+    var trashIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 13h8l1-13M10.5 11v5.5M13.5 11v5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    function renderLines(items) {
+        lines.innerHTML = "";
+        items.forEach(function (item, index) {
+            var row = el("div", "co-line-item");
+
+            var photo = el("a", "co-photo");
+            photo.href = item.link || "product.html";
+            if (item.photo) {
+                var img = el("img");
+                img.src = item.photo;
+                img.alt = "";
+                photo.appendChild(img);
+            }
+            row.appendChild(photo);
+
+            var info = el("div", "co-info");
+            var name = el("a", "co-name", item.name);
+            name.href = item.link || "product.html";
+            info.appendChild(name);
+            var options = el("div", "mini-cart-options");
+            (item.weights || []).forEach(function (weight, weightIndex) {
+                var pill = el("button", "mini-cart-weight" + (weightIndex === item.weight ? " is-on" : ""), weight.label);
+                pill.type = "button";
+                if (weight.off) pill.appendChild(el("small", "", weight.off));
+                pill.addEventListener("click", function () { changeLine(index, { weight: weightIndex }); });
+                options.appendChild(pill);
+            });
+            if (item.grinds && item.grinds.length) {
+                var select = el("select", "mini-cart-grind");
+                select.setAttribute("aria-label", "Grind");
+                item.grinds.forEach(function (grind) {
+                    var option = el("option", "", grind);
+                    option.selected = grind === item.grind;
+                    select.appendChild(option);
+                });
+                select.addEventListener("change", function () { changeLine(index, { grind: select.value }); });
+                options.appendChild(select);
+            }
+            info.appendChild(options);
+            row.appendChild(info);
+
+            var qty = el("div", "mini-cart-qty");
+            var minus = el("button", "", "−");
+            minus.type = "button";
+            minus.setAttribute("aria-label", "Less " + item.name);
+            minus.disabled = item.qty <= 1;
+            minus.addEventListener("click", function () { changeLine(index, { qty: item.qty - 1 }); });
+            var plus = el("button", "", "+");
+            plus.type = "button";
+            plus.setAttribute("aria-label", "More " + item.name);
+            plus.addEventListener("click", function () { changeLine(index, { qty: item.qty + 1 }); });
+            qty.appendChild(minus);
+            qty.appendChild(el("span", "", String(item.qty)));
+            qty.appendChild(plus);
+            row.appendChild(qty);
+
+            var price = el("div", "mini-cart-price");
+            if (item.oldPrice) price.appendChild(el("s", "", money(item.oldPrice * item.qty)));
+            price.appendChild(el("strong", "", money(item.price * item.qty)));
+            row.appendChild(price);
+
+            var remove = el("button", "mini-cart-remove");
+            remove.type = "button";
+            remove.setAttribute("aria-label", "Remove " + item.name);
+            remove.innerHTML = trashIcon;
+            remove.addEventListener("click", function () { changeLine(index, null); });
+            row.appendChild(remove);
+
+            lines.appendChild(row);
+        });
+    }
+
+    function renderGift(items) {
+        var packs = items.reduce(function (sum, item) {
+            var weight = item.weights && item.weights[item.weight];
+            return sum + (weight && weight.label === "250 g" ? item.qty : 0);
+        }, 0);
+        var gifts = Math.floor(packs / 6);
+        var left = 6 - (packs % 6);
+        var text = "Add " + left + " more " + (left === 1 ? "pack" : "packs") + " of 250 g coffee to get a gift";
+        if (gifts) text = "You get " + gifts + (gifts === 1 ? " gift" : " gifts") + ". " + text.replace("a gift", "one more");
+        form.querySelector(".co-gift-text").textContent = text;
+        form.querySelector(".co-gift").classList.toggle("is-won", gifts > 0);
+    }
+
+    function selectedWay() {
+        return form.querySelector("input[name=delivery]:checked");
+    }
+
+    function deliveryPrice(subtotal) {
+        var way = selectedWay();
+        if (!way) return 0;
+        if (way.value === "courier") return subtotal >= 50 ? 0 : 4;
+        return parseFloat(way.getAttribute("data-price")) || 0;
+    }
+
+    function renderTotals(items) {
+        var full = 0;
+        var discount = 0;
+        items.forEach(function (item) {
+            full += (item.oldPrice || item.price) * item.qty;
+            if (item.oldPrice) discount += (item.oldPrice - item.price) * item.qty;
+        });
+        var subtotal = full - discount;
+        var promo = codes.promo ? Math.round(subtotal * codes.promo.percent) / 100 : 0;
+        var delivery = deliveryPrice(subtotal);
+        var beforeGift = subtotal - promo + delivery;
+        var gift = codes.gift ? Math.min(codes.gift.amount, beforeGift) : 0;
+        var pay = beforeGift - gift;
+
+        function put(key, text) {
+            form.querySelectorAll('[data-sum="' + key + '"]').forEach(function (node) { node.textContent = text; });
+        }
+
+        put("items", money(full));
+        put("discount", "−" + money(discount));
+        form.querySelector(".co-row-discount").hidden = discount === 0;
+        put("promo", "−" + money(promo + gift));
+        form.querySelector(".co-row-promo").hidden = promo + gift === 0;
+        form.querySelector(".co-row-promo dt").textContent = codes.promo && codes.gift ? "Promo code and certificate" : codes.gift ? "Gift certificate" : "Promo code";
+        put("delivery", delivery ? money(delivery) : "free");
+        put("pay", money(pay));
+        var payWith = form.querySelector("input[name=pay]:checked");
+        put("paywith", payWith ? "Payment: " + payWith.value.toLowerCase() : "");
+
+        form.querySelectorAll(".co-way-price[data-free-over]").forEach(function (node) {
+            node.textContent = subtotal >= 50 ? "Free" : money(4);
+        });
+    }
+
+    function renderDates() {
+        var way = selectedWay();
+        var days = way ? parseInt(way.getAttribute("data-days"), 10) : 1;
+        form.querySelector('[data-date="roast"]').textContent = dayFrom(1);
+        form.querySelector('[data-date="ship"]').textContent = dayFrom(2);
+        form.querySelector('[data-date="deliver"]').textContent = days === 0 ? "Today" : dayFrom(2) + " – " + dayFrom(2 + days);
+        form.querySelectorAll(".co-way-date[data-days]").forEach(function (node) {
+            var wayDays = parseInt(node.getAttribute("data-days"), 10);
+            node.textContent = dayFrom(2) + (wayDays > 1 ? " – " + dayFrom(2 + wayDays) : "");
+        });
+    }
+
+    function render() {
+        var items = readCart();
+        var count = items.reduce(function (sum, item) { return sum + item.qty; }, 0);
+
+        doneBlock.hidden = !isDone;
+        form.hidden = isDone || !items.length;
+        emptyBlock.hidden = isDone || items.length > 0;
+        likeBlocks.forEach(function (block) { block.hidden = emptyBlock.hidden; });
+        if (form.hidden) return;
+
+        form.querySelector(".co-count").textContent = count;
+        renderLines(items);
+        renderGift(items);
+        renderTotals(items);
+        renderDates();
+    }
+
+    document.addEventListener("janz-cart-change", render);
+
+    form.querySelector(".co-clear").addEventListener("click", function () {
+        writeCart([]);
+        showCartCount(false);
+        renderMiniCart();
+        showToast("The cart is cleared");
+    });
+
+    form.querySelectorAll("[data-toggle]").forEach(function (box) {
+        box.addEventListener("change", function () {
+            var part = form.querySelector('[data-part="' + box.getAttribute("data-toggle") + '"]');
+            part.hidden = !box.checked;
+            part.querySelectorAll("input").forEach(function (input) { input.required = box.checked; });
+        });
+    });
+
+    var addressForm = form.querySelector(".co-address-form");
+    form.querySelector(".co-address-new").addEventListener("click", function () {
+        addressForm.hidden = !addressForm.hidden;
+        if (!addressForm.hidden) addressForm.querySelector("input[name=street]").focus();
+    });
+
+    form.querySelector(".co-address-save").addEventListener("click", function () {
+        var city = addressForm.querySelector("input[name=city]").value.trim();
+        var street = addressForm.querySelector("input[name=street]").value.trim();
+        if (!street) {
+            addressForm.querySelector("input[name=street]").focus();
+            return;
+        }
+        var text = (city ? city + ", " : "") + street;
+        var card = el("label", "co-address");
+        var radio = el("input");
+        radio.type = "radio";
+        radio.name = "address";
+        radio.value = text;
+        radio.checked = true;
+        card.appendChild(radio);
+        card.appendChild(el("span", "", text));
+        form.querySelector(".co-addresses").appendChild(card);
+        addressForm.querySelector("input[name=street]").value = "";
+        addressForm.hidden = true;
+        showToast("Address is added");
+    });
+
+    form.querySelectorAll(".co-tabs button").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+            var way = tab.getAttribute("data-way");
+            form.querySelectorAll(".co-tabs button").forEach(function (other) {
+                other.classList.toggle("is-on", other === tab);
+                other.setAttribute("aria-selected", other === tab ? "true" : "false");
+            });
+            form.querySelectorAll(".co-ways").forEach(function (list) {
+                list.hidden = list.getAttribute("data-way") !== way;
+            });
+            var first = form.querySelector('.co-ways[data-way="' + way + '"] input');
+            if (first && !form.querySelector('.co-ways[data-way="' + way + '"] input:checked')) first.checked = true;
+            render();
+        });
+    });
+
+    form.addEventListener("change", function (event) {
+        if (event.target.name === "delivery" || event.target.name === "pay") render();
+        if (event.target.name === "repeat") form.querySelector(".co-repeat-box").hidden = !event.target.checked;
+    });
+
+    form.querySelectorAll(".co-code-btn").forEach(function (button) {
+        button.addEventListener("click", function () {
+            var kind = button.getAttribute("data-code");
+            var input = form.querySelector('input[name="' + kind + '"]');
+            var note = form.querySelector('[data-note="' + kind + '"]');
+            var code = input.value.trim().toUpperCase();
+            note.hidden = false;
+            note.classList.remove("is-ok");
+            if (!code) {
+                codes[kind] = null;
+                note.textContent = "Write a code first";
+            } else if (kind === "promo" && promoCodes[code]) {
+                codes.promo = { code: code, percent: promoCodes[code] };
+                note.textContent = code + ": −" + promoCodes[code] + "% is applied";
+                note.classList.add("is-ok");
+            } else if (kind === "gift" && giftCards[code]) {
+                codes.gift = { code: code, amount: giftCards[code] };
+                note.textContent = code + ": −" + money(giftCards[code]) + " is applied";
+                note.classList.add("is-ok");
+            } else {
+                codes[kind] = null;
+                note.textContent = "This code is not valid";
+            }
+            render();
+        });
+    });
+
+    function check(input) {
+        var field = input.closest(".co-field");
+        var value = input.value.trim();
+        var ok = !input.required || value !== "";
+        if (ok && value && input.name === "phone") ok = value.replace(/\D/g, "").length === 9;
+        if (ok && value && input.type === "email") ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        if (field) field.classList.toggle("is-error", !ok);
+        return ok;
+    }
+
+    form.querySelectorAll(".co-field input").forEach(function (input) {
+        input.addEventListener("blur", function () {
+            if (input.value) check(input);
+        });
+        input.addEventListener("input", function () {
+            var field = input.closest(".co-field");
+            if (field && field.classList.contains("is-error")) check(input);
+        });
+    });
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var firstBad = null;
+        form.querySelectorAll(".co-field input").forEach(function (input) {
+            if (!check(input) && !firstBad) firstBad = input;
+        });
+        var agree = form.querySelector("input[name=agree]");
+        form.querySelector(".co-agree-error").classList.toggle("is-shown", !agree.checked);
+        if (firstBad) {
+            firstBad.focus();
+            showToast("Check the recipient details");
+            return;
+        }
+        if (!agree.checked) {
+            agree.focus();
+            return;
+        }
+
+        doneBlock.querySelector(".co-done-number").textContent = "#" + (1000 + Math.floor(Math.random() * 9000));
+        doneBlock.querySelector(".co-done-email").textContent = form.querySelector("input[name=email]").value.trim();
+        isDone = true;
+        writeCart([]);
+        showCartCount(false);
+        renderMiniCart();
+        window.scrollTo(0, 0);
+        showToast("The order is placed");
+    });
+
+    render();
+})();
+
+(function () {
+    var page = document.getElementById("user-profile");
+    if (!page) return;
+
+    var colorCount = 9;
+    var svgNs = "http://www.w3.org/2000/svg";
+
+    page.querySelectorAll(".up-pref").forEach(function (pref) {
+        var items = pref.querySelectorAll("li");
+        var svg = pref.querySelector(".up-donut");
+        var total = 0;
+        items.forEach(function (item) { total += parseFloat(item.getAttribute("data-value")) || 0; });
+        var radius = 15.915;
+        var offset = 25;
+
+        var wrap = document.createElement("div");
+        wrap.className = "up-donut-wrap";
+        svg.parentNode.insertBefore(wrap, svg);
+        wrap.appendChild(svg);
+        var tip = document.createElement("div");
+        tip.className = "up-tip";
+        tip.hidden = true;
+        wrap.appendChild(tip);
+
+        function showPart(index, event) {
+            var item = items[index];
+            var rings = svg.querySelectorAll("circle");
+            rings.forEach(function (ring, ringIndex) { ring.classList.toggle("is-on", ringIndex === index); });
+            items.forEach(function (other, otherIndex) { other.classList.toggle("is-on", otherIndex === index); });
+            tip.textContent = item.firstChild.textContent.trim() + " ";
+            tip.appendChild(item.querySelector("b").cloneNode(true));
+            tip.hidden = false;
+            var box = wrap.getBoundingClientRect();
+            var x = event && event.clientX ? event.clientX - box.left : box.width / 2;
+            var y = event && event.clientY ? event.clientY - box.top : box.height / 2;
+            tip.style.left = x + "px";
+            tip.style.top = y + "px";
+        }
+
+        function hidePart() {
+            tip.hidden = true;
+            svg.querySelectorAll("circle").forEach(function (ring) { ring.classList.remove("is-on"); });
+            items.forEach(function (item) { item.classList.remove("is-on"); });
+        }
+
+        wrap.addEventListener("mouseleave", hidePart);
+        items.forEach(function (item, index) {
+            var value = parseFloat(item.getAttribute("data-value")) || 0;
+            var share = total ? value / total * 100 : 0;
+            var color = "var(--up-c" + (index % colorCount) + ")";
+
+            var mark = document.createElement("b");
+            mark.textContent = Math.round(share) + "%";
+            item.appendChild(document.createTextNode(" "));
+            item.appendChild(mark);
+            item.style.setProperty("--dot", color);
+
+            var ring = document.createElementNS(svgNs, "circle");
+            ring.setAttribute("cx", "21");
+            ring.setAttribute("cy", "21");
+            ring.setAttribute("r", String(radius));
+            ring.setAttribute("fill", "none");
+            ring.style.stroke = color;
+            ring.setAttribute("stroke-width", "4.5");
+            ring.setAttribute("stroke-dasharray", Math.max(share - 1, 0.5) + " " + (100 - Math.max(share - 1, 0.5)));
+            ring.setAttribute("stroke-dashoffset", String(offset));
+            svg.appendChild(ring);
+            offset -= share;
+
+            ring.addEventListener("mousemove", function (event) { showPart(index, event); });
+            item.addEventListener("mouseenter", function () { showPart(index, null); });
+            item.addEventListener("mouseleave", hidePart);
+        });
+    });
+
+    page.querySelectorAll(".up-tabs button").forEach(function (tab) {
+        tab.addEventListener("click", function () {
+            var name = tab.getAttribute("data-pref");
+            page.querySelectorAll(".up-tabs button").forEach(function (other) {
+                other.classList.toggle("is-on", other === tab);
+                other.setAttribute("aria-selected", other === tab ? "true" : "false");
+            });
+            page.querySelectorAll(".up-pref").forEach(function (pref) {
+                pref.hidden = pref.getAttribute("data-pref") !== name;
+            });
+        });
+    });
+
+    var follow = page.querySelector(".up-follow");
+    var followers = page.querySelector("[data-followers]");
+    var postFollows = page.querySelectorAll(".feed-follow");
+
+    function setFollow(on) {
+        follow.classList.toggle("is-on", on);
+        follow.setAttribute("aria-pressed", on ? "true" : "false");
+        follow.textContent = on ? "Following" : "Follow";
+        postFollows.forEach(function (button) {
+            button.classList.toggle("is-on", on);
+            button.setAttribute("aria-pressed", on ? "true" : "false");
+            button.textContent = on ? "Following" : "Follow";
+        });
+    }
+
+    follow.addEventListener("click", function () {
+        var on = !follow.classList.contains("is-on");
+        followers.textContent = String((parseInt(followers.textContent, 10) || 0) + (on ? 1 : -1));
+        setFollow(on);
+    });
+
+    postFollows.forEach(function (button) {
+        button.addEventListener("click", function () {
+            var on = button.classList.contains("is-on");
+            if (on !== follow.classList.contains("is-on")) {
+                followers.textContent = String((parseInt(followers.textContent, 10) || 0) + (on ? 1 : -1));
+                setFollow(on);
+            }
+        });
+    });
+
+    page.querySelector(".up-share").addEventListener("click", function () {
+        if (typeof openShare === "function") openShare(window.location.href);
+    });
 })();
